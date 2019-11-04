@@ -5,9 +5,11 @@ import StatsContainer from '../components/StatsContainer';
 import IntakeFoodContainer from '../components/IntakeFoodContainer';
 import IntakeWaterContainer from '../components/IntakeWaterContainer';
 
+import * as ThemeConstants from '../common/Themes';
+
 const HomeScreen = () => {
     return(
-        <ScrollView>
+        <ScrollView style={styles.main}>
             <StatsContainer/>
             <IntakeFoodContainer title="Breakfast"/>
             <IntakeFoodContainer title="Lunch"/>
@@ -18,6 +20,11 @@ const HomeScreen = () => {
     );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    main: {
+        backgroundColor: ThemeConstants.BACKGROUND_LIGHT_GRAY,
+        flex: 1
+    }
+});
 
 export default HomeScreen;
