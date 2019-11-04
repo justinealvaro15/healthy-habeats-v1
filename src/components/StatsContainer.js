@@ -17,7 +17,7 @@ const StatsContainer = () => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: ThemeConstants.BACKGROUND_LIGHT_GRAY,
+        backgroundColor: ThemeConstants.BACKGROUND_WHITE,
         borderRadius: ThemeConstants.CONTAINER_RADIUS,
         flexDirection: 'row',
         justifyContent: 'space-around',

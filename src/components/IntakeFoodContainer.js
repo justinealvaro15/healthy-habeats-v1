@@ -24,8 +24,9 @@ const IntakeFoodContainer = ({ title }) => {
 
 const styles = StyleSheet.create({
     add: {
+        alignItems: 'center',
         flexDirection: 'row',
-        alignItems: 'center'
+
     },
     button: {
         color: 'gray',
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
         marginRight: 10
     },
     container: {
-        backgroundColor: ThemeConstants.BACKGROUND_LIGHT_GRAY,
+        backgroundColor: ThemeConstants.BACKGROUND_WHITE,
         borderRadius: ThemeConstants.CONTAINER_RADIUS,
         marginBottom: ThemeConstants.CONTAINER_MARGIN,
         marginHorizontal: ThemeConstants.CONTAINER_MARGIN
