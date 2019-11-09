@@ -6,7 +6,7 @@ const navigator = createStackNavigator({
     Home: HomeScreen,
     SearchFood: SearchFoodScreen
 }, {
-    initialRouteName: 'SearchFood',
+    initialRouteName: 'Home',
     defaultNavigationOptions: {
         title: 'Health Food App'
     }

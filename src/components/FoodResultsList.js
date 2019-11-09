@@ -1,9 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
+import { withNavigation } from 'react-navigation';
+import { Feather } from '@expo/vector-icons';
 
 import * as foodData from '../samplefooditems.json';
 
-const FoodResultsList = ({ title, results }) => {
+const FoodResultsList = ({ foodArray, setFoodArray, navigation, results, title }) => {
    // food array
     if(!results.length){
         const data = [];
@@ -12,28 +14,37 @@ const FoodResultsList = ({ title, results }) => {
         // store in array
         for (let i = 0; i < 10; i++) {
             data.push(foodData[i]);
-            const food = data[i].foodName;
+            const foodName = data[i].foodName;
             const id = data[i].id;
-            foodItems.push({id, food});
+            foodItems.push({id, foodName});
         }
         results = foodItems;
     }
-	
+
     return (
         <View style={styles.container} >
             <Text style={styles.titleStyle}>{title}</Text>
             <FlatList
-                showsVerticalScrollIndicator={false}
                 data={results}
                 keyExtractor = {(result) => result.id}
                 renderItem={({item})=>{
+                    
                     return (
-                        <Text>{item.food}</Text>
-                    )       
+                        <View>
+                            <Text>{item.foodName}</Text>
+                            <Button
+                                title='Add'
+                                onPress={() => {
+                                    setFoodArray([...foodArray, item])
+                                    navigation.navigate('Home')
+                                }}
+                            />
+                        </View>
+                    )
                 }}
+                showsVerticalScrollIndicator={false}
             />
         </View>
-
     );
 };
 
@@ -49,4 +60,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default FoodResultsList;
+export default withNavigation(FoodResultsList);

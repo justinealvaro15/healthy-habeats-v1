@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, ScrollView } from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { withNavigation } from 'react-navigation';
 
 import FoodResultsList from '../components/FoodResultsList';
 import SearchBar from '../components/SearchBar';
@@ -15,27 +16,25 @@ for (let i = 0; i < 10; i++) {
 
 const filterResultsBySearch = (term) => {
     const foodArray=[];
+
     if(!term.length){
-        console.log('NO TERM GIVEN');
         return { };
-    } else {   
-        console.log('TERMS');
+    } else {
         const string_to_check = term.toUpperCase();
         for (let i = 0; i < 10; i++) {
             if(((data[i].foodName).toUpperCase()).includes(string_to_check)){
-                const food = data[i].foodName;
+                const foodName = data[i].foodName;
                 const id = data[i].id;
                 
-                console.log(food.toUpperCase());
-                foodArray.push({id, food});
-            }     
+                foodArray.push({id, foodName});
+            }
         };
         return foodArray;
     }
 };
 
-const SearchFoodScreen = () => {
-    const [term, setTerm] = useState('')
+const SearchFoodScreen = ({ navigation }) => {
+    const [term, setTerm] = useState('');
 
     return (
         <View style={styles.main}>
@@ -43,15 +42,18 @@ const SearchFoodScreen = () => {
                 term={term}
                 onTermChange={newTerm => setTerm(newTerm)}
                 onTermSubmit={(word) => {
-                    console.log('term submitted')
                 }}
             />
             <Text>{term}</Text>
 
+            <TouchableOpacity onPress={() => navigation.navigate('Home')} title='return'/>
+
             <ScrollView>
                 <FoodResultsList
-                    title='Food Items'
+                    foodArray={navigation.getParam('foodArray')}
+                    setFoodArray={navigation.getParam('setFoodArray')}
                     results={filterResultsBySearch(term)}
+                    title='Food Items'
                 />
             </ScrollView>
         </View>
@@ -66,4 +68,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default SearchFoodScreen; 
+export default withNavigation(SearchFoodScreen); 
