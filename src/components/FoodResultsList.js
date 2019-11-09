@@ -75,11 +75,6 @@ const styles = StyleSheet.create({
     main: {
         backgroundColor: ThemeConstants.BACKGROUND_WHITE
     },
-    text_parent: {
-        borderColor: 'red',
-        borderWidth: 1,
-        flex: 1
-    },
     text_regular: {
         fontSize: ThemeConstants.FONT_SIZE_REGULAR,
         fontWeight: '400'

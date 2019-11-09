@@ -1,6 +1,6 @@
 import React from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons'
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Feather } from '@expo/vector-icons'
 
 import * as ThemeConstants from '../common/Themes';
 
@@ -17,20 +17,30 @@ const IntakeFoodContainer = ({ food, title, navigateToSearchFood }) => {
                     keyExtractor = {(item) => item.id}
                     renderItem={({item})=>{
                         return (
-                            <Text>{item.foodName}</Text>
+                            // <Text>{item.foodName}</Text>
+                            <TouchableOpacity
+                                style={styles.food}
+                                onPress={() => console.log(item.foodName + ' is pressed.')}
+                            >
+                                <View>
+                                    <Text style={styles.text_regular}>{item.foodName}</Text>
+                                    <Text style={styles.text_small}>
+                                        Weight: {item.grams} g  •  Energy: {item.calories} kCal
+                                    </Text>
+                                </View>
+                            </TouchableOpacity>
                         )
                     }}
                     showsVerticalScrollIndicator={false}
                 />
 
-                <View style={styles.add}>
-                    <FontAwesome
-                        name='plus-square'
-                        onPress={navigateToSearchFood}
+                <TouchableOpacity style={styles.add} onPress={navigateToSearchFood}>
+                    <Feather
+                        name='plus-circle'
                         style={styles.button}
                     />
-                    <Text>Add</Text>
-                </View>
+                    <Text style={styles.text_light}>Add</Text>
+                </TouchableOpacity>
             </View>
         </View>
     );
@@ -39,26 +49,48 @@ const IntakeFoodContainer = ({ food, title, navigateToSearchFood }) => {
 const styles = StyleSheet.create({
     add: {
         alignItems: 'center',
+        flex: 1,
         flexDirection: 'row',
-
+        paddingVertical: 15,
     },
     button: {
-        color: 'gray',
+        color: ThemeConstants.BUTTON_LIGHT_GRAY,
         fontSize: 30,
         marginRight: 10
     },
     container: {
         backgroundColor: ThemeConstants.BACKGROUND_WHITE,
-        borderRadius: ThemeConstants.CONTAINER_RADIUS,
-        marginBottom: ThemeConstants.CONTAINER_MARGIN,
-        marginHorizontal: ThemeConstants.CONTAINER_MARGIN
+        marginBottom: ThemeConstants.CONTAINER_MARGIN
     },
     details: {
-        margin: 15
+        marginHorizontal: 15
+    },
+    food: {
+        borderBottomColor: ThemeConstants.BORDER_GRAY,
+        borderBottomWidth: 1,
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingVertical: 10,
     },
     header: {
-        fontSize: 18,
-        fontWeight: 'bold'
+        borderBottomColor: ThemeConstants.BORDER_GRAY,
+        borderBottomWidth: 1,
+        fontSize: ThemeConstants.FONT_SIZE_HEADER,
+        fontWeight: 'bold',
+        paddingVertical: 10
+    },
+    text_light: {
+        color: ThemeConstants.FONT_GRAY,
+        fontSize: ThemeConstants.FONT_SIZE_MEDIUM
+    },
+    text_regular: {
+        fontSize: ThemeConstants.FONT_SIZE_REGULAR,
+        fontWeight: '400'
+    },
+    text_small: {
+        color: ThemeConstants.FONT_GRAY,
+        fontSize: ThemeConstants.FONT_SIZE_SMALL
     }
 });
 
