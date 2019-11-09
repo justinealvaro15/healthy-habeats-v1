@@ -16,7 +16,7 @@ for (let i = 0; i < 10; i++) {
 
 const filterResultsBySearch = (term) => {
     const foodArray=[];
-
+    //console.log(term);
     if(!term.length){
         return { };
     } else {
@@ -34,6 +34,7 @@ const filterResultsBySearch = (term) => {
                 foodArray.push({id, foodName, grams, calories, carbs, fats, proteins});
             }
         };
+        console.log(foodArray);
         return foodArray;
     }
 };

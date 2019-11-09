@@ -6,15 +6,15 @@ import ActivityInput from '../components/ActivityInput';
 
 
 const AnthropometricScreen = () => {
-    const [weight,setWeight] = useState('');
-    const [height,setHeight] = useState('');
-    const [bmi,setBmi] =  useState('');
-    const [bmiAssessment,setBmiAssessment] =  useState('');
-    const [activityLevel,setActivityLevel] = useState('');
-    const [activityLevelValue,setActivityLevelValue] = useState(0);
-    const [DBW,setDBW] = useState(0);
-    const [TEA,setTEA] = useState(0);
-    const [distributions,setDistributions] = useState({
+    const [weight, setWeight] = useState('');
+    const [height, setHeight] = useState('');
+    const [bmi, setBmi] =  useState('');
+    const [bmiAssessment, setBmiAssessment] =  useState('');
+    const [activityLevel, setActivityLevel] = useState('');
+    const [activityLevelValue, setActivityLevelValue] = useState(0);
+    const [DBW, setDBW] = useState(0);
+    const [TEA, setTEA] = useState(0);
+    const [distributions, setDistributions] = useState({
         carbsCalorie: 0, 
         proteinsCalorie: 0,
         fatsCalorie: 0,

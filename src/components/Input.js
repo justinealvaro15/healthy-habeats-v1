@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, TextInput } from 'react-native';
+import { StyleSheet, TextInput, View  } from 'react-native';
 
 import * as ThemeConstants from '../common/Themes';
 
@@ -8,9 +8,9 @@ const Input = ({ onTermChange, term, input }) => {
     return (
         <View style={styles.background}>
             <TextInput
-                keyboardType={'numeric'}
                 autoCapitalize='words'
                 autoCorrect={false}
+                keyboardType={'numeric'}
                 onChangeText={onTermChange}
                 placeholder={input}
                 style={styles.input}

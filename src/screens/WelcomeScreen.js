@@ -4,7 +4,7 @@ import * as ThemeConstants from '../common/Themes';
 
 
 const WelcomeScreen = ({navigation}) => {
-	const [state,setState] = useState('');
+	const [state, setState] = useState('');
 
 
 	const saveUserToken = async (userToken) => {
@@ -32,6 +32,7 @@ const WelcomeScreen = ({navigation}) => {
 		  console.log(error.message);
 		}      
 	  }
+
 	const deleteUserToken = async () => {
 		try {
 		  await AsyncStorage.removeItem('userToken');
@@ -66,8 +67,8 @@ const WelcomeScreen = ({navigation}) => {
 				navigation.navigate('SearchFood');
 				
 				}
-			}} />
-
+			}} 
+		/>
      </View>
         
     );

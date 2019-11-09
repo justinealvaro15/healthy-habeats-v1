@@ -1,16 +1,16 @@
 import React from 'react';
-import { StyleSheet, View, TextInput } from 'react-native';
+import { StyleSheet, TextInput, View  } from 'react-native';
 
 import * as ThemeConstants from '../common/Themes';
 
-const ActivityInput = ({ onTermChange, term, input }) => {
+const ActivityInput = ({ input, onTermChange, term  }) => {
     
     return (
         <View style={styles.background}>
             <TextInput
-                keyboardType={'default'}
                 autoCapitalize='words'
                 autoCorrect={false}
+                keyboardType={'default'}
                 onChangeText={onTermChange}
                 placeholder={input}
                 style={styles.input}
@@ -29,8 +29,8 @@ const styles = StyleSheet.create({
         margin: ThemeConstants.CONTAINER_MARGIN
     },
     icon: {
-        fontSize: 35,
         alignSelf: 'center',
+        fontSize: 35,
         margin: 10,
         marginRight: 15
     },
