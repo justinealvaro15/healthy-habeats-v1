@@ -1,18 +1,32 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons'
 
 import * as ThemeConstants from '../common/Themes';
 
-const IntakeFoodContainer = ({ title }) => {
+const IntakeFoodContainer = ({ food, title, navigateToSearchFood }) => {
+    const foodArray = food;
+
     return(
         <View style={styles.container}>
             <View style={styles.details}>
                 <Text style={styles.header}>{title}</Text>
+
+                <FlatList
+                    data={foodArray}
+                    keyExtractor = {(item) => item.id}
+                    renderItem={({item})=>{
+                        return (
+                            <Text>{item.foodName}</Text>
+                        )
+                    }}
+                    showsVerticalScrollIndicator={false}
+                />
+
                 <View style={styles.add}>
                     <FontAwesome
                         name='plus-square'
-                        onPress={() => console.log('add water')}
+                        onPress={navigateToSearchFood}
                         style={styles.button}
                     />
                     <Text>Add</Text>
