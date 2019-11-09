@@ -121,7 +121,7 @@ const AnthropometricScreen = () => {
         <Text>Your BMI is: {bmi}</Text>
         <Text>Your BMI Assessment is: {bmiAssessment}</Text>
         <Text>Your Desirable Body Weight is {DBW}</Text>
-        <Text>Your Total Energy Allowance is: {TEA}</Text>
+        <Text>Your Total Energy Allowance is: {TEA} calories</Text>
         <Text>Calorie Allowance Distribution:</Text>
         <Text>Carbohydrates: {distributions.carbsCalorie} calories</Text>
         <Text>Proteins: {distributions.proteinsCalorie} calories</Text>
