@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
         marginBottom: ThemeConstants.CONTAINER_MARGIN
     },
     details: {
-        marginHorizontal: 15
+        marginHorizontal: ThemeConstants.CONTAINER_MARGIN+9
     },
     food: {
         borderBottomColor: ThemeConstants.BORDER_GRAY,
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         fontSize: ThemeConstants.FONT_SIZE_HEADER,
         fontWeight: 'bold',
-        paddingVertical: 10
+        paddingVertical: ThemeConstants.CONTAINER_MARGIN+5
     },
     text_light: {
         color: ThemeConstants.FONT_GRAY,

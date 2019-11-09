@@ -62,7 +62,7 @@ const FoodResultsList = ({ foodArray, setFoodArray, navigation, results, title }
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginHorizontal: ThemeConstants.CONTAINER_MARGIN+7
+        marginHorizontal: ThemeConstants.CONTAINER_MARGIN+9
     },
     food: {
         borderBottomColor: ThemeConstants.BORDER_GRAY,
