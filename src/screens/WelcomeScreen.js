@@ -64,7 +64,7 @@ const WelcomeScreen = ({navigation}) => {
 				navigation.navigate('Anthropometric');
 			}
 			else{
-				navigation.navigate('SearchFood');
+				navigation.navigate('Home');
 				
 				}
 			}} 
