@@ -25,8 +25,13 @@ const filterResultsBySearch = (term) => {
             if(((data[i].foodName).toUpperCase()).includes(string_to_check)){
                 const foodName = data[i].foodName;
                 const id = data[i].id;
+                const grams = data[i].grams;
+                const calories = data[i].grams;
+                const carbs = data[i].carbs;
+                const fats = data[i].fats;
+                const proteins = data[i].proteins;
                 
-                foodArray.push({id, foodName});
+                foodArray.push({id, foodName, grams, calories, carbs, fats, proteins});
             }
         };
         return foodArray;
@@ -44,7 +49,6 @@ const SearchFoodScreen = ({ navigation }) => {
                 onTermSubmit={(word) => {
                 }}
             />
-            <Text>{term}</Text>
 
             <TouchableOpacity onPress={() => navigation.navigate('Home')} title='return'/>
 
@@ -53,7 +57,6 @@ const SearchFoodScreen = ({ navigation }) => {
                     foodArray={navigation.getParam('foodArray')}
                     setFoodArray={navigation.getParam('setFoodArray')}
                     results={filterResultsBySearch(term)}
-                    title='Food Items'
                 />
             </ScrollView>
         </View>
