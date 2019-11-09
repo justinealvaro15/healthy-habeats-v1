@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 
-import * as foodData from '../samplefooditems.json';
+import * as foodData from '../../assets/samplefooditems.json';
 
 const FoodResultsList = ({ title, results }) => {
    // food array
@@ -12,9 +12,9 @@ const FoodResultsList = ({ title, results }) => {
         // store in array
         for (let i = 0; i < 10; i++) {
             data.push(foodData[i]);
-            const food = data[i].foodName;
+            const foodName = data[i].foodName;
             const id = data[i].id;
-            foodItems.push({id, food});
+            foodItems.push({id, foodName});
         }
         results = foodItems;
     }
@@ -28,7 +28,7 @@ const FoodResultsList = ({ title, results }) => {
                 keyExtractor = {(result) => result.id}
                 renderItem={({item})=>{
                     return (
-                        <Text>{item.food}</Text>
+                        <Text>{item.foodName}</Text>
                     )       
                 }}
             />

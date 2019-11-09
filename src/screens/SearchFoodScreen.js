@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, AsyncStorage } from 'react-native';
 
 import FoodResultsList from '../components/FoodResultsList';
 import SearchBar from '../components/SearchBar';
 
 import * as ThemeConstants from '../common/Themes';
-import * as foodData from '../samplefooditems.json';
+import * as foodData from '../../assets/samplefooditems.json';
 
 // Store food item data
 const data = [];
@@ -23,11 +23,11 @@ const filterResultsBySearch = (term) => {
         const string_to_check = term.toUpperCase();
         for (let i = 0; i < 10; i++) {
             if(((data[i].foodName).toUpperCase()).includes(string_to_check)){
-                const food = data[i].foodName;
+                const foodName = data[i].foodName;
                 const id = data[i].id;
                 
-                console.log(food.toUpperCase());
-                foodArray.push({id, food});
+                console.log(foodName.toUpperCase());
+                foodArray.push({id, foodName});
             }     
         };
         return foodArray;
