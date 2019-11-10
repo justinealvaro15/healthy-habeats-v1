@@ -2,8 +2,8 @@ import React from 'react';
 import { Button, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
 
+import * as foodData from '../../assets/samplefooditems.json';
 import * as ThemeConstants from '../common/Themes';
-import * as foodData from '../samplefooditems.json';
 
 const FoodResultsList = ({ foodArray, setFoodArray, navigation, results, title }) => {
    // food array
