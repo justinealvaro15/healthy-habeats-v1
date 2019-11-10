@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, AsyncStorage, Button } from 'react-native';
+import { AsyncStorage, Button, Text, StyleSheet, View } from 'react-native';
+import { withNavigation } from 'react-navigation';
 
 import * as ThemeConstants from '../common/Themes';
 
-const WelcomeScreen = ({navigation}) => {
+const WelcomeScreen = ({ navigation }) => {
 	const [state, setState] = useState('');
 
 	const saveUserToken = async (userToken) => {
@@ -50,7 +51,6 @@ const WelcomeScreen = ({navigation}) => {
 		<View>
 			<Text style={styles.text}>WelcomeScreen</Text>
 			<Button title='CONTINUE' onPress={ () => {
-		
 				if(state === 'firstTime'){
 					saveUserToken('oldUser');
 					navigation.navigate('Anthropometric');
@@ -72,4 +72,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default WelcomeScreen;
+export default withNavigation(WelcomeScreen);
