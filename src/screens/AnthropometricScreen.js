@@ -1,9 +1,10 @@
-import React, {useState, useEffect} from 'react';
-import { StyleSheet, View, Text, AsyncStorage, Button, TextInput, ScrollView } from 'react-native';
-import * as ThemeConstants from '../common/Themes';
-import Input from '../components/Input';
-import ActivityInput from '../components/ActivityInput';
+import React, { useEffect, useState } from 'react';
+import { Button, ScrollView, StyleSheet, Text } from 'react-native';
 
+import ActivityInput from '../components/ActivityInput';
+import Input from '../components/Input';
+
+import * as ThemeConstants from '../common/Themes';
 
 const AnthropometricScreen = () => {
     const [weight, setWeight] = useState('');
@@ -15,7 +16,7 @@ const AnthropometricScreen = () => {
     const [DBW, setDBW] = useState(0);
     const [TEA, setTEA] = useState(0);
     const [distributions, setDistributions] = useState({
-        carbsCalorie: 0, 
+        carbsCalorie: 0,
         proteinsCalorie: 0,
         fatsCalorie: 0,
         carbs: 0,
@@ -44,7 +45,6 @@ const AnthropometricScreen = () => {
         else if(result > 30){
             setBmiAssessment('Obese');
         }
-        
     }; 
 
     const computeActivityLevel = () => {
@@ -87,75 +87,74 @@ const AnthropometricScreen = () => {
             meatAndFishExchange: Math.round(((Math.ceil(((TEA*0.15)/4)/5)*5)-24)/8),
             fatExchange: Math.round(((Math.ceil(((TEA*0.2)/9)/5)*5)-19)/5),
         });
-    },[TEA]);
+    }, [TEA]);
 
+    return (
+        <ScrollView>
+            <Text style={styles.text}>Weight in kg</Text>
+            <Input
+                input="Weight"
+                term={weight.toString()}
+                onTermChange={newWeight => setWeight(newWeight.toString())}
+            />
 
+            <Text style={styles.text}>Height in cm</Text>
+            <Input
+                input="Height"
+                term={height.toString()}
+                onTermChange={newHeight => setHeight(newHeight)}
+            />
 
-    return ( <ScrollView>
-        <Text style={styles.text}>Weight in kg</Text>
-	    <Input
-            input="Weight"
-            term={weight.toString()}
-            onTermChange={newWeight => setWeight(newWeight.toString())}
+            <Text>{activityDescription}</Text>
+            <ActivityInput
+                input="Activity Level"
+                term={activityLevel}
+                onTermChange={newTerm => setActivityLevel(newTerm)}
+                />
+
+            <Button title='Save' onPress={async () => {
+                computeBMI();
+                setDBW((height - 100) - ((height - 100) * 0.1));
+            }}/>
+
+            <Text>Your BMI is: {bmi}</Text>
+            <Text>Your BMI Assessment is: {bmiAssessment}</Text>
+            <Text>Your Desirable Body Weight is {DBW}</Text>
+            <Text>Your Total Energy Allowance is: {TEA} calories</Text>
+            <Text>Calorie Allowance Distribution:</Text>
+            <Text>Carbohydrates: {distributions.carbsCalorie} calories</Text>
+            <Text>Proteins: {distributions.proteinsCalorie} calories</Text>
+            <Text>Fats: {distributions.fatsCalorie} calories</Text>
+            <Text>Grams Allowance Distribution:</Text>
+            <Text>Carbohydrates: {distributions.carbs} grams</Text>
+            <Text>Proteins: {distributions.proteins} grams</Text>
+            <Text>Fats: {distributions.fats} grams</Text>
+            <Text>Diet Prescription:</Text>
+            <Text>Calories: {Math.ceil(TEA/50)*50} {} calories</Text>
+            <Text>Carbohydrates: {Math.ceil((distributions.carbs)/5)*5} grams</Text>
+            <Text>Proteins: {Math.ceil((distributions.proteins)/5)*5} grams</Text>
+            <Text>Fats: {Math.ceil((distributions.fats)/5)*5} grams</Text>
+            <Text>Food Exchanges: </Text>
+            {distributions.riceExchange < 0 
+                ? <Text>Rice Exchanges: 0</Text>
+                : <Text>Rice Exchanges: {distributions.riceExchange}</Text>
+            }
+            {distributions.meatAndFishExchange < 0 
+                ? <Text>Meat and Fish Exchanges: 0 </Text>
+                : <Text>Meat and Fish Exchanges: {distributions.meatAndFishExchange}</Text>
+            }
+            {distributions.fatExchange < 0 
+                ? <Text>Fat Exchanges: 0 </Text>
+                : <Text>Fat Exchanges: {distributions.fatExchange}</Text>
+            }
             
-            />
-        <Text style={styles.text}>Height in cm</Text>
-        <Input
-            input="Height"
-            term={height.toString()}
-            onTermChange={newHeight => setHeight(newHeight)}
-            />
-        <Text>{activityDescription}</Text>
-        <ActivityInput
-            input="Activity Level"
-            term={activityLevel}
-            onTermChange={newTerm => setActivityLevel(newTerm)}
-            />
-        
-        <Button title='Save' onPress={ async () => {
-            computeBMI();
-            setDBW((height - 100) - ((height - 100) * 0.1));
-           
-        }}/>
-
-        <Text>Your BMI is: {bmi}</Text>
-        <Text>Your BMI Assessment is: {bmiAssessment}</Text>
-        <Text>Your Desirable Body Weight is {DBW}</Text>
-        <Text>Your Total Energy Allowance is: {TEA} calories</Text>
-        <Text>Calorie Allowance Distribution:</Text>
-        <Text>Carbohydrates: {distributions.carbsCalorie} calories</Text>
-        <Text>Proteins: {distributions.proteinsCalorie} calories</Text>
-        <Text>Fats: {distributions.fatsCalorie} calories</Text>
-        <Text>Grams Allowance Distribution:</Text>
-        <Text>Carbohydrates: {distributions.carbs} grams</Text>
-        <Text>Proteins: {distributions.proteins} grams</Text>
-        <Text>Fats: {distributions.fats} grams</Text>
-        <Text>Diet Prescription:</Text>
-        <Text>Calories: {Math.ceil(TEA/50)*50} {} calories</Text>
-        <Text>Carbohydrates: {Math.ceil((distributions.carbs)/5)*5} grams</Text>
-        <Text>Proteins: {Math.ceil((distributions.proteins)/5)*5} grams</Text>
-        <Text>Fats: {Math.ceil((distributions.fats)/5)*5} grams</Text>
-        <Text>Food Exchanges: </Text>
-        {distributions.riceExchange < 0 
-            ?   <Text>Rice Exchanges: 0 </Text>
-            :   <Text>Rice Exchanges: {distributions.riceExchange} </Text>
-        }
-        {distributions.meatAndFishExchange < 0 
-            ?   <Text>Meat and Fish Exchanges: 0 </Text>
-            :   <Text>Meat and Fish Exchanges: {distributions.meatAndFishExchange} </Text>
-        }
-        {distributions.fatExchange < 0 
-            ?   <Text>Fat Exchanges: 0 </Text>
-            :   <Text>Fat Exchanges: {distributions.fatExchange} </Text>
-        }
-        
         </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
     main: {
-        backgroundColor: ThemeConstants.BACKGROUND_LIGHT_GRAY,
+        // backgroundColor: ThemeConstants.BACKGROUND_LIGHT_GRAY,
         flex: 1
     },
     text:{

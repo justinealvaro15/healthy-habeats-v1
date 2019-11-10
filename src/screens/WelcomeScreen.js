@@ -1,76 +1,64 @@
-import React, {useState, useEffect} from 'react';
-import { StyleSheet, View, Text, AsyncStorage, Button } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { AsyncStorage, Button, Text, StyleSheet, View } from 'react-native';
+import { withNavigation } from 'react-navigation';
+
 import * as ThemeConstants from '../common/Themes';
 
-
-const WelcomeScreen = ({navigation}) => {
+const WelcomeScreen = ({ navigation }) => {
 	const [state, setState] = useState('');
-
 
 	const saveUserToken = async (userToken) => {
 		setState(userToken);
 		try {
-		  await AsyncStorage.setItem('userToken', userToken);
+			await AsyncStorage.setItem('userToken', userToken);
 		} catch (error) {
-		  // Error retrieving data
-		  console.log(error.message);
+			// Error retrieving data
+			console.log(error.message);
 		}
-	  };
+	};
 	  
-	  const getUserToken = async () => {
-		
+	const getUserToken = async () => {
 		try {
 			const userToken = await AsyncStorage.getItem('userToken') || 'firstTime'
 			setState(userToken);
-			
 
-			//setState("HATDOG");
-			//console.log(userToken);
 			return userToken;
 		} catch (error) {
-		  // Error retrieving data
-		  console.log(error.message);
+			// Error retrieving data
+			console.log(error.message);
 		}      
-	  }
+	}
 
 	const deleteUserToken = async () => {
 		try {
-		  await AsyncStorage.removeItem('userToken');
+			await AsyncStorage.removeItem('userToken');
 		} catch (error) {
-		  // Error retrieving data
-		  console.log(error.message);
+			// Error retrieving data
+			console.log(error.message);
 		}
-	  }
+	}
 	  
-	//USE TO RESET STORAGE
-	deleteUserToken(); 
-	//comment it out again and rebuild
+	// USE TO RESET STORAGE
+	deleteUserToken();
+	// comment it out again and rebuild
 	
 	useEffect(() => {
-       // console.log('useEffect has been called!');
 		getUserToken();
-		
-
-		//console.log({state});
-		//console.log({x});
-    },[]); //Pass Array as second argument
-
-    return( <View>
-        <Text style={styles.text}>WelcomeScreen</Text>
-		<Button title='CONTINUE' onPress={ () => {
+	}, []);
 	
-			if(state === 'firstTime'){
-				saveUserToken('oldUser');
-				navigation.navigate('Anthropometric');
-			}
-			else{
-				navigation.navigate('Home');
-				
+	//Pass Array as second argument
+    return( 
+		<View>
+			<Text style={styles.text}>WelcomeScreen</Text>
+			<Button title='CONTINUE' onPress={ () => {
+				if(state === 'firstTime'){
+					saveUserToken('oldUser');
+					navigation.navigate('Anthropometric');
+				} else {
+					navigation.navigate('Home');
 				}
-			}} 
-		/>
-     </View>
-        
+			}}/>
+		</View>
     );
 };
 
@@ -84,4 +72,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default WelcomeScreen;
+export default withNavigation(WelcomeScreen);
