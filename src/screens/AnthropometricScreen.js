@@ -1,9 +1,10 @@
-import React, {useState, useEffect} from 'react';
-import { StyleSheet, View, Text, AsyncStorage, Button, TextInput, ScrollView } from 'react-native';
-import * as ThemeConstants from '../common/Themes';
-import Input from '../components/Input';
-import ActivityInput from '../components/ActivityInput';
+import React, { useEffect, useState } from 'react';
+import { Button, ScrollView, StyleSheet, Text } from 'react-native';
 
+import ActivityInput from '../components/ActivityInput';
+import Input from '../components/Input';
+
+import * as ThemeConstants from '../common/Themes';
 
 const AnthropometricScreen = () => {
     const [weight, setWeight] = useState('');
@@ -15,7 +16,7 @@ const AnthropometricScreen = () => {
     const [DBW, setDBW] = useState(0);
     const [TEA, setTEA] = useState(0);
     const [distributions, setDistributions] = useState({
-        carbsCalorie: 0, 
+        carbsCalorie: 0,
         proteinsCalorie: 0,
         fatsCalorie: 0,
         carbs: 0,
@@ -44,7 +45,6 @@ const AnthropometricScreen = () => {
         else if(result > 30){
             setBmiAssessment('Obese');
         }
-        
     }; 
 
     const computeActivityLevel = () => {
@@ -87,9 +87,7 @@ const AnthropometricScreen = () => {
             meatAndFishExchange: Math.round(((Math.ceil(((TEA*0.15)/4)/5)*5)-24)/8),
             fatExchange: Math.round(((Math.ceil(((TEA*0.2)/9)/5)*5)-19)/5),
         });
-    },[TEA]);
-
-
+    }, [TEA]);
 
     return ( <ScrollView>
         <Text style={styles.text}>Weight in kg</Text>
@@ -97,8 +95,7 @@ const AnthropometricScreen = () => {
             input="Weight"
             term={weight.toString()}
             onTermChange={newWeight => setWeight(newWeight.toString())}
-            
-            />
+        />
         <Text style={styles.text}>Height in cm</Text>
         <Input
             input="Height"
@@ -137,16 +134,16 @@ const AnthropometricScreen = () => {
         <Text>Fats: {Math.ceil((distributions.fats)/5)*5} grams</Text>
         <Text>Food Exchanges: </Text>
         {distributions.riceExchange < 0 
-            ?   <Text>Rice Exchanges: 0 </Text>
-            :   <Text>Rice Exchanges: {distributions.riceExchange} </Text>
+            ? <Text>Rice Exchanges: 0</Text>
+            : <Text>Rice Exchanges: {distributions.riceExchange}</Text>
         }
         {distributions.meatAndFishExchange < 0 
-            ?   <Text>Meat and Fish Exchanges: 0 </Text>
-            :   <Text>Meat and Fish Exchanges: {distributions.meatAndFishExchange} </Text>
+            ? <Text>Meat and Fish Exchanges: 0 </Text>
+            : <Text>Meat and Fish Exchanges: {distributions.meatAndFishExchange}</Text>
         }
         {distributions.fatExchange < 0 
-            ?   <Text>Fat Exchanges: 0 </Text>
-            :   <Text>Fat Exchanges: {distributions.fatExchange} </Text>
+            ? <Text>Fat Exchanges: 0 </Text>
+            : <Text>Fat Exchanges: {distributions.fatExchange}</Text>
         }
         
         </ScrollView>
