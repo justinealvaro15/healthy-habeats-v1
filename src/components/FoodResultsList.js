@@ -6,7 +6,13 @@ import * as ThemeConstants from '../common/Themes';
 import * as foodData from '../samplefooditems.json';
 
 const FoodResultsList = ({ foodArray, setFoodArray, navigation, results, title }) => {
-   // food array
+    // results === [Food Items]; 
+    //      used for filtering search
+    // foodArray === [Food Items]; 
+    //      passed from Breakfast, Lunch, etc.,
+    //      used for adding Food Items at HomeScreen
+
+    // food array
     if(!results.length){
         const data = [];
         const foodItems =[];
