@@ -48,28 +48,49 @@ const WelcomeScreen = ({ navigation }) => {
 	
 	//Pass Array as second argument
     return( 
-		<View>
-			<Text style={styles.text}>WelcomeScreen</Text>
-			<Button title='CONTINUE' onPress={ () => {
-				if(state === 'firstTime'){
-					saveUserToken('oldUser');
-					navigation.navigate('Anthropometric');
-				} else {
-					navigation.navigate('Home');
-				}
-			}}/>
+		<View style={styles.main}>
+			<View style={styles.container}>
+				<Text style={styles.text}>Hello WSG!</Text>
+				<View style={styles.button}>
+					<Button
+						title='CONTINUE'
+						onPress={ () => {
+							if(state === 'firstTime'){
+								saveUserToken('oldUser');
+								navigation.navigate('Anthropometric');
+							} else {
+								navigation.replace('Home');
+							}
+						}}
+					/>
+				</View>
+			</View>
 		</View>
     );
 };
 
 const styles = StyleSheet.create({
+	button: {
+        // color: ___
+        alignItems: 'center',
+        margin: ThemeConstants.CONTAINER_MARGIN*1.5,
+	},
+	container: {
+		alignItems: 'center',
+		backgroundColor: ThemeConstants.BACKGROUND_WHITE,
+        borderRadius: ThemeConstants.CONTAINER_RADIUS,
+        marginHorizontal: ThemeConstants.CONTAINER_MARGIN,
+        marginTop: ThemeConstants.CONTAINER_MARGIN
+	},
     main: {
         backgroundColor: ThemeConstants.BACKGROUND_LIGHT_GRAY,
         flex: 1
-    },
-    text:{
-        fontSize: 20
-    }
+	},
+	text: {
+		fontSize: ThemeConstants.FONT_SIZE_REGULAR,
+        fontWeight: 'bold',
+        paddingVertical: ThemeConstants.CONTAINER_MARGIN*4
+	}
 });
 
 export default withNavigation(WelcomeScreen);
