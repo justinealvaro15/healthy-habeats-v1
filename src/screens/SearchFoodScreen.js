@@ -6,7 +6,7 @@ import FoodResultsList from '../components/FoodResultsList';
 import SearchBar from '../components/SearchBar';
 
 import * as ThemeConstants from '../common/Themes';
-import * as foodData from '../samplefooditems.json';
+import * as foodData from '../../assets/samplefooditems.json';
 
 // Store food item data
 const data = [];
@@ -16,7 +16,7 @@ for (let i = 0; i < 10; i++) {
 
 const filterResultsBySearch = (term) => {
     const foodArray=[];
-
+    //console.log(term);
     if(!term.length){
         return { };
     } else {
@@ -34,6 +34,7 @@ const filterResultsBySearch = (term) => {
                 foodArray.push({id, foodName, grams, calories, carbs, fats, proteins});
             }
         };
+        console.log(foodArray);
         return foodArray;
     }
 };
