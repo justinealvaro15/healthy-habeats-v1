@@ -10,16 +10,27 @@ import * as ThemeConstants from '../common/Themes';
 const reducer = (state, action) => {
     return {...state, foodArray: state.foodArray.push(action.payload) }
 }
-var s =global
+
 const HomeScreen = ({ navigation }) => {
-    
-    const breakfastArray = [];
-    
+    var totalFood = [];
+
+    const [userData, setUserData] = useState({
+        calories: 0,
+        carbs: 0,
+        proteins: 0,
+        fats: 0,
+    });
+    const [current, setCurrent] = useState({
+        current_calories: 0,
+        current_carbs: 0,
+        current_proteins: 0,
+        current_fats: 0,
+    })
+    const [totalFoodArray,setTotalFoodArray] = useState([]);
     const [breakfast, setBreakfast] = useState([]);
     const [lunch, setLunch] = useState([]);
     const [dinner, setDinner] = useState([]);
     const [snacks, setSnacks] = useState([]);
-    var checker = 0;
 
     const deleteData = async (key) => {
 		try {
@@ -30,14 +41,21 @@ const HomeScreen = ({ navigation }) => {
 		}
     }
     
-    const getData = async (key) => {
+    const getUserData = async () => {
 		try {
             
-            const data = await AsyncStorage.getItem(key);
-            let x =  JSON.parse(data);
-            //console.log(x);
+            const calories = await AsyncStorage.getItem('total_calories');
+            const carbs = await AsyncStorage.getItem('total_carbs');
+            const proteins = await AsyncStorage.getItem('total_proteins');
+            const fats = await AsyncStorage.getItem('total_fats');
+            setUserData({
+                calories: calories,
+                carbs: carbs,
+                proteins: proteins,
+                fats: fats
+            });
            
-            return data;
+            //return data;
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);
@@ -52,6 +70,7 @@ const HomeScreen = ({ navigation }) => {
                 setBreakfast([]);
             }else{
                 x =  JSON.parse(data);
+                //console.log(x);
                 setBreakfast(x);
             }
             
@@ -118,27 +137,108 @@ const HomeScreen = ({ navigation }) => {
 			console.log(error.message);
 		}      
     };  
-    
+
+    const syncFoodsData = async () => {
+		try {
+            let a,b,c,d = 0;
+            const breakfast = await AsyncStorage.getItem('total_breakfast') || 'empty';
+            const lunch = await AsyncStorage.getItem('total_lunch') || 'empty';
+            const dinner = await AsyncStorage.getItem('total_dinner') || 'empty';
+            const snacks = await AsyncStorage.getItem('total_snacks') || 'empty';
+           
+            if(breakfast === 'empty'){
+               
+            }else{
+                a =  JSON.parse(breakfast);
+                for (let i = 0; i < a.length; i++) {
+                     totalFood.push(a[i]);
+                }
+            }
+            
+            if(lunch === 'empty'){
+                
+            }else{
+                b =  JSON.parse(lunch);
+                for (let i = 0; i < b.length; i++) {
+                    totalFood.push(b[i]);
+               }
+
+            }
+
+            if(dinner === 'empty'){
+                
+            }else{
+                c =  JSON.parse(dinner);
+                for (let i = 0; i < a.length; i++) {
+                    totalFood.push(c[i]);
+               }
+                
+            }
+
+            if(snacks === 'empty'){
+               
+                //console.log(totalFoodArray);
+                
+            }else{
+                d =  JSON.parse(snacks);
+                for (let i = 0; i < a.length; i++) {
+                    totalFood.push(d[i]);
+               }
+               
+            }
+            //console.log(totalFood);
+            var calories = 0;
+            var carbs = 0;
+            var proteins = 0;
+            var fats = 0;
+            for (let i = 0; i < totalFood.length; i++) {
+                calories = calories + totalFood[i].calories;
+                carbs = carbs + totalFood[i].carbs;
+                proteins = proteins + totalFood[i].proteins;
+                fats = fats + totalFood[i].fats;
+            }
+            setCurrent({
+                current_calories: calories,
+                current_carbs: carbs,
+                current_proteins: proteins,
+                current_fats: fats
+            });
+            setTotalFoodArray(totalFood);
+            
+		} catch (error) {
+			// Error retrieving data
+			console.log(error.message);
+		}      
+    };  
     const saveData = async (key, value) => {
 		try {
-            await AsyncStorage.setItem(key, value);
+            await (AsyncStorage.setItem(key, value), syncFoodsData());
+            
+
+            
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);
 		}
     };
+
+
+
     //DELETE FOR DEV PURPOSES ONLY
     //deleteData('total_breakfast');
     //deleteData('total_lunch');
     //deleteData('total_dinner');
     //deleteData('total_snacks');
-  
+    //console.log(totalFoodArray);
+    
     useEffect( () => {
         //console.log("RQTQYWU");
         syncBreakfastData('total_breakfast');
         syncLunchData('total_lunch');
         syncDinnerData('total_dinner');
-        syncDinnerData('total_snacks');
+        syncSnacksData('total_snacks');
+        syncFoodsData();
+        getUserData();
     },[]);
 
     useEffect( () => {
@@ -149,6 +249,8 @@ const HomeScreen = ({ navigation }) => {
         }else{
             //console.log("OLD USER");
             saveData('total_breakfast',JSON.stringify(breakfast));
+            //setTotalFoodArray([...totalFoodArray, breakfast]);
+            //console.log(totalFoodArray);
             //getData('total_breakfast'); 
         }
     }, [breakfast]);
@@ -161,6 +263,8 @@ const HomeScreen = ({ navigation }) => {
         }else{
             //console.log("OLD USER");
             saveData('total_lunch',JSON.stringify(lunch));
+            //setTotalFoodArray([...totalFoodArray,lunch]);
+            //console.log(totalFoodArray);
             //getData('total_lunch'); 
         }
     }, [lunch]);
@@ -173,6 +277,8 @@ const HomeScreen = ({ navigation }) => {
         }else{
             //console.log("OLD USER");
             saveData('total_dinner',JSON.stringify(dinner));
+            //setTotalFoodArray([...totalFoodArray, dinner]);
+            //console.log(totalFoodArray);
             //getData('total_dinner'); 
         }
     }, [dinner]);
@@ -185,6 +291,8 @@ const HomeScreen = ({ navigation }) => {
         }else{
             //console.log("OLD USER");
             saveData('total_snacks',JSON.stringify(snacks));
+            //setTotalFoodArray([...totalFoodArray, snacks]);
+            //console.log(totalFoodArray);
             //getData('total_snacks'); 
         }
     }, [snacks]);
@@ -195,7 +303,11 @@ const HomeScreen = ({ navigation }) => {
         
 
         <ScrollView style={styles.main}>
-            <StatsContainer/>
+            <StatsContainer
+                food = {totalFoodArray}
+                values1 = {userData}
+                values2 = {current}
+            />
             <IntakeFoodContainer
                 food={breakfast}
                 title='Breakfast'
