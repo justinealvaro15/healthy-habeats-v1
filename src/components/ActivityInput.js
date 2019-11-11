@@ -22,20 +22,13 @@ const ActivityInput = ({ input, onTermChange, term  }) => {
 
 const styles = StyleSheet.create({
     background: {
-        backgroundColor: ThemeConstants.BACKGROUND_WHITE,
-        borderRadius: ThemeConstants.CONTAINER_RADIUS,
-        flexDirection: 'row',
-        height: 50,
-        margin: ThemeConstants.CONTAINER_MARGIN
-    },
-    icon: {
-        alignSelf: 'center',
-        fontSize: 35,
-        margin: 10,
-        marginRight: 15
+        borderBottomColor: ThemeConstants.BORDER_GRAY,
+        borderBottomWidth: 1,
+        borderTopColor: ThemeConstants.BORDER_GRAY,
+        borderTopWidth: 1,
+        paddingVertical: 12,
     },
     input: {
-        flex: 1,
         fontSize: ThemeConstants.FONT_SIZE_REGULAR
     }
 });

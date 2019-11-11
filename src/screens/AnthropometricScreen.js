@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Button, ScrollView, StyleSheet, Text } from 'react-native';
+import { Button, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { withNavigation } from 'react-navigation';
 
 import ActivityInput from '../components/ActivityInput';
 import Input from '../components/Input';
 
 import * as ThemeConstants from '../common/Themes';
 
-const AnthropometricScreen = () => {
+const AnthropometricScreen = ({ navigation }) => {
     const [weight, setWeight] = useState('');
     const [height, setHeight] = useState('');
     const [bmi, setBmi] =  useState('');
@@ -26,7 +27,12 @@ const AnthropometricScreen = () => {
         meatAndFishExchange: 0,
         fatExchange: 0
     });
-    const activityDescription = "Activity Level\n Bedrest (but mobile; hospital patients)\n Sedentary (mostly sitting)\n Light (tailor, nurse, physician, jeepney driver)\n Moderate (carpenter, painter, heavy housework)\n Very Active (swimming, lumberman, athlete)";
+    const activityDescription = 
+        "• Bedrest (but mobile; hospital patients)\n" +
+        "• Sedentary (mostly sitting)\n" +
+        "• Light (tailor, nurse, physician, jeepney driver)\n" +
+        "• Moderate (carpenter, painter, heavy housework)\n" +
+        "• Very Active (swimming, lumberman, athlete)";
 
     const computeBMI = () => {
         const pheight = Math.pow(parseFloat(height)/100,2);
@@ -90,80 +96,123 @@ const AnthropometricScreen = () => {
     }, [TEA]);
 
     return (
-        <ScrollView>
-            <Text style={styles.text}>Weight in kg</Text>
-            <Input
-                input="Weight"
-                term={weight.toString()}
-                onTermChange={newWeight => setWeight(newWeight.toString())}
-            />
+        <ScrollView style={styles.main}>
+            <View style={styles.container}>
+                <View style={styles.details}>
+                    <Text style={styles.text_header}>Weight in kg</Text>
+                    <Input
+                        input="Weight"
+                        term={weight.toString()}
+                        onTermChange={newWeight => setWeight(newWeight.toString())}
+                    />
+                </View>
+            </View>
 
-            <Text style={styles.text}>Height in cm</Text>
-            <Input
-                input="Height"
-                term={height.toString()}
-                onTermChange={newHeight => setHeight(newHeight)}
-            />
+            <View style={styles.container}>
+                <View style={styles.details}>
+                    <Text style={styles.text_header}>Height in cm</Text>
+                    <Input
+                        input="Height"
+                        term={height.toString()}
+                        onTermChange={newHeight => setHeight(newHeight)}
+                    />
+                </View>
+            </View>
 
-            <Text>{activityDescription}</Text>
-            <ActivityInput
-                input="Activity Level"
-                term={activityLevel}
-                onTermChange={newTerm => setActivityLevel(newTerm)}
+            <View style={styles.container}>
+                <View style={styles.details}>
+                    {/* <Text style={styles.header}>{activityDescription}</Text> */}
+                    <Text style={styles.text_header}>Activity Level</Text>
+                    <Text style={styles.text_regular}>{activityDescription}</Text>
+                    <ActivityInput
+                        input="Activity Level"
+                        term={activityLevel}
+                        onTermChange={newTerm => setActivityLevel(newTerm)}
+                    />
+                </View>
+            </View>
+
+            <View style={styles.button}>
+                <Button
+                    title='Save'
+                    onPress={async () => {
+                        computeBMI();
+                        setDBW((height - 100) - ((height - 100) * 0.1));
+                        navigation.replace('Home');
+                    }}
                 />
-
-            <Button title='Save' onPress={async () => {
-                computeBMI();
-                setDBW((height - 100) - ((height - 100) * 0.1));
-            }}/>
-
-            <Text>Your BMI is: {bmi}</Text>
-            <Text>Your BMI Assessment is: {bmiAssessment}</Text>
-            <Text>Your Desirable Body Weight is {DBW}</Text>
-            <Text>Your Total Energy Allowance is: {TEA} calories</Text>
-            <Text>Calorie Allowance Distribution:</Text>
-            <Text>Carbohydrates: {distributions.carbsCalorie} calories</Text>
-            <Text>Proteins: {distributions.proteinsCalorie} calories</Text>
-            <Text>Fats: {distributions.fatsCalorie} calories</Text>
-            <Text>Grams Allowance Distribution:</Text>
-            <Text>Carbohydrates: {distributions.carbs} grams</Text>
-            <Text>Proteins: {distributions.proteins} grams</Text>
-            <Text>Fats: {distributions.fats} grams</Text>
-            <Text>Diet Prescription:</Text>
-            <Text>Calories: {Math.ceil(TEA/50)*50} {} calories</Text>
-            <Text>Carbohydrates: {Math.ceil((distributions.carbs)/5)*5} grams</Text>
-            <Text>Proteins: {Math.ceil((distributions.proteins)/5)*5} grams</Text>
-            <Text>Fats: {Math.ceil((distributions.fats)/5)*5} grams</Text>
-            <Text>Food Exchanges: </Text>
-            {distributions.riceExchange < 0 
-                ? <Text>Rice Exchanges: 0</Text>
-                : <Text>Rice Exchanges: {distributions.riceExchange}</Text>
-            }
-            {distributions.meatAndFishExchange < 0 
-                ? <Text>Meat and Fish Exchanges: 0 </Text>
-                : <Text>Meat and Fish Exchanges: {distributions.meatAndFishExchange}</Text>
-            }
-            {distributions.fatExchange < 0 
-                ? <Text>Fat Exchanges: 0 </Text>
-                : <Text>Fat Exchanges: {distributions.fatExchange}</Text>
-            }
-            
+            </View>
         </ScrollView>
+
+        // Insert inside ScrollView
+        //     <Text>Your BMI is: {bmi}</Text>
+        //     <Text>Your BMI Assessment is: {bmiAssessment}</Text>
+        //     <Text>Your Desirable Body Weight is {DBW}</Text>
+        //     <Text>Your Total Energy Allowance is: {TEA} calories</Text>
+        //     <Text>Calorie Allowance Distribution:</Text>
+        //     <Text>Carbohydrates: {distributions.carbsCalorie} calories</Text>
+        //     <Text>Proteins: {distributions.proteinsCalorie} calories</Text>
+        //     <Text>Fats: {distributions.fatsCalorie} calories</Text>
+        //     <Text>Grams Allowance Distribution:</Text>
+        //     <Text>Carbohydrates: {distributions.carbs} grams</Text>
+        //     <Text>Proteins: {distributions.proteins} grams</Text>
+        //     <Text>Fats: {distributions.fats} grams</Text>
+        //     <Text>Diet Prescription:</Text>
+        //     <Text>Calories: {Math.ceil(TEA/50)*50} {} calories</Text>
+        //     <Text>Carbohydrates: {Math.ceil((distributions.carbs)/5)*5} grams</Text>
+        //     <Text>Proteins: {Math.ceil((distributions.proteins)/5)*5} grams</Text>
+        //     <Text>Fats: {Math.ceil((distributions.fats)/5)*5} grams</Text>
+        //     <Text>Food Exchanges: </Text>
+        //     {distributions.riceExchange < 0 
+        //         ? <Text>Rice Exchanges: 0</Text>
+        //         : <Text>Rice Exchanges: {distributions.riceExchange}</Text>
+        //     }
+        //     {distributions.meatAndFishExchange < 0 
+        //         ? <Text>Meat and Fish Exchanges: 0 </Text>
+        //         : <Text>Meat and Fish Exchanges: {distributions.meatAndFishExchange}</Text>
+        //     }
+        //     {distributions.fatExchange < 0 
+        //         ? <Text>Fat Exchanges: 0 </Text>
+        //         : <Text>Fat Exchanges: {distributions.fatExchange}</Text>
+        //     }
     );
 };
 
 const styles = StyleSheet.create({
-    main: {
-        // backgroundColor: ThemeConstants.BACKGROUND_LIGHT_GRAY,
-        flex: 1
+    button: {
+        // color: ___
+        alignItems: 'center',
+        marginTop: ThemeConstants.CONTAINER_MARGIN+5,
     },
-    text:{
-        fontSize: 20
+    container: {
+        backgroundColor: ThemeConstants.BACKGROUND_WHITE,
+        borderRadius: ThemeConstants.CONTAINER_RADIUS,
+        marginHorizontal: ThemeConstants.CONTAINER_MARGIN,
+        marginTop: ThemeConstants.CONTAINER_MARGIN
+    },
+    details: {
+        marginHorizontal: ThemeConstants.CONTAINER_MARGIN+9,
+        paddingBottom: 15
     },
     input: {
         flex: 1,
         fontSize: ThemeConstants.FONT_SIZE_REGULAR
+    },
+    main: {
+        backgroundColor: ThemeConstants.BACKGROUND_LIGHT_GRAY,
+        flex: 1
+    },
+    text_header: {
+        fontSize: ThemeConstants.FONT_SIZE_REGULAR,
+        fontWeight: 'bold',
+        paddingVertical: ThemeConstants.CONTAINER_MARGIN-1
+    },
+    text_regular: {
+        borderTopColor: ThemeConstants.BORDER_GRAY,
+        borderTopWidth: 1,
+        fontSize: ThemeConstants.FONT_SIZE_REGULAR,
+        paddingVertical: ThemeConstants.CONTAINER_MARGIN
     }
 });
 
-export default AnthropometricScreen;
+export default withNavigation(AnthropometricScreen);
