@@ -39,7 +39,7 @@ const WelcomeScreen = ({ navigation }) => {
 	}
 	  
 	// USE TO RESET STORAGE
-	deleteUserToken();
+	//deleteUserToken();
 	// comment it out again and rebuild
 	
 	useEffect(() => {
