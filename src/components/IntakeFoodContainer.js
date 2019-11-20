@@ -10,7 +10,7 @@ const IntakeFoodContainer = ({ food, title, navigateToSearchFood }) => {
     return(
         <View style={styles.container}>
             <View style={styles.details}>
-                <Text style={styles.header}>{title}</Text>
+                <Text style={styles.text_header}>{title}</Text>
 
                 <FlatList
                     data={foodArray}
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingVertical: 10,
     },
-    header: {
+    text_header: {
         borderBottomColor: ThemeConstants.BORDER_GRAY,
         borderBottomWidth: 1,
         fontSize: ThemeConstants.FONT_SIZE_HEADER,
