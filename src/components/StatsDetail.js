@@ -1,11 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-const StatsDetail = ({ title }) => {
+const StatsDetail = ({ title, value1, value2 }) => {
     return(
         <View style={styles.details}>
             <View style={styles.chart}/>
             <Text style={styles.text}>{title}</Text>
+            <Text style={styles.text}>{value2}/{value1}</Text>
         </View>
     );
 };

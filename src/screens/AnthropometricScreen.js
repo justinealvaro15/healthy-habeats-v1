@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { AsyncStorage, Button, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
 
 import ActivityInput from '../components/ActivityInput';
@@ -10,12 +10,12 @@ import * as ThemeConstants from '../common/Themes';
 const AnthropometricScreen = ({ navigation }) => {
     const [weight, setWeight] = useState('');
     const [height, setHeight] = useState('');
-    const [bmi, setBmi] =  useState('');
-    const [bmiAssessment, setBmiAssessment] =  useState('');
-    const [activityLevel, setActivityLevel] = useState('');
-    const [activityLevelValue, setActivityLevelValue] = useState(0);
     const [DBW, setDBW] = useState(0);
     const [TEA, setTEA] = useState(0);
+    const [activityLevel, setActivityLevel] = useState('');
+    const [activityLevelValue, setActivityLevelValue] = useState(0);
+    const [bmi, setBmi] =  useState('');
+    const [bmiAssessment, setBmiAssessment] =  useState('');
     const [distributions, setDistributions] = useState({
         carbsCalorie: 0,
         proteinsCalorie: 0,
@@ -55,7 +55,7 @@ const AnthropometricScreen = ({ navigation }) => {
 
     const computeActivityLevel = () => {
         var value = 0;
-
+        console.log("HI");
         switch(activityLevel){
             
             case 'Bedrest':
@@ -79,9 +79,27 @@ const AnthropometricScreen = ({ navigation }) => {
         }
         setActivityLevelValue(value);
         setTEA((weight*value));
+        console.log(TEA);
+        setDistributions({
+            carbsCalorie: (weight*value)*0.65,
+            proteinsCalorie: (weight*value)*0.15,
+            fatsCalorie: (weight*value)*0.2,
+            carbs: ((weight*value)*0.65)/4,
+            proteins: ((weight*value)*0.15)/4,
+            fats: ((weight*value)*0.2)/9,
+            riceExchange: Math.round(((Math.ceil((((weight*value)*0.65)/4)/5)*5)-83)/23),
+            meatAndFishExchange: Math.round(((Math.ceil((((weight*value)*0.15)/4)/5)*5)-24)/8),
+            fatExchange: Math.round(((Math.ceil((((weight*value)*0.2)/9)/5)*5)-19)/5),
+        });
+        saveData('total_calories', JSON.stringify(Math.ceil((weight*value)/50)*50));
+        saveData('total_carbs', JSON.stringify(Math.ceil((((weight*value)*0.65)/4)/5)*5));
+        saveData('total_proteins', JSON.stringify(Math.ceil((((weight*value)*0.15)/4)/5)*5));
+        saveData('total_fats', JSON.stringify(Math.ceil((((weight*value)*0.2)/9)/5)*5));
+        
     };
 
     useEffect( () => {
+        console.log("THIS IS SUMMONED")
         setDistributions({
             carbsCalorie: TEA*0.65,
             proteinsCalorie: TEA*0.15,
@@ -93,7 +111,42 @@ const AnthropometricScreen = ({ navigation }) => {
             meatAndFishExchange: Math.round(((Math.ceil(((TEA*0.15)/4)/5)*5)-24)/8),
             fatExchange: Math.round(((Math.ceil(((TEA*0.2)/9)/5)*5)-19)/5),
         });
+        saveData('total_calories', JSON.stringify(Math.ceil(TEA/50)*50));
+        saveData('total_carbs', JSON.stringify(Math.ceil(((TEA*0.65)/4)/5)*5));
+        saveData('total_proteins', JSON.stringify(Math.ceil(((TEA*0.15)/4)/5)*5));
+        saveData('total_fats', JSON.stringify(Math.ceil(((TEA*0.2)/9)/5)*5));
+       
     }, [TEA]);
+
+    const saveData = async (key, value) => {
+		try {
+			await AsyncStorage.setItem(key, value);
+		} catch (error) {
+			// Error retrieving data
+			console.log(error.message);
+		}
+	};
+	  
+	const getData = async (key) => {
+		try {
+			const data = await AsyncStorage.getItem(key);
+            return data;
+		} catch (error) {
+			// Error retrieving data
+			console.log(error.message);
+		}      
+	};
+
+	const deleteData = async (key) => {
+		try {
+			await AsyncStorage.removeItem(key);
+		} catch (error) {
+			// Error retrieving data
+			console.log(error.message);
+		}
+	};
+
+
 
     return (
         <ScrollView style={styles.main}>

@@ -26,15 +26,13 @@ const filterResultsBySearch = (term) => {
                 const foodName = data[i].foodName;
                 const id = data[i].id;
                 const grams = data[i].grams;
-                const calories = data[i].grams;
+                const calories = data[i].calories;
                 const carbs = data[i].carbs;
                 const fats = data[i].fats;
                 const proteins = data[i].proteins;
-                
                 foodArray.push({id, foodName, grams, calories, carbs, fats, proteins});
             }
         };
-        console.log(foodArray);
         return foodArray;
     }
 };

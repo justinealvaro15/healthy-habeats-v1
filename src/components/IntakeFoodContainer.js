@@ -6,7 +6,7 @@ import * as ThemeConstants from '../common/Themes';
 
 const IntakeFoodContainer = ({ bannerUri, food, title, navigateToSearchFood }) => {
     const foodArray = food;
-
+    //console.log(food);
     return(
         <View style={styles.container}>
             <Image
