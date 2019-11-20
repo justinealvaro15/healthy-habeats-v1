@@ -227,14 +227,16 @@ const HomeScreen = ({ navigation }) => {
 		}
     };
 
-
-
-    //DELETE FOR DEV PURPOSES ONLY
-    //deleteData('total_breakfast');
-    //deleteData('total_lunch');
-    //deleteData('total_dinner');
-    //deleteData('total_snacks');
-    //console.log(totalFoodArray);
+    //////////////////////////////////////
+    //
+    // DELETE FOR DEV PURPOSES ONLY
+    // deleteData('total_breakfast');
+    // deleteData('total_lunch');
+    // deleteData('total_dinner');
+    // deleteData('total_snacks');
+    // console.log(totalFoodArray);
+    //
+    //////////////////////////////////////
     
     useEffect( () => {
         //console.log("RQTQYWU");
@@ -316,6 +318,7 @@ const HomeScreen = ({ navigation }) => {
             <IntakeFoodContainer
                 bannerUri={bannerUriBreakfast}
                 food={breakfast}
+                highlight={ThemeConstants.HIGHLIGHT_GREEN}
                 title='Breakfast'
                 navigateToSearchFood={() => navigation.navigate('SearchFood', {
                     foodArray: breakfast,
@@ -325,6 +328,7 @@ const HomeScreen = ({ navigation }) => {
             <IntakeFoodContainer
                 bannerUri={bannerUriLunch}
                 food={lunch}
+                highlight={ThemeConstants.HIGHLIGHT_ORANGE}
                 title='Lunch'
                 navigateToSearchFood={() => navigation.navigate('SearchFood', {
                     foodArray: lunch,
@@ -334,6 +338,7 @@ const HomeScreen = ({ navigation }) => {
             <IntakeFoodContainer
                 bannerUri={bannerUriDinner}
                 food={dinner}
+                highlight={ThemeConstants.HIGHLIGHT_PURPLE}
                 title='Dinner'
                 navigateToSearchFood={() => navigation.navigate('SearchFood', {
                     foodArray: dinner,
@@ -343,6 +348,7 @@ const HomeScreen = ({ navigation }) => {
             <IntakeFoodContainer
                 bannerUri={bannerUriSnacks}
                 food={snacks}
+                highlight={ThemeConstants.HIGHLIGHT_BLUE}
                 title='Snacks'
                 navigateToSearchFood={() => navigation.navigate('SearchFood', {
                     foodArray: snacks,
