@@ -17,10 +17,16 @@ const HomeScreen = ({ navigation }) => {
     const [dinner, setDinner] = useState([]);
     const [snacks, setSnacks] = useState([]);
 
+    const bannerUriBreakfast = require('../../assets/banners/banner-breakfast.png');
+    const bannerUriLunch = require('../../assets/banners/banner-lunch.png')
+    const bannerUriDinner = require('../../assets/banners/banner-dinner.png')
+    const bannerUriSnacks = require('../../assets/banners/banner-snacks.png')
+
     return(
         <ScrollView style={styles.main}>
             <StatsContainer/>
             <IntakeFoodContainer
+                bannerUri={bannerUriBreakfast}
                 food={breakfast}
                 title='Breakfast'
                 navigateToSearchFood={() => navigation.navigate('SearchFood', {
@@ -29,6 +35,7 @@ const HomeScreen = ({ navigation }) => {
                 })}
             />
             <IntakeFoodContainer
+                bannerUri={bannerUriLunch}
                 food={lunch}
                 title='Lunch'
                 navigateToSearchFood={() => navigation.navigate('SearchFood', {
@@ -37,6 +44,7 @@ const HomeScreen = ({ navigation }) => {
                 })}
             />
             <IntakeFoodContainer
+                bannerUri={bannerUriDinner}
                 food={dinner}
                 title='Dinner'
                 navigateToSearchFood={() => navigation.navigate('SearchFood', {
@@ -45,6 +53,7 @@ const HomeScreen = ({ navigation }) => {
                 })}
             />
             <IntakeFoodContainer
+                bannerUri={bannerUriSnacks}
                 food={snacks}
                 title='Snacks'
                 navigateToSearchFood={() => navigation.navigate('SearchFood', {

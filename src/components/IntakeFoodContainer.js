@@ -1,14 +1,18 @@
 import React from 'react';
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Feather } from '@expo/vector-icons'
 
 import * as ThemeConstants from '../common/Themes';
 
-const IntakeFoodContainer = ({ food, title, navigateToSearchFood }) => {
+const IntakeFoodContainer = ({ bannerUri, food, title, navigateToSearchFood }) => {
     const foodArray = food;
 
     return(
         <View style={styles.container}>
+            <Image
+                source={bannerUri}
+                style={{width: '100%', height: 32}}
+            />
             <View style={styles.details}>
                 <Text style={styles.text_header}>{title}</Text>
 
@@ -52,6 +56,9 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         paddingVertical: 15,
+    },
+    banner: {
+        width: 100
     },
     button: {
         color: ThemeConstants.BUTTON_LIGHT_GRAY,
