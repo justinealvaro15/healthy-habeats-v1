@@ -26,7 +26,7 @@ const HomeScreen = ({ navigation }) => {
         current_proteins: 0,
         current_fats: 0,
     })
-    const [totalFoodArray,setTotalFoodArray] = useState([]);
+    const [totalFoodArray, setTotalFoodArray] = useState([]);
     const [breakfast, setBreakfast] = useState([]);
     const [lunch, setLunch] = useState([]);
     const [dinner, setDinner] = useState([]);
@@ -48,7 +48,6 @@ const HomeScreen = ({ navigation }) => {
     
     const getUserData = async () => {
 		try {
-            
             const calories = await AsyncStorage.getItem('total_calories');
             const carbs = await AsyncStorage.getItem('total_carbs');
             const proteins = await AsyncStorage.getItem('total_proteins');
@@ -65,7 +64,8 @@ const HomeScreen = ({ navigation }) => {
 			// Error retrieving data
 			console.log(error.message);
 		}      
-    };    
+    };
+
     const syncBreakfastData = async (key) => {
 		try {
             let x = 0;
@@ -84,7 +84,7 @@ const HomeScreen = ({ navigation }) => {
 			// Error retrieving data
 			console.log(error.message);
 		}      
-    };    
+    };
 
     const syncLunchData = async (key) => {
 		try {
@@ -103,7 +103,7 @@ const HomeScreen = ({ navigation }) => {
 			// Error retrieving data
 			console.log(error.message);
 		}      
-    }; 
+    };
 
     const syncDinnerData = async (key) => {
 		try {
@@ -122,7 +122,7 @@ const HomeScreen = ({ navigation }) => {
 			// Error retrieving data
 			console.log(error.message);
 		}      
-    };  
+    };
 
     const syncSnacksData = async (key) => {
 		try {
@@ -141,7 +141,7 @@ const HomeScreen = ({ navigation }) => {
 			// Error retrieving data
 			console.log(error.message);
 		}      
-    };  
+    };
 
     const syncFoodsData = async () => {
 		try {
@@ -214,7 +214,8 @@ const HomeScreen = ({ navigation }) => {
 			// Error retrieving data
 			console.log(error.message);
 		}      
-    };  
+    };
+
     const saveData = async (key, value) => {
 		try {
             await (AsyncStorage.setItem(key, value), syncFoodsData());
@@ -305,16 +306,13 @@ const HomeScreen = ({ navigation }) => {
     }, [snacks]);
 
 
-    
     return(
-        
-
         <ScrollView style={styles.main}>
             <StatsContainer
-                food = {totalFoodArray}
-                values1 = {userData}
-                values2 = {current}
+                valuesTotal = {userData}
+                valuesCurrent = {current}
             />
+
             <IntakeFoodContainer
                 bannerUri={bannerUriBreakfast}
                 food={breakfast}
@@ -325,6 +323,7 @@ const HomeScreen = ({ navigation }) => {
                     setFoodArray: setBreakfast
                 })}
             />
+
             <IntakeFoodContainer
                 bannerUri={bannerUriLunch}
                 food={lunch}
@@ -335,6 +334,7 @@ const HomeScreen = ({ navigation }) => {
                     setFoodArray: setLunch
                 })}
             />
+
             <IntakeFoodContainer
                 bannerUri={bannerUriDinner}
                 food={dinner}
@@ -345,6 +345,7 @@ const HomeScreen = ({ navigation }) => {
                     setFoodArray: setDinner
                 })}
             />
+
             <IntakeFoodContainer
                 bannerUri={bannerUriSnacks}
                 food={snacks}
@@ -355,6 +356,7 @@ const HomeScreen = ({ navigation }) => {
                     setFoodArray: setSnacks
                 })}
             />
+            
             <IntakeWaterContainer/>
         </ScrollView>
     );
