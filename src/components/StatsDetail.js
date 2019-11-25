@@ -1,31 +1,42 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { Bar } from 'react-native-progress';
 
-const StatsDetail = ({ title, value1, value2 }) => {
+import * as ThemeConstants from '../common/Themes';
+
+const StatsDetail = ({ title, valueTotal, valueCurrent }) => {
+    const progress = valueCurrent/valueTotal ? valueCurrent/valueTotal : null;
+
     return(
         <View style={styles.details}>
-            <View style={styles.chart}/>
-            <Text style={styles.text}>{title}</Text>
-            <Text style={styles.text}>{value2}/{value1}</Text>
+            <View style={styles.bar}>
+                <Bar
+                    color={ThemeConstants.SHADOW_BLUE}
+                    progress={progress}
+                />
+            </View>
+            <Text style={styles.text_header}>{title}</Text>
+            <Text style={styles.text_regular}>{valueCurrent}/{valueTotal}</Text>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    chart: {
+    bar: {
         alignSelf: 'center',
-        backgroundColor: 'black',
-        borderRadius: 60/2,
-        height: 60,
-        width: 60
+        backgroundColor: ThemeConstants.BACKGROUND_LIGHT_GRAY,
+        marginBottom: 4
     },
     details: {
         flex: 1,
-        marginVertical: 20
+        marginTop: 30
     },
-    text: {
+    text_header: {
         alignSelf: 'center',
         fontWeight: 'bold'
+    },
+    text_regular: {
+        alignSelf: 'center'
     }
 });
 

@@ -1,31 +1,35 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 
 import StatsDetail from './StatsDetail';
 import * as ThemeConstants from '../common/Themes';
 
-const StatsContainer = ({food,values1, values2}) => {
-
-
-
-    //console.log(food);
+const StatsContainer = ({ valuesTotal, valuesCurrent }) => {
     return(
         <View style={styles.container}>
-            <StatsDetail style={styles.details} title='Energy' value1 = {values1.calories} value2 = {values2.current_calories}/>
-            <StatsDetail style={styles.details} title='Carbs' value1 = {values1.carbs} value2 = {values2.current_carbs} />
-            <StatsDetail style={styles.details} title='Protein' value1 = {values1.proteins} value2 = {values2.current_proteins} />
-            <StatsDetail style={styles.details} title='Fat' value1 = {values1.fats} value2 = {values2.current_fats} />
+            <View style={styles.bar}>
+                <StatsDetail style={styles.details} title='Energy' valueTotal = {valuesTotal.calories} valueCurrent = {valuesCurrent.current_calories}/>
+                <StatsDetail style={styles.details} title='Carbs' valueTotal = {valuesTotal.carbs} valueCurrent = {valuesCurrent.current_carbs} />
+            </View>
+
+            <View style={styles.bar}>
+                <StatsDetail style={styles.details} title='Protein' valueTotal = {valuesTotal.proteins} valueCurrent = {valuesCurrent.current_proteins} />
+                <StatsDetail style={styles.details} title='Fat' valueTotal = {valuesTotal.fats} valueCurrent = {valuesCurrent.current_fats} />
+            </View>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
+    bar: {
+        flexDirection: 'row',
+        justifyContent: 'space-around'
+    },
     container: {
         backgroundColor: ThemeConstants.BACKGROUND_WHITE,
         borderRadius: ThemeConstants.CONTAINER_RADIUS,
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        margin: ThemeConstants.CONTAINER_MARGIN
+        margin: ThemeConstants.CONTAINER_MARGIN,
+        paddingBottom: 18
     }
 });
 
