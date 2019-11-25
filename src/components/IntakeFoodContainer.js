@@ -1,14 +1,18 @@
 import React from 'react';
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Image, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
 import { Feather } from '@expo/vector-icons'
 
 import * as ThemeConstants from '../common/Themes';
 
-const IntakeFoodContainer = ({ food, title, navigateToSearchFood }) => {
+const IntakeFoodContainer = ({ bannerUri, food, highlight, title, navigateToSearchFood }) => {
     const foodArray = food;
     //console.log(food);
     return(
         <View style={styles.container}>
+            <Image
+                source={bannerUri}
+                style={{width: '100%', height: 32}}
+            />
             <View style={styles.details}>
                 <Text style={styles.text_header}>{title}</Text>
 
@@ -33,14 +37,22 @@ const IntakeFoodContainer = ({ food, title, navigateToSearchFood }) => {
                     }}
                     showsVerticalScrollIndicator={false}
                 />
+            </View>
 
-                <TouchableOpacity style={styles.add} onPress={navigateToSearchFood}>
-                    <Feather
-                        name='plus-circle'
-                        style={styles.button}
-                    />
-                    <Text style={styles.text_light}>Add</Text>
-                </TouchableOpacity>
+            <View>
+                <TouchableHighlight
+                    onPress={navigateToSearchFood}
+                    underlayColor={highlight}
+                    // style={styles.touchable}
+                >
+                    <View style={styles.add}>
+                        <Feather
+                            name='plus-circle'
+                            style={styles.button}
+                        />
+                        <Text style={styles.text_light}>Add</Text>
+                    </View>
+                </TouchableHighlight>
             </View>
         </View>
     );
@@ -51,10 +63,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flex: 1,
         flexDirection: 'row',
+        marginHorizontal: ThemeConstants.CONTAINER_MARGIN+9,
         paddingVertical: 15,
     },
+    banner: {
+        width: 100
+    },
     button: {
-        color: ThemeConstants.BUTTON_LIGHT_GRAY,
         fontSize: 30,
         marginRight: 10
     },
@@ -81,7 +96,6 @@ const styles = StyleSheet.create({
         paddingVertical: ThemeConstants.CONTAINER_MARGIN+5
     },
     text_light: {
-        color: ThemeConstants.FONT_GRAY,
         fontSize: ThemeConstants.FONT_SIZE_MEDIUM
     },
     text_regular: {
@@ -91,6 +105,9 @@ const styles = StyleSheet.create({
     text_small: {
         color: ThemeConstants.FONT_GRAY,
         fontSize: ThemeConstants.FONT_SIZE_SMALL
+    },
+    touchable: {
+       backgroundColor: 'red' 
     }
 });
 
