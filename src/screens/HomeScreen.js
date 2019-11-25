@@ -26,11 +26,16 @@ const HomeScreen = ({ navigation }) => {
         current_proteins: 0,
         current_fats: 0,
     })
-    const [totalFoodArray,setTotalFoodArray] = useState([]);
+    const [totalFoodArray, setTotalFoodArray] = useState([]);
     const [breakfast, setBreakfast] = useState([]);
     const [lunch, setLunch] = useState([]);
     const [dinner, setDinner] = useState([]);
     const [snacks, setSnacks] = useState([]);
+
+    const bannerUriBreakfast = require('../../assets/banners/banner-breakfast.png');
+    const bannerUriLunch = require('../../assets/banners/banner-lunch.png')
+    const bannerUriDinner = require('../../assets/banners/banner-dinner.png')
+    const bannerUriSnacks = require('../../assets/banners/banner-snacks.png')
 
     const deleteData = async (key) => {
 		try {
@@ -43,7 +48,6 @@ const HomeScreen = ({ navigation }) => {
     
     const getUserData = async () => {
 		try {
-            
             const calories = await AsyncStorage.getItem('total_calories');
             const carbs = await AsyncStorage.getItem('total_carbs');
             const proteins = await AsyncStorage.getItem('total_proteins');
@@ -60,7 +64,8 @@ const HomeScreen = ({ navigation }) => {
 			// Error retrieving data
 			console.log(error.message);
 		}      
-    };    
+    };
+
     const syncBreakfastData = async (key) => {
 		try {
             let x = 0;
@@ -79,7 +84,7 @@ const HomeScreen = ({ navigation }) => {
 			// Error retrieving data
 			console.log(error.message);
 		}      
-    };    
+    };
 
     const syncLunchData = async (key) => {
 		try {
@@ -98,7 +103,7 @@ const HomeScreen = ({ navigation }) => {
 			// Error retrieving data
 			console.log(error.message);
 		}      
-    }; 
+    };
 
     const syncDinnerData = async (key) => {
 		try {
@@ -117,7 +122,7 @@ const HomeScreen = ({ navigation }) => {
 			// Error retrieving data
 			console.log(error.message);
 		}      
-    };  
+    };
 
     const syncSnacksData = async (key) => {
 		try {
@@ -136,7 +141,7 @@ const HomeScreen = ({ navigation }) => {
 			// Error retrieving data
 			console.log(error.message);
 		}      
-    };  
+    };
 
     const syncFoodsData = async () => {
 		try {
@@ -209,7 +214,8 @@ const HomeScreen = ({ navigation }) => {
 			// Error retrieving data
 			console.log(error.message);
 		}      
-    };  
+    };
+
     const saveData = async (key, value) => {
 		try {
             await (AsyncStorage.setItem(key, value), syncFoodsData());
@@ -222,14 +228,16 @@ const HomeScreen = ({ navigation }) => {
 		}
     };
 
-
-
-    //DELETE FOR DEV PURPOSES ONLY
-    //deleteData('total_breakfast');
-    //deleteData('total_lunch');
-    //deleteData('total_dinner');
-    //deleteData('total_snacks');
-    //console.log(totalFoodArray);
+    //////////////////////////////////////
+    //
+    // DELETE FOR DEV PURPOSES ONLY
+    // deleteData('total_breakfast');
+    // deleteData('total_lunch');
+    // deleteData('total_dinner');
+    // deleteData('total_snacks');
+    // console.log(totalFoodArray);
+    //
+    //////////////////////////////////////
     
     useEffect( () => {
         //console.log("RQTQYWU");
@@ -298,48 +306,57 @@ const HomeScreen = ({ navigation }) => {
     }, [snacks]);
 
 
-    
     return(
-        
-
         <ScrollView style={styles.main}>
             <StatsContainer
-                food = {totalFoodArray}
-                values1 = {userData}
-                values2 = {current}
+                valuesTotal = {userData}
+                valuesCurrent = {current}
             />
+
             <IntakeFoodContainer
+                bannerUri={bannerUriBreakfast}
                 food={breakfast}
+                highlight={ThemeConstants.HIGHLIGHT_GREEN}
                 title='Breakfast'
                 navigateToSearchFood={() => navigation.navigate('SearchFood', {
                     foodArray: breakfast,
                     setFoodArray: setBreakfast
                 })}
             />
+
             <IntakeFoodContainer
+                bannerUri={bannerUriLunch}
                 food={lunch}
+                highlight={ThemeConstants.HIGHLIGHT_ORANGE}
                 title='Lunch'
                 navigateToSearchFood={() => navigation.navigate('SearchFood', {
                     foodArray: lunch,
                     setFoodArray: setLunch
                 })}
             />
+
             <IntakeFoodContainer
+                bannerUri={bannerUriDinner}
                 food={dinner}
+                highlight={ThemeConstants.HIGHLIGHT_PURPLE}
                 title='Dinner'
                 navigateToSearchFood={() => navigation.navigate('SearchFood', {
                     foodArray: dinner,
                     setFoodArray: setDinner
                 })}
             />
+
             <IntakeFoodContainer
+                bannerUri={bannerUriSnacks}
                 food={snacks}
+                highlight={ThemeConstants.HIGHLIGHT_BLUE}
                 title='Snacks'
                 navigateToSearchFood={() => navigation.navigate('SearchFood', {
                     foodArray: snacks,
                     setFoodArray: setSnacks
                 })}
             />
+            
             <IntakeWaterContainer/>
         </ScrollView>
     );
