@@ -16,7 +16,7 @@ const FoodResultsList = ({ foodArray, setFoodArray, navigation, results, title }
     if(!results.length){
         const data = [];
         const foodItems =[];
-
+        
         // store in array
         for (let i = 0; i < 10; i++) {
             data.push(foodData[i]);
@@ -30,8 +30,11 @@ const FoodResultsList = ({ foodArray, setFoodArray, navigation, results, title }
             const proteins = data[i].proteins;
 
             foodItems.push({id, foodName, grams, calories, carbs, fats, proteins});
-        }
+        }       
         results = foodItems;
+    }
+    else{
+        results=results;
     }
 
     return (

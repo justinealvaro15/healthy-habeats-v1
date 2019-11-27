@@ -25,17 +25,37 @@ const HomeScreen = ({ navigation }) => {
         current_carbs: 0,
         current_proteins: 0,
         current_fats: 0,
-    })
+    });
     const [totalFoodArray, setTotalFoodArray] = useState([]);
     const [breakfast, setBreakfast] = useState([]);
     const [lunch, setLunch] = useState([]);
     const [dinner, setDinner] = useState([]);
     const [snacks, setSnacks] = useState([]);
 
+    let current2 = {
+        current2_calories: 0,
+        current2_carbs: 0,
+        current2_proteins: 0,
+        current2_fats: 0,
+    };
+    let totalFoodArray2 = [];
+    let breakfast2 = [];
+    let lunch2 = [];
+    let dinner2 = [];
+    let snacks2 = [];
+
+    
+
+
+
+
+
     const bannerUriBreakfast = require('../../assets/banners/banner-breakfast.png');
     const bannerUriLunch = require('../../assets/banners/banner-lunch.png')
     const bannerUriDinner = require('../../assets/banners/banner-dinner.png')
     const bannerUriSnacks = require('../../assets/banners/banner-snacks.png')
+
+    const [isDeleted, setIsDeleted] = useState();
 
     const deleteData = async (key) => {
 		try {
@@ -73,10 +93,14 @@ const HomeScreen = ({ navigation }) => {
             //console.log(data);
             if(data === 'empty'){
                 setBreakfast([]);
+                breakfast2 = [];
             }else{
                 x =  JSON.parse(data);
                 //console.log(x);
                 setBreakfast(x);
+                breakfast2 = x;
+               
+                //console.log(breakfast2)
             }
             
             return data;
@@ -93,9 +117,11 @@ const HomeScreen = ({ navigation }) => {
             //console.log(data);
             if(data === 'empty'){
                 setLunch([]);
+                lunch2 = [];
             }else{
                 x =  JSON.parse(data);
                 setLunch(x);
+                lunch2 = x;
             }
             
             return data;
@@ -112,9 +138,11 @@ const HomeScreen = ({ navigation }) => {
             //console.log(data);
             if(data === 'empty'){
                 setDinner([]);
+                dinner2 = [];
             }else{
                 x =  JSON.parse(data);
                 setDinner(x);
+                dinner2 = x;
             }
             
             return data;
@@ -131,9 +159,11 @@ const HomeScreen = ({ navigation }) => {
             //console.log(data);
             if(data === 'empty'){
                 setSnacks([]);
+                snacks2 = [];
             }else{
                 x =  JSON.parse(data);
                 setSnacks(x);
+                snacks2 = x;
             }
             
             return data;
@@ -146,46 +176,46 @@ const HomeScreen = ({ navigation }) => {
     const syncFoodsData = async () => {
 		try {
             let a,b,c,d = 0;
-            const breakfast = await AsyncStorage.getItem('total_breakfast') || 'empty';
-            const lunch = await AsyncStorage.getItem('total_lunch') || 'empty';
-            const dinner = await AsyncStorage.getItem('total_dinner') || 'empty';
-            const snacks = await AsyncStorage.getItem('total_snacks') || 'empty';
+            const breakfast1 = await AsyncStorage.getItem('total_breakfast') || 'empty';
+            const lunch1 = await AsyncStorage.getItem('total_lunch') || 'empty';
+            const dinner1 = await AsyncStorage.getItem('total_dinner') || 'empty';
+            const snacks1 = await AsyncStorage.getItem('total_snacks') || 'empty';
            
-            if(breakfast === 'empty'){
+            if(breakfast1 === 'empty'){
                
             }else{
-                a =  JSON.parse(breakfast);
+                a =  JSON.parse(breakfast1);
                 for (let i = 0; i < a.length; i++) {
                      totalFood.push(a[i]);
                 }
             }
             
-            if(lunch === 'empty'){
+            if(lunch1 === 'empty'){
                 
             }else{
-                b =  JSON.parse(lunch);
+                b =  JSON.parse(lunch1);
                 for (let i = 0; i < b.length; i++) {
                     totalFood.push(b[i]);
                }
 
             }
 
-            if(dinner === 'empty'){
+            if(dinner1 === 'empty'){
                 
             }else{
-                c =  JSON.parse(dinner);
+                c =  JSON.parse(dinner1);
                 for (let i = 0; i < a.length; i++) {
                     totalFood.push(c[i]);
                }
                 
             }
 
-            if(snacks === 'empty'){
+            if(snacks1 === 'empty'){
                
                 //console.log(totalFoodArray);
                 
             }else{
-                d =  JSON.parse(snacks);
+                d =  JSON.parse(snacks1);
                 for (let i = 0; i < a.length; i++) {
                     totalFood.push(d[i]);
                }
@@ -208,25 +238,64 @@ const HomeScreen = ({ navigation }) => {
                 current_proteins: proteins,
                 current_fats: fats
             });
+            saveCurrentUserData('current_calories', JSON.stringify(calories));
+            saveCurrentUserData('current_carbs', JSON.stringify(carbs));
+            saveCurrentUserData('current_proteins', JSON.stringify(proteins));
+            saveCurrentUserData('current_fats', JSON.stringify(fats));
+            
+
             setTotalFoodArray(totalFood);
+            //var z = totalFood;
+            //console.log("HELLO");
+            //console.log(z);
             
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);
 		}      
     };
+    const saveCurrentUserData = async (key, value) => {
+		try {
+			await AsyncStorage.setItem(key, value);
+		} catch (error) {
+			// Error retrieving data
+			console.log(error.message);
+		}
+	};
 
     const saveData = async (key, value) => {
 		try {
             await (AsyncStorage.setItem(key, value), syncFoodsData());
-            
-
-            
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);
 		}
     };
+
+    const syncCurrentUserData = async () => {
+		try {
+			let a,b,c,d = 0;
+            const user_calories = await AsyncStorage.getItem('current_calories') || 'empty';
+            const user_carbs = await AsyncStorage.getItem('current_carbs') || 'empty';
+            const user_proteins = await AsyncStorage.getItem('current_proteins') || 'empty';
+            const user_fats = await AsyncStorage.getItem('current_fats') || 'empty';
+
+            if(user_calories === 'empty'){
+               
+            }else{
+                a =  JSON.parse(user_calories);
+                setCurrent({
+                    current_calories: 100 //LAST HERE kuha tayo sa variable nlng mastore muna ung calories para maupdate agad
+                });
+                console.log(a);
+            }
+
+
+		} catch (error) {
+			// Error retrieving data
+			console.log(error.message);
+		}
+	};
 
     //////////////////////////////////////
     //
@@ -238,7 +307,12 @@ const HomeScreen = ({ navigation }) => {
     // console.log(totalFoodArray);
     //
     //////////////////////////////////////
-    
+    useEffect( () => {
+        syncFoodsData();
+        syncCurrentUserData();
+        //console.log(totalFoodArray);
+    },[isDeleted]);
+
     useEffect( () => {
         //console.log("RQTQYWU");
         syncBreakfastData('total_breakfast');
@@ -246,6 +320,7 @@ const HomeScreen = ({ navigation }) => {
         syncDinnerData('total_dinner');
         syncSnacksData('total_snacks');
         syncFoodsData();
+        syncCurrentUserData();
         getUserData();
     },[]);
 
@@ -256,7 +331,7 @@ const HomeScreen = ({ navigation }) => {
            
         }else{
             //console.log("OLD USER");
-            saveData('total_breakfast',JSON.stringify(breakfast));
+            saveData('total_breakfast', JSON.stringify(breakfast));
             //setTotalFoodArray([...totalFoodArray, breakfast]);
             //console.log(totalFoodArray);
             //getData('total_breakfast'); 
@@ -271,8 +346,9 @@ const HomeScreen = ({ navigation }) => {
         }else{
             //console.log("OLD USER");
             saveData('total_lunch',JSON.stringify(lunch));
+            
             //setTotalFoodArray([...totalFoodArray,lunch]);
-            //console.log(totalFoodArray);
+            //console.log(lunch);
             //getData('total_lunch'); 
         }
     }, [lunch]);
@@ -305,8 +381,9 @@ const HomeScreen = ({ navigation }) => {
         }
     }, [snacks]);
 
-
+    
     return(
+         
         <ScrollView style={styles.main}>
             <StatsContainer
                 valuesTotal = {userData}
@@ -317,44 +394,55 @@ const HomeScreen = ({ navigation }) => {
                 bannerUri={bannerUriBreakfast}
                 food={breakfast}
                 highlight={ThemeConstants.HIGHLIGHT_GREEN}
-                title='Breakfast'
+                mealTitle='Breakfast'
                 navigateToSearchFood={() => navigation.navigate('SearchFood', {
                     foodArray: breakfast,
                     setFoodArray: setBreakfast
                 })}
+                onDeletion = {setBreakfast}
+                onDeletion2 = {setIsDeleted}
+                onDeletion3 = {setCurrent}
             />
 
             <IntakeFoodContainer
                 bannerUri={bannerUriLunch}
                 food={lunch}
                 highlight={ThemeConstants.HIGHLIGHT_ORANGE}
-                title='Lunch'
+                mealTitle='Lunch'
                 navigateToSearchFood={() => navigation.navigate('SearchFood', {
                     foodArray: lunch,
                     setFoodArray: setLunch
                 })}
+                onDeletion = {setLunch}
+                onDeletion2 = {setIsDeleted}
+                
+  
             />
 
             <IntakeFoodContainer
                 bannerUri={bannerUriDinner}
                 food={dinner}
                 highlight={ThemeConstants.HIGHLIGHT_PURPLE}
-                title='Dinner'
+                mealTitle='Dinner'
                 navigateToSearchFood={() => navigation.navigate('SearchFood', {
                     foodArray: dinner,
                     setFoodArray: setDinner
                 })}
+                onDeletion = {setDinner}
+                onDeletion2 = {setIsDeleted}
             />
 
             <IntakeFoodContainer
                 bannerUri={bannerUriSnacks}
                 food={snacks}
                 highlight={ThemeConstants.HIGHLIGHT_BLUE}
-                title='Snacks'
+                mealTitle='Snacks'
                 navigateToSearchFood={() => navigation.navigate('SearchFood', {
                     foodArray: snacks,
                     setFoodArray: setSnacks
                 })}
+                onDeletion = {setSnacks}
+                onDeletion2 = {setIsDeleted}
             />
             
             <IntakeWaterContainer/>

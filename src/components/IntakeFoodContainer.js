@@ -1,12 +1,72 @@
-import React from 'react';
-import { FlatList, Image, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
+import React, {useState} from 'react';
+import { AsyncStorage, FlatList, Image, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View, Button } from 'react-native';
 import { Feather } from '@expo/vector-icons'
+import Swipeout from 'react-native-swipeout';
 
 import * as ThemeConstants from '../common/Themes';
+import { isNull } from 'util';
 
-const IntakeFoodContainer = ({ bannerUri, food, highlight, title, navigateToSearchFood }) => {
+
+//FOODARRAY: contains list of foods in a particular setting
+//when pressed => FOODARRAY[INDEX] get the food object
+//after deletion setFoodArray to
+var sample = [
+    {
+        data: '1',
+        id: '1'
+    },
+    {
+        data: '2',
+        id: '2'
+    },
+    {
+        data: '3',
+        id: '3'
+    }
+];
+
+// total_breakfast
+// total_lunch
+// total_dinner
+// total_snacks
+
+
+var totalFood = [];
+const deleteData = async (key) => {
+    try {
+        await AsyncStorage.removeItem(key);
+    } catch (error) {
+        // Error retrieving data
+        console.log(error.message);
+    }
+}
+
+
+const IntakeFoodContainer = ({ bannerUri, food, highlight, mealTitle, navigateToSearchFood, onDeletion, onDeletion2, onDeletion3 }) => {
     const foodArray = food;
-    //console.log(food);
+    const setFoodArray = onDeletion;
+    //const [idDeleted, setIsDeleted] = useState();
+    const setIsDeleted = onDeletion2;
+    const setCurrent = onDeletion3;
+   /* const swipeSettings = {
+        autoClose: true,
+        onClose: (secId, rowId, direction) => {
+
+        },
+        onOpen: (secId, rowId, direction) => {
+
+        },
+        right: [
+            {
+                onPress: () => {
+
+                },
+                text: 'Delete', type: 'delete'
+            }
+        ]
+
+    };*/
+
     return(
         <View style={styles.container}>
             <Image
@@ -14,25 +74,68 @@ const IntakeFoodContainer = ({ bannerUri, food, highlight, title, navigateToSear
                 style={{width: '100%', height: 32}}
             />
             <View style={styles.details}>
-                <Text style={styles.text_header}>{title}</Text>
-
+                <Text style={styles.text_header}>{mealTitle}</Text>
+            
                 <FlatList
                     data={foodArray}
                     keyExtractor = {(item) => item.id}
-                    renderItem={({item})=>{
+                    renderItem={({item,index})=>{
                         return (
                             // <Text>{item.foodName}</Text>
-                            <TouchableOpacity
-                                style={styles.food}
-                                onPress={() => console.log(item.foodName + ' is pressed.')}
-                            >
-                                <View>
-                                    <Text style={styles.text_regular}>{item.foodName}</Text>
-                                    <Text style={styles.text_small}>
-                                        Weight: {item.grams} g  •  Energy: {item.calories} kCal
-                                    </Text>
-                                </View>
-                            </TouchableOpacity>
+                            //<Swipeout {...swipeSettings}>
+                                <TouchableOpacity
+                                    style={styles.food}
+                                    onPress={() => console.log(item.foodName + ' is pressed.')}
+                                >
+                                    <View>
+                                        <Button
+                                            
+                                            title='Delete'
+                                            onPress={ () => {
+                                                var x = foodArray.filter(foodArray => foodArray.foodName !== item.foodName);
+                                                //console.log(x.length);
+                                                var calories = 0;
+                                                var carbs = 0;
+                                                var proteins = 0;
+                                                var fats = 0;
+                                                for (let i = 0; i < foodArray.length; i++) {
+                                                    calories = calories + foodArray[i].calories;
+                                                    carbs = carbs + foodArray[i].carbs;
+                                                    proteins = proteins + foodArray[i].proteins;
+                                                    fats = fats + foodArray[i].fats;
+                                                }
+                                                //console.log("HEYHEYHEY");
+                                                setCurrent({
+                                                    current_calories: calories,
+                                                    current_carbs: carbs,
+                                                    current_proteins: proteins,
+                                                    current_fats: fats
+                                                });
+                                                //console.log("HUHUHU")
+                                                
+
+                                                if (x.length == 0){
+                                                    //deleteData('total_'+mealTitle.toLowerCase());
+                                                    //deleteData('total_'+mealTitle.toLowerCase());
+                                                    setFoodArray([]);
+                                                    setIsDeleted(Math.random());
+                                                }
+                                                else{
+                                                    console.log(mealTitle.toLowerCase());
+                                                    setFoodArray(x)
+                                                    setIsDeleted(Math.random());
+                                                }
+                                                
+                                            }}
+                                           
+                                        />
+                                        <Text style={styles.text_regular}>{item.foodName}</Text>
+                                        <Text style={styles.text_small}>
+                                            Weight: {item.grams} g  •  Energy: {item.calories} kCal
+                                        </Text>
+                                    </View>
+                                </TouchableOpacity>
+                            //</Swipeout>
                         )
                     }}
                     showsVerticalScrollIndicator={false}
