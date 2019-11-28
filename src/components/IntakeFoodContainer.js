@@ -94,26 +94,6 @@ const IntakeFoodContainer = ({ bannerUri, food, highlight, mealTitle, navigateTo
                                             onPress={ () => {
                                                 var x = foodArray.filter(foodArray => foodArray.foodName !== item.foodName);
                                                 //console.log(x.length);
-                                                var calories = 0;
-                                                var carbs = 0;
-                                                var proteins = 0;
-                                                var fats = 0;
-                                                for (let i = 0; i < foodArray.length; i++) {
-                                                    calories = calories + foodArray[i].calories;
-                                                    carbs = carbs + foodArray[i].carbs;
-                                                    proteins = proteins + foodArray[i].proteins;
-                                                    fats = fats + foodArray[i].fats;
-                                                }
-                                                //console.log("HEYHEYHEY");
-                                                setCurrent({
-                                                    current_calories: calories,
-                                                    current_carbs: carbs,
-                                                    current_proteins: proteins,
-                                                    current_fats: fats
-                                                });
-                                                //console.log("HUHUHU")
-                                                
-
                                                 if (x.length == 0){
                                                     //deleteData('total_'+mealTitle.toLowerCase());
                                                     //deleteData('total_'+mealTitle.toLowerCase());

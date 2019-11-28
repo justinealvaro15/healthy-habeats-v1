@@ -185,6 +185,7 @@ const HomeScreen = ({ navigation }) => {
                
             }else{
                 a =  JSON.parse(breakfast1);
+
                 for (let i = 0; i < a.length; i++) {
                      totalFood.push(a[i]);
                 }
@@ -204,7 +205,7 @@ const HomeScreen = ({ navigation }) => {
                 
             }else{
                 c =  JSON.parse(dinner1);
-                for (let i = 0; i < a.length; i++) {
+                for (let i = 0; i < c.length; i++) {
                     totalFood.push(c[i]);
                }
                 
@@ -216,7 +217,7 @@ const HomeScreen = ({ navigation }) => {
                 
             }else{
                 d =  JSON.parse(snacks1);
-                for (let i = 0; i < a.length; i++) {
+                for (let i = 0; i < d.length; i++) {
                     totalFood.push(d[i]);
                }
                
@@ -272,30 +273,6 @@ const HomeScreen = ({ navigation }) => {
 		}
     };
 
-    const syncCurrentUserData = async () => {
-		try {
-			let a,b,c,d = 0;
-            const user_calories = await AsyncStorage.getItem('current_calories') || 'empty';
-            const user_carbs = await AsyncStorage.getItem('current_carbs') || 'empty';
-            const user_proteins = await AsyncStorage.getItem('current_proteins') || 'empty';
-            const user_fats = await AsyncStorage.getItem('current_fats') || 'empty';
-
-            if(user_calories === 'empty'){
-               
-            }else{
-                a =  JSON.parse(user_calories);
-                setCurrent({
-                    current_calories: 100 //LAST HERE kuha tayo sa variable nlng mastore muna ung calories para maupdate agad
-                });
-                console.log(a);
-            }
-
-
-		} catch (error) {
-			// Error retrieving data
-			console.log(error.message);
-		}
-	};
 
     //////////////////////////////////////
     //
@@ -308,9 +285,10 @@ const HomeScreen = ({ navigation }) => {
     //
     //////////////////////////////////////
     useEffect( () => {
-        syncFoodsData();
-        syncCurrentUserData();
+        //syncFoodsData();
+        //syncCurrentUserData();
         //console.log(totalFoodArray);
+        //console.log("JKJKKJK");
     },[isDeleted]);
 
     useEffect( () => {
@@ -320,7 +298,7 @@ const HomeScreen = ({ navigation }) => {
         syncDinnerData('total_dinner');
         syncSnacksData('total_snacks');
         syncFoodsData();
-        syncCurrentUserData();
+        //syncCurrentUserData();
         getUserData();
     },[]);
 
@@ -328,6 +306,7 @@ const HomeScreen = ({ navigation }) => {
         if(breakfast.length == 0){
             //console.log("NEW USERS");
             //getData('total_breakfast');
+            saveData('total_breakfast', JSON.stringify(breakfast));
            
         }else{
             //console.log("OLD USER");
@@ -342,6 +321,7 @@ const HomeScreen = ({ navigation }) => {
         if(lunch.length == 0){
             //console.log("NEW USERS");
             //getData('total_breakfast');
+            saveData('total_lunch',JSON.stringify(lunch));
            
         }else{
             //console.log("OLD USER");
@@ -357,6 +337,7 @@ const HomeScreen = ({ navigation }) => {
         if(dinner.length == 0){
             //console.log("NEW USERS");
             //getData('total_breakfast');
+            saveData('total_dinner',JSON.stringify(dinner));
            
         }else{
             //console.log("OLD USER");
@@ -371,6 +352,7 @@ const HomeScreen = ({ navigation }) => {
         if(snacks.length == 0){
             //console.log("NEW USERS");
             //getData('total_snacks');
+            saveData('total_snacks',JSON.stringify(snacks));
            
         }else{
             //console.log("OLD USER");
@@ -415,6 +397,7 @@ const HomeScreen = ({ navigation }) => {
                 })}
                 onDeletion = {setLunch}
                 onDeletion2 = {setIsDeleted}
+                onDeletion3 = {setCurrent}
                 
   
             />
@@ -430,6 +413,7 @@ const HomeScreen = ({ navigation }) => {
                 })}
                 onDeletion = {setDinner}
                 onDeletion2 = {setIsDeleted}
+                onDeletion3 = {setCurrent}
             />
 
             <IntakeFoodContainer
@@ -443,6 +427,7 @@ const HomeScreen = ({ navigation }) => {
                 })}
                 onDeletion = {setSnacks}
                 onDeletion2 = {setIsDeleted}
+                onDeletion3 = {setCurrent}
             />
             
             <IntakeWaterContainer/>
