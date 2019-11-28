@@ -101,7 +101,7 @@ const IntakeFoodContainer = ({ bannerUri, food, highlight, mealTitle, navigateTo
                                                     setIsDeleted(Math.random());
                                                 }
                                                 else{
-                                                    console.log(mealTitle.toLowerCase());
+                                                    //console.log(mealTitle.toLowerCase());
                                                     setFoodArray(x)
                                                     setIsDeleted(Math.random());
                                                 }

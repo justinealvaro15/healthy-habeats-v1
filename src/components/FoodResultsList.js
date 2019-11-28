@@ -2,6 +2,8 @@ import React from 'react';
 import { Button, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
 
+import moment from "moment";
+
 import * as foodData from '../../assets/samplefooditems.json';
 import * as ThemeConstants from '../common/Themes';
 
@@ -28,8 +30,8 @@ const FoodResultsList = ({ foodArray, setFoodArray, navigation, results, title }
             const carbs = data[i].carbs;
             const fats = data[i].fats;
             const proteins = data[i].proteins;
-
-            foodItems.push({id, foodName, grams, calories, carbs, fats, proteins});
+            const dateConsumed = data[i].dateConsumed;
+            foodItems.push({id, foodName, grams, calories, carbs, fats, proteins, dateConsumed});
         }       
         results = foodItems;
     }
@@ -48,6 +50,9 @@ const FoodResultsList = ({ foodArray, setFoodArray, navigation, results, title }
                             <TouchableOpacity 
                                 style={styles.food}
                                 onPress={() => {
+
+                                    item.dateConsumed = moment().format('MMMM DD YYYY');
+                                    //console.log(item);
                                     setFoodArray([...foodArray, item])
                                     navigation.navigate('Home')
                                 }}

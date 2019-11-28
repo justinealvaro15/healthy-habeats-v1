@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { AsyncStorage, ScrollView, StyleSheet } from 'react-native';
 
+import CalendarStrip from 'react-native-calendar-strip';
+import moment from "moment";
+
 import IntakeFoodContainer from '../components/IntakeFoodContainer';
 import IntakeWaterContainer from '../components/IntakeWaterContainer';
 import StatsContainer from '../components/StatsContainer';
@@ -32,23 +35,7 @@ const HomeScreen = ({ navigation }) => {
     const [dinner, setDinner] = useState([]);
     const [snacks, setSnacks] = useState([]);
 
-    let current2 = {
-        current2_calories: 0,
-        current2_carbs: 0,
-        current2_proteins: 0,
-        current2_fats: 0,
-    };
-    let totalFoodArray2 = [];
-    let breakfast2 = [];
-    let lunch2 = [];
-    let dinner2 = [];
-    let snacks2 = [];
-
-    
-
-
-
-
+    const [dateSelected, setDateSelected] = useState( moment().format('MMMM DD YYYY'));
 
     const bannerUriBreakfast = require('../../assets/banners/banner-breakfast.png');
     const bannerUriLunch = require('../../assets/banners/banner-lunch.png')
@@ -92,15 +79,30 @@ const HomeScreen = ({ navigation }) => {
             const data = await AsyncStorage.getItem(key) || 'empty';
             //console.log(data);
             if(data === 'empty'){
+                console.log("EMPTY BREAKFAST");
                 setBreakfast([]);
-                breakfast2 = [];
-            }else{
-                x =  JSON.parse(data);
-                //console.log(x);
-                setBreakfast(x);
-                breakfast2 = x;
                
-                //console.log(breakfast2)
+            }else{
+                
+                x =  JSON.parse(data);
+                console.log(x.length)
+                let x_date = [];
+                for (let i = 0; i < x.length; i++) {
+                    if(x[i].dateConsumed === dateSelected){
+                        x_date.push(x[i]);
+                    }
+                    
+                }
+                //FIX NAWAWALA DATA IF NAPUNTA SA IBANG DATE
+                console.log("HELLO");
+                console.log(x);
+                console.log("WORLD");
+                console.log(x_date);
+                setBreakfast(x_date);
+                
+               
+               
+                
             }
             
             return data;
@@ -117,11 +119,11 @@ const HomeScreen = ({ navigation }) => {
             //console.log(data);
             if(data === 'empty'){
                 setLunch([]);
-                lunch2 = [];
+                
             }else{
                 x =  JSON.parse(data);
                 setLunch(x);
-                lunch2 = x;
+                
             }
             
             return data;
@@ -138,11 +140,11 @@ const HomeScreen = ({ navigation }) => {
             //console.log(data);
             if(data === 'empty'){
                 setDinner([]);
-                dinner2 = [];
+                
             }else{
                 x =  JSON.parse(data);
                 setDinner(x);
-                dinner2 = x;
+                
             }
             
             return data;
@@ -159,11 +161,11 @@ const HomeScreen = ({ navigation }) => {
             //console.log(data);
             if(data === 'empty'){
                 setSnacks([]);
-                snacks2 = [];
+                
             }else{
                 x =  JSON.parse(data);
                 setSnacks(x);
-                snacks2 = x;
+               
             }
             
             return data;
@@ -289,6 +291,7 @@ const HomeScreen = ({ navigation }) => {
         //syncCurrentUserData();
         //console.log(totalFoodArray);
         //console.log("JKJKKJK");
+        //console.log(breakfast);
     },[isDeleted]);
 
     useEffect( () => {
@@ -363,10 +366,32 @@ const HomeScreen = ({ navigation }) => {
         }
     }, [snacks]);
 
-    
+    useEffect( () => {
+        syncBreakfastData('total_breakfast');
+        //console.log(dateSelected);
+    },[dateSelected]);
     return(
          
         <ScrollView style={styles.main}>
+            <CalendarStrip
+                style={{height:100, paddingTop: 5, paddingBottom: 5}}
+                daySelectionAnimation={{type: 'background', duration: 200, highlightColor: '#a9a9ab'}}
+                calendarHeaderStyle={{color: 'white'}}
+                calendarColor={'#7743CE'}
+                dateNumberStyle={{color: 'white'}}
+                dateNameStyle={{color: 'white'}}
+                highlightDateNumberStyle={{color: 'yellow'}}
+                highlightDateNameStyle={{color: 'yellow'}}
+                disabledDateNameStyle={{color: 'grey'}}
+                disabledDateNumberStyle={{color: 'grey'}}
+                onDateSelected = { (onDateSelected) => {
+                    var currentDateSelected = moment(onDateSelected).format('MMMM DD YYYY');
+                    console.log(moment(onDateSelected).format('MMMM DD YYYY'));
+                    setDateSelected(currentDateSelected);
+                    //console.log(moment('2019-11-30T13:51:45.046Z').format('MMMM DD YYYY')); // FOR DEV PURPOSES ONLY
+                }}
+                
+            />
             <StatsContainer
                 valuesTotal = {userData}
                 valuesCurrent = {current}
