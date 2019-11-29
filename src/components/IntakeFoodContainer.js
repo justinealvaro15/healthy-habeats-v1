@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { AsyncStorage, FlatList, Image, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View, Button } from 'react-native';
 import { Feather } from '@expo/vector-icons'
 import Swipeout from 'react-native-swipeout';
@@ -40,33 +40,30 @@ const deleteData = async (key) => {
         console.log(error.message);
     }
 }
+const saveData = async (key, value) => {
+    try {
+        await (AsyncStorage.setItem(key, value));
+    } catch (error) {
+        // Error retrieving data
+        console.log(error.message);
+    }
+};
 
-
-const IntakeFoodContainer = ({ bannerUri, food, highlight, mealTitle, navigateToSearchFood, onDeletion, onDeletion2, onDeletion3 }) => {
+const IntakeFoodContainer = ({ bannerUri, food, highlight, mealTitle, navigateToSearchFood, onDeletion, onDeletion2, onDeletion3, onDeletion4, onDeletion5 }) => {
+    const meal = onDeletion5;
     const foodArray = food;
+    let x_date = foodArray;
+    const [isDelete, setIsDelete] = useState();
+    let counter = 0;
+    const dateSelected = onDeletion4;
+    //console.log(dateSelected);
+
     const setFoodArray = onDeletion;
-    //const [idDeleted, setIsDeleted] = useState();
+    
     const setIsDeleted = onDeletion2;
-    const setCurrent = onDeletion3;
-   /* const swipeSettings = {
-        autoClose: true,
-        onClose: (secId, rowId, direction) => {
+    const setTotalFoodArray = onDeletion3;
 
-        },
-        onOpen: (secId, rowId, direction) => {
-
-        },
-        right: [
-            {
-                onPress: () => {
-
-                },
-                text: 'Delete', type: 'delete'
-            }
-        ]
-
-    };*/
-
+    
     return(
         <View style={styles.container}>
             <Image
@@ -77,7 +74,7 @@ const IntakeFoodContainer = ({ bannerUri, food, highlight, mealTitle, navigateTo
                 <Text style={styles.text_header}>{mealTitle}</Text>
             
                 <FlatList
-                    data={foodArray}
+                    data={x_date}
                     keyExtractor = {(item) => item.id}
                     renderItem={({item,index})=>{
                         return (
@@ -89,21 +86,43 @@ const IntakeFoodContainer = ({ bannerUri, food, highlight, mealTitle, navigateTo
                                 >
                                     <View>
                                         <Button
-                                            
+                                           // 1  | 3 4
                                             title='Delete'
                                             onPress={ () => {
-                                                var x = foodArray.filter(foodArray => foodArray.foodName !== item.foodName);
-                                                //console.log(x.length);
+                                                counter = 0;
+                                                let x = foodArray.filter(foodArray => foodArray.foodName !== item.foodName);
+                                                let y = foodArray.filter(foodArray => foodArray.foodName === item.foodName);
+                                                let data = y[0].deleteID;
+                                                
+                                                for (let i = 0; i < meal.length; i++) {
+                                                    if (meal[i].deleteID != data ){
+                                                        counter = counter + 1;
+                                                    }
+                                                    else{
+                                                        break;
+                                                    }
+                                                }
+                                                //console.log(counter);
+                                                meal.splice(counter,1); // strip in total breakfast [1,2,3]
+                                                //console.log(x);
                                                 if (x.length == 0){
                                                     //deleteData('total_'+mealTitle.toLowerCase());
                                                     //deleteData('total_'+mealTitle.toLowerCase());
                                                     setFoodArray([]);
                                                     setIsDeleted(Math.random());
+                                                    setIsDelete(Math.random());
                                                 }
                                                 else{
+                                                    
                                                     //console.log(mealTitle.toLowerCase());
-                                                    setFoodArray(x)
+                                                    //saveData('total_'+mealTitle.toLowerCase(), JSON.stringify(meal));
+                                                    setFoodArray(x); //current meal we are setting breakfast to contain
+                                                    setTotalFoodArray(meal);
+                                                    //console.log(meal.length);
+                                                    
+
                                                     setIsDeleted(Math.random());
+                                                    setIsDelete(Math.random());
                                                 }
                                                 
                                             }}
@@ -195,3 +214,22 @@ const styles = StyleSheet.create({
 });
 
 export default IntakeFoodContainer;
+
+   /* const swipeSettings = {
+        autoClose: true,
+        onClose: (secId, rowId, direction) => {
+
+        },
+        onOpen: (secId, rowId, direction) => {
+
+        },
+        right: [
+            {
+                onPress: () => {
+
+                },
+                text: 'Delete', type: 'delete'
+            }
+        ]
+
+    };*/

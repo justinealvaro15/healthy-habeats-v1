@@ -7,7 +7,7 @@ import moment from "moment";
 import * as foodData from '../../assets/samplefooditems.json';
 import * as ThemeConstants from '../common/Themes';
 
-const FoodResultsList = ({ foodArray, setFoodArray, navigation, results, title, currentDate }) => {
+const FoodResultsList = ({ foodArray, setFoodArray, navigation, results, title, currentDate, deleteID }) => {
     // results === [Food Items]; 
     //      used for filtering search
     // foodArray === [Food Items]; 
@@ -31,7 +31,8 @@ const FoodResultsList = ({ foodArray, setFoodArray, navigation, results, title, 
             const fats = data[i].fats;
             const proteins = data[i].proteins;
             const dateConsumed = data[i].dateConsumed;
-            foodItems.push({id, foodName, grams, calories, carbs, fats, proteins, dateConsumed});
+            const deleteID = data[i].deleteID
+            foodItems.push({id, foodName, grams, calories, carbs, fats, proteins, dateConsumed, deleteID});
         }       
         results = foodItems;
     }
@@ -52,6 +53,7 @@ const FoodResultsList = ({ foodArray, setFoodArray, navigation, results, title, 
                                 onPress={() => {
                                     //console.log(currentDate);
                                     item.dateConsumed = moment(currentDate).format('MMMM DD YYYY');
+                                    item.deleteID = deleteID
                                     //console.log(item);
                                     setFoodArray([...foodArray, item])
                                     navigation.navigate('Home')

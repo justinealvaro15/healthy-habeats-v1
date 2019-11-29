@@ -31,7 +31,8 @@ const filterResultsBySearch = (term) => {
                 const fats = data[i].fats;
                 const proteins = data[i].proteins;
                 const dateConsumed = data[i].dateConsumed;
-                foodArray.push({id, foodName, grams, calories, carbs, fats, proteins, dateConsumed});
+                const deleteID = data[i].deleteID;
+                foodArray.push({id, foodName, grams, calories, carbs, fats, proteins, dateConsumed, deleteID});
             }
         };
         return foodArray;
@@ -57,6 +58,7 @@ const SearchFoodScreen = ({ navigation }) => {
                     foodArray={navigation.getParam('foodArray')}
                     setFoodArray={navigation.getParam('setFoodArray')}
                     currentDate={navigation.getParam('currentDate')}
+                    deleteID = {navigation.getParam('deleteID')}
                     results={filterResultsBySearch(term)}
                 />
             </ScrollView>

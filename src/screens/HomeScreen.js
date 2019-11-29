@@ -188,6 +188,7 @@ const HomeScreen = ({ navigation }) => {
     const syncFoodsData = async () => {
         
 		try {
+            //console.log(totalFoodArray);
             let a,b,c,d = 0;
             let x_date = [];
             const breakfast1 = await AsyncStorage.getItem('total_breakfast') || 'empty';
@@ -278,7 +279,7 @@ const HomeScreen = ({ navigation }) => {
             saveCurrentUserData('current_proteins', JSON.stringify(proteins));
             saveCurrentUserData('current_fats', JSON.stringify(fats));
             
-
+           
             setTotalFoodArray(totalFood);
             //var z = totalFood;
             //console.log("HELLO");
@@ -306,6 +307,17 @@ const HomeScreen = ({ navigation }) => {
 			console.log(error.message);
 		}
     };
+    const saveDeletionData = async () => {
+		try {
+            await (AsyncStorage.setItem('total_breakfast', JSON.stringify(breakfast)));
+            await (AsyncStorage.setItem('total_lunch', JSON.stringify(lunch)));
+            await (AsyncStorage.setItem('total_dinner', JSON.stringify(dinner)));
+            await (AsyncStorage.setItem('total_snacks', JSON.stringify(snacks)));
+		} catch (error) {
+			// Error retrieving data
+			console.log(error.message);
+		}
+    };
 
 
     //////////////////////////////////////
@@ -318,13 +330,7 @@ const HomeScreen = ({ navigation }) => {
     // console.log(totalFoodArray);
     //
     //////////////////////////////////////
-    useEffect( () => {
-        //syncFoodsData();
-        //syncCurrentUserData();
-        //console.log(totalFoodArray);
-        //console.log("JKJKKJK");
-        //console.log(breakfast);
-    },[isDeleted]);
+
 
     useEffect( () => {
         //console.log("RQTQYWU");
@@ -350,6 +356,7 @@ const HomeScreen = ({ navigation }) => {
             //console.log(totalFoodArray);
             //getData('total_breakfast'); 
         }
+        //console.log("SUMMONED");
     }, [breakfast]);
 
     useEffect( () => {
@@ -399,10 +406,22 @@ const HomeScreen = ({ navigation }) => {
     }, [snacks]);
 
     useEffect( () => {
-       
         syncFoodsData();
         //console.log(dateSelected);
     },[dateSelected]);
+    useEffect( () => {
+        
+        //syncCurrentUserData();
+        //console.log(totalFoodArray);
+        //console.log("JKJKKJK");
+        //console.log(breakfast);
+        //saveData('total_breakfast', JSON.stringify(breakfast));
+        //saveData('total_lunch', JSON.stringify(lunch));
+        //saveData('total_dinner', JSON.stringify(dinner));
+        //saveData('total_snacks', JSON.stringify(snacks));
+        saveDeletionData();
+        syncFoodsData();
+    },[isDeleted]);
     return(
          
         <ScrollView style={styles.main}>
@@ -419,7 +438,7 @@ const HomeScreen = ({ navigation }) => {
                 disabledDateNumberStyle={{color: 'grey'}}
                 onDateSelected = { (onDateSelected) => {
                     var currentDateSelected = moment(onDateSelected).format('MMMM DD YYYY');
-                    console.log(currentDateSelected);
+                    //console.log(currentDateSelected);
                     setDateSelected(currentDateSelected);
                     setDateMoment(moment(onDateSelected));
                     //console.log(moment('2019-11-30T13:51:45.046Z').format('MMMM DD YYYY')); // FOR DEV PURPOSES ONLY
@@ -439,11 +458,14 @@ const HomeScreen = ({ navigation }) => {
                 navigateToSearchFood={() => navigation.navigate('SearchFood', {
                     foodArray: breakfast,
                     setFoodArray: setBreakfast,
-                    currentDate: dateMoment
+                    currentDate: dateMoment,
+                    deleteID: Math.floor(Math.random() * 99999)
                 })}
-                onDeletion = {setBreakfast}
+                onDeletion = {setCurrentBreakfast}
                 onDeletion2 = {setIsDeleted}
-                onDeletion3 = {setCurrent}
+                onDeletion3 = {setBreakfast}
+                onDeletion4 = {dateSelected}
+                onDeletion5 ={breakfast}
             />
 
             <IntakeFoodContainer
@@ -454,11 +476,14 @@ const HomeScreen = ({ navigation }) => {
                 navigateToSearchFood={() => navigation.navigate('SearchFood', {
                     foodArray: lunch,
                     setFoodArray: setLunch,
-                    currentDate: dateMoment
+                    currentDate: dateMoment,
+                    deleteID: Math.floor(Math.random() * 99999)
                 })}
-                onDeletion = {setLunch}
+                onDeletion = {setCurrentLunch}
                 onDeletion2 = {setIsDeleted}
-                onDeletion3 = {setCurrent}
+                onDeletion3 = {setLunch}
+                onDeletion4 = {dateSelected}
+                onDeletion5 ={lunch}
                 
   
             />
@@ -471,11 +496,14 @@ const HomeScreen = ({ navigation }) => {
                 navigateToSearchFood={() => navigation.navigate('SearchFood', {
                     foodArray: dinner,
                     setFoodArray: setDinner,
-                    currentDate: dateMoment
+                    currentDate: dateMoment,
+                    deleteID: Math.floor(Math.random() * 99999)
                 })}
-                onDeletion = {setDinner}
+                onDeletion = {setCurrentDinner}
                 onDeletion2 = {setIsDeleted}
-                onDeletion3 = {setCurrent}
+                onDeletion3 = {setDinner}
+                onDeletion4 = {dateSelected}
+                onDeletion5 ={dinner}
             />
 
             <IntakeFoodContainer
@@ -486,14 +514,14 @@ const HomeScreen = ({ navigation }) => {
                 navigateToSearchFood={() => navigation.navigate('SearchFood', {
                     foodArray: snacks,
                     setFoodArray: setSnacks,
-                    currentDate: dateMoment
-
-
-
+                    currentDate: dateMoment,
+                    deleteID: Math.floor(Math.random() * 99999)
                 })}
-                onDeletion = {setSnacks}
+                onDeletion = {setCurrentSnacks}
                 onDeletion2 = {setIsDeleted}
-                onDeletion3 = {setCurrent}
+                onDeletion3 = {setSnacks}
+                onDeletion4 = {dateSelected}
+                onDeletion5 ={snacks}
             />
             
             <IntakeWaterContainer/>
