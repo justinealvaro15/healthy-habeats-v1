@@ -7,7 +7,7 @@ import moment from "moment";
 import * as foodData from '../../assets/samplefooditems.json';
 import * as ThemeConstants from '../common/Themes';
 
-const FoodResultsList = ({ foodArray, setFoodArray, navigation, results, title }) => {
+const FoodResultsList = ({ foodArray, setFoodArray, navigation, results, title, currentDate }) => {
     // results === [Food Items]; 
     //      used for filtering search
     // foodArray === [Food Items]; 
@@ -50,8 +50,8 @@ const FoodResultsList = ({ foodArray, setFoodArray, navigation, results, title }
                             <TouchableOpacity 
                                 style={styles.food}
                                 onPress={() => {
-
-                                    item.dateConsumed = moment().format('MMMM DD YYYY');
+                                    //console.log(currentDate);
+                                    item.dateConsumed = moment(currentDate).format('MMMM DD YYYY');
                                     //console.log(item);
                                     setFoodArray([...foodArray, item])
                                     navigation.navigate('Home')
