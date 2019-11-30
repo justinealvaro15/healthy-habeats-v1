@@ -8,14 +8,6 @@ import Input from '../components/Input';
 import * as ThemeConstants from '../common/Themes';
 
 const AnthropometricScreen = ({ navigation }) => {
-    const [exchanges, setExchanges] = useState([]);
-
-    let exchanges2 = {
-        riceExchange: 0,
-        meatAndFishExchange: 0,
-        fatExchange: 0
-    };
-
 
     const [weight, setWeight] = useState('');
     const [height, setHeight] = useState('');
@@ -97,7 +89,6 @@ const AnthropometricScreen = ({ navigation }) => {
         }
         setActivityLevelValue(value);
         setTEA((weight*value));
-        //console.log(TEA);
         setDistributions({
             carbsCalorie: (weight*value)*0.65,
             proteinsCalorie: (weight*value)*0.15,
@@ -113,11 +104,6 @@ const AnthropometricScreen = ({ navigation }) => {
         saveData('total_carbs', JSON.stringify(Math.ceil((((weight*value)*0.65)/4)/5)*5));
         saveData('total_proteins', JSON.stringify(Math.ceil((((weight*value)*0.15)/4)/5)*5));
         saveData('total_fats', JSON.stringify(Math.ceil((((weight*value)*0.2)/9)/5)*5));
-        
-        //exchanges2.riceExchange =  Math.round(((Math.ceil((((weight*value)*0.65)/4)/5)*5)-83)/23);
-        //exchanges2.meatAndFishExchange = Math.round(((Math.ceil((((weight*value)*0.15)/4)/5)*5)-24)/8);
-        //exchanges2.fatExchange = Math.round(((Math.ceil((((weight*value)*0.2)/9)/5)*5)-19)/5);
-        //setExchanges(exchanges2);
 
         saveData('riceExchange', JSON.stringify( Math.round(((Math.ceil((((weight*value)*0.65)/4)/5)*5)-83)/23)));
         saveData('meatAndFishExchange', JSON.stringify( Math.round(((Math.ceil((((weight*value)*0.15)/4)/5)*5)-24)/8)));

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AsyncStorage, Button, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import { Permissions, Notifications } from 'expo';
 import ActivityInput from '../components/ActivityInput';
 import Input from '../components/Input';
 
@@ -66,22 +67,15 @@ const UserProfileScreen = ({ navigation }) => {
                 meatAndFishExchange: meatAndFishExchange,
                 fatExchange, fatExchange
             });
-           
-            
-
-           
-            //return data;
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);
 		}      
     };
 
-
 useEffect( () => {
     getUserData();
 },[])
-
 
     return (
         <ScrollView style={styles.main}>
@@ -113,12 +107,6 @@ useEffect( () => {
                 }
                 </View>
             </View>
-
-
-
-
-
- 
         </ScrollView>
 
         // Insert inside ScrollView

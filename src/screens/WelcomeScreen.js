@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { AsyncStorage, Button, Text, StyleSheet, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
 
+import {Permissions, Notifications} from 'expo';
+
 import * as ThemeConstants from '../common/Themes';
 
 const WelcomeScreen = ({ navigation }) => {

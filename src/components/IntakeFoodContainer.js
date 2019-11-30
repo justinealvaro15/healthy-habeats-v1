@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { AsyncStorage, FlatList, Image, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View, Button } from 'react-native';
 import { Feather } from '@expo/vector-icons'
 import Swipeout from 'react-native-swipeout';
@@ -10,26 +10,6 @@ import { isNull } from 'util';
 //FOODARRAY: contains list of foods in a particular setting
 //when pressed => FOODARRAY[INDEX] get the food object
 //after deletion setFoodArray to
-var sample = [
-    {
-        data: '1',
-        id: '1'
-    },
-    {
-        data: '2',
-        id: '2'
-    },
-    {
-        data: '3',
-        id: '3'
-    }
-];
-
-// total_breakfast
-// total_lunch
-// total_dinner
-// total_snacks
-
 
 var totalFood = [];
 const deleteData = async (key) => {
@@ -56,7 +36,6 @@ const IntakeFoodContainer = ({ bannerUri, food, highlight, mealTitle, navigateTo
     const [isDelete, setIsDelete] = useState();
     let counter = 0;
     const dateSelected = onDeletion4;
-    //console.log(dateSelected);
 
     const setFoodArray = onDeletion;
     
@@ -102,29 +81,20 @@ const IntakeFoodContainer = ({ bannerUri, food, highlight, mealTitle, navigateTo
                                                         break;
                                                     }
                                                 }
-                                                //console.log(counter);
+                                                
                                                 meal.splice(counter,1); // strip in total breakfast [1,2,3]
-                                                //console.log(x);
+                                                
                                                 if (x.length == 0){
-                                                    //deleteData('total_'+mealTitle.toLowerCase());
-                                                    //deleteData('total_'+mealTitle.toLowerCase());
                                                     setFoodArray([]);
                                                     setIsDeleted(Math.random());
                                                     setIsDelete(Math.random());
                                                 }
                                                 else{
-                                                    
-                                                    //console.log(mealTitle.toLowerCase());
-                                                    //saveData('total_'+mealTitle.toLowerCase(), JSON.stringify(meal));
                                                     setFoodArray(x); //current meal we are setting breakfast to contain
                                                     setTotalFoodArray(meal);
-                                                    //console.log(meal.length);
-                                                    
-
                                                     setIsDeleted(Math.random());
                                                     setIsDelete(Math.random());
                                                 }
-                                                
                                             }}
                                            
                                         />
