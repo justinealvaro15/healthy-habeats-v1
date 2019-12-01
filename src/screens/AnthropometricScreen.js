@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AsyncStorage, Button, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import MotionSlider from 'react-native-motion-slider';
 
 import ActivityInput from '../components/ActivityInput';
 import Input from '../components/Input';
@@ -12,7 +13,7 @@ const AnthropometricScreen = ({ navigation }) => {
     const [height, setHeight] = useState('');
     const [DBW, setDBW] = useState(0);
     const [TEA, setTEA] = useState(0);
-    const [activityLevel, setActivityLevel] = useState('');
+    const [activityLevel, setActivityLevel] = useState(0);
     const [activityLevelValue, setActivityLevelValue] = useState(0);
     const [bmi, setBmi] =  useState('');
     const [bmiAssessment, setBmiAssessment] =  useState('');
@@ -57,20 +58,19 @@ const AnthropometricScreen = ({ navigation }) => {
         var value = 0;
         console.log("HI");
         switch(activityLevel){
-            
-            case 'Bedrest':
+            case 1:
                 value = 27.5;
                 break;
-            case 'Sedentary':
+            case 2:
                 value = 30;
                 break;
-            case 'Light':
+            case 3:
                 value = 35;
                 break;
-            case 'Moderate':
+            case 4:
                 value = 40;
                 break;
-            case 'Very Active':
+            case 5:
                 value = 45;
                 break;
             default:
@@ -146,10 +146,34 @@ const AnthropometricScreen = ({ navigation }) => {
 		}
 	};
 
-
-
     return (
         <ScrollView style={styles.main}>
+            <MotionSlider
+                backgroundColor={[ThemeConstants.MAIN_GREEN]}
+                min={0}
+                max={250}
+                units={'kg'}
+                value={50}
+                onValueChanged={(input) => setWeight(input)}
+            />
+
+            <MotionSlider  
+                backgroundColor={[ThemeConstants.MAIN_ORANGE]}
+                min={0}
+                max={250}
+                units={'cm'}
+                value={150}
+                onValueChanged={(input) => setHeight(input)}
+            />
+
+            <MotionSlider  
+                backgroundColor={[ThemeConstants.MAIN_BLUE, ThemeConstants.SHADOW_BLUE]}
+                min={1}
+                max={5}
+                value={3}
+                onValueChanged={(input) => setActivityLevel(input)}
+            />
+
             <View style={styles.container}>
                 <View style={styles.details}>
                     <Text style={styles.text_header}>Weight in kg</Text>
@@ -180,7 +204,8 @@ const AnthropometricScreen = ({ navigation }) => {
                     <ActivityInput
                         input="Activity Level"
                         term={activityLevel}
-                        onTermChange={newTerm => setActivityLevel(newTerm)}
+                        onTermChange={() => console.log('x')}
+                        // onTermChange={newTerm => setActivityLevel(newTerm)}
                     />
                 </View>
             </View>
