@@ -64,9 +64,16 @@ const IntakeFoodContainer = ({ bannerUri, food, highlight, mealTitle, navigateTo
                                     onPress={() => console.log(item.foodName + ' is pressed.')}
                                 >
                                     <View>
-                                        <Button
-                                           // 1  | 3 4
-                                            title='Delete'
+                                        <Text style={styles.text_regular}>{item.foodName}</Text>
+                                        <Text style={styles.text_small}>
+                                            Weight: {item.grams} g  •  Energy: {item.calories} kCal
+                                        </Text>
+                                    </View>
+
+                                    <View>
+                                        <Feather
+                                            // 1  | 3 4
+                                            name='delete'
                                             onPress={ () => {
                                                 counter = 0;
                                                 let x = foodArray.filter(foodArray => foodArray.foodName !== item.foodName);
@@ -96,12 +103,8 @@ const IntakeFoodContainer = ({ bannerUri, food, highlight, mealTitle, navigateTo
                                                     setIsDelete(Math.random());
                                                 }
                                             }}
-                                           
+                                            style={styles.button_delete}
                                         />
-                                        <Text style={styles.text_regular}>{item.foodName}</Text>
-                                        <Text style={styles.text_small}>
-                                            Weight: {item.grams} g  •  Energy: {item.calories} kCal
-                                        </Text>
                                     </View>
                                 </TouchableOpacity>
                             //</Swipeout>
@@ -120,7 +123,7 @@ const IntakeFoodContainer = ({ bannerUri, food, highlight, mealTitle, navigateTo
                     <View style={styles.add}>
                         <Feather
                             name='plus-circle'
-                            style={styles.button}
+                            style={styles.button_add}
                         />
                         <Text style={styles.text_light}>Add</Text>
                     </View>
@@ -141,9 +144,12 @@ const styles = StyleSheet.create({
     banner: {
         width: 100
     },
-    button: {
+    button_add: {
         fontSize: 30,
         marginRight: 10
+    },
+    button_delete: {
+        fontSize: 40
     },
     container: {
         backgroundColor: ThemeConstants.BACKGROUND_WHITE,

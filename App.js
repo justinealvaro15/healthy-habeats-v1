@@ -14,7 +14,8 @@ const navigator = createStackNavigator({
     Welcome: WelcomeScreen,
     
 }, {
-    initialRouteName: 'UserProfile',
+
+    initialRouteName: 'Anthropometric',
     defaultNavigationOptions: {
         title: 'Health Food App'
     }
