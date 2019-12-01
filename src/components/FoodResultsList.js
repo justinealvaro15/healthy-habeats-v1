@@ -2,10 +2,12 @@ import React from 'react';
 import { Button, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
 
+import moment from "moment";
+
 import * as foodData from '../../assets/samplefooditems.json';
 import * as ThemeConstants from '../common/Themes';
 
-const FoodResultsList = ({ foodArray, setFoodArray, navigation, results, title }) => {
+const FoodResultsList = ({ foodArray, setFoodArray, navigation, results, title, currentDate, deleteID }) => {
     // results === [Food Items]; 
     //      used for filtering search
     // foodArray === [Food Items]; 
@@ -16,7 +18,7 @@ const FoodResultsList = ({ foodArray, setFoodArray, navigation, results, title }
     if(!results.length){
         const data = [];
         const foodItems =[];
-
+        
         // store in array
         for (let i = 0; i < 10; i++) {
             data.push(foodData[i]);
@@ -28,10 +30,14 @@ const FoodResultsList = ({ foodArray, setFoodArray, navigation, results, title }
             const carbs = data[i].carbs;
             const fats = data[i].fats;
             const proteins = data[i].proteins;
-
-            foodItems.push({id, foodName, grams, calories, carbs, fats, proteins});
-        }
+            const dateConsumed = data[i].dateConsumed;
+            const deleteID = data[i].deleteID
+            foodItems.push({id, foodName, grams, calories, carbs, fats, proteins, dateConsumed, deleteID});
+        }       
         results = foodItems;
+    }
+    else{
+        results=results;
     }
 
     return (
@@ -45,6 +51,10 @@ const FoodResultsList = ({ foodArray, setFoodArray, navigation, results, title }
                             <TouchableOpacity 
                                 style={styles.food}
                                 onPress={() => {
+                                    //console.log(currentDate);
+                                    item.dateConsumed = moment(currentDate).format('MMMM DD YYYY');
+                                    item.deleteID = deleteID
+                                    //console.log(item);
                                     setFoodArray([...foodArray, item])
                                     navigation.navigate('Home')
                                 }}

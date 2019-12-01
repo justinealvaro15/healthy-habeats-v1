@@ -9,6 +9,7 @@ import Input from '../components/Input';
 import * as ThemeConstants from '../common/Themes';
 
 const AnthropometricScreen = ({ navigation }) => {
+
     const [weight, setWeight] = useState('');
     const [height, setHeight] = useState('');
     const [DBW, setDBW] = useState(0);
@@ -36,26 +37,35 @@ const AnthropometricScreen = ({ navigation }) => {
         "• Very Active (swimming, lumberman, athlete)";
 
     const computeBMI = () => {
+        let a = '';
         const pheight = Math.pow(parseFloat(height)/100,2);
         const result = Math.ceil((parseFloat(weight)/pheight));
         setBmi(result.toString());
         computeActivityLevel();
         if(result<18.5){
             setBmiAssessment('Underweight');
+            a = 'Underweight';
         }
         else if(result >= 18.5 && result <= 24.9){
             setBmiAssessment('Normal');
+            a = 'Normal';
         }
         else if(result >= 25 && result <= 29.9){
             setBmiAssessment('Overweight');
+            a = 'Overweight';
         }
         else if(result > 30){
             setBmiAssessment('Obese');
+            a = 'Obese';
         }
+        saveData('weight', JSON.stringify(weight));
+        saveData('height', JSON.stringify(height));
+        saveData('bmi', JSON.stringify(result));
+        saveData('bmiAssessment', a);
     }; 
 
     const computeActivityLevel = () => {
-        var value = 0;
+        let value = 0;
         console.log("HI");
         switch(activityLevel){
             case 1:
@@ -79,7 +89,6 @@ const AnthropometricScreen = ({ navigation }) => {
         }
         setActivityLevelValue(value);
         setTEA((weight*value));
-        console.log(TEA);
         setDistributions({
             carbsCalorie: (weight*value)*0.65,
             proteinsCalorie: (weight*value)*0.15,
@@ -95,7 +104,12 @@ const AnthropometricScreen = ({ navigation }) => {
         saveData('total_carbs', JSON.stringify(Math.ceil((((weight*value)*0.65)/4)/5)*5));
         saveData('total_proteins', JSON.stringify(Math.ceil((((weight*value)*0.15)/4)/5)*5));
         saveData('total_fats', JSON.stringify(Math.ceil((((weight*value)*0.2)/9)/5)*5));
-        
+
+        saveData('riceExchange', JSON.stringify( Math.round(((Math.ceil((((weight*value)*0.65)/4)/5)*5)-83)/23)));
+        saveData('meatAndFishExchange', JSON.stringify( Math.round(((Math.ceil((((weight*value)*0.15)/4)/5)*5)-24)/8)));
+        saveData('fatExchange', JSON.stringify( Math.round(((Math.ceil((((weight*value)*0.2)/9)/5)*5)-19)/5)));
+      
+        saveData('TEA', JSON.stringify(weight*value));
     };
 
     useEffect( () => {
@@ -115,6 +129,12 @@ const AnthropometricScreen = ({ navigation }) => {
         saveData('total_carbs', JSON.stringify(Math.ceil(((TEA*0.65)/4)/5)*5));
         saveData('total_proteins', JSON.stringify(Math.ceil(((TEA*0.15)/4)/5)*5));
         saveData('total_fats', JSON.stringify(Math.ceil(((TEA*0.2)/9)/5)*5));
+
+        saveData('riceExchange', JSON.stringify( Math.round(((Math.ceil((((TEA)*0.65)/4)/5)*5)-83)/23)));
+        saveData('meatAndFishExchange', JSON.stringify( Math.round(((Math.ceil((((TEA)*0.15)/4)/5)*5)-24)/8)));
+        saveData('fatExchange', JSON.stringify( Math.round(((Math.ceil((((TEA)*0.2)/9)/5)*5)-19)/5)));
+        
+        saveData('TEA', JSON.stringify(TEA));
        
     }, [TEA]);
 
@@ -180,7 +200,7 @@ const AnthropometricScreen = ({ navigation }) => {
                     <Input
                         input="Weight"
                         term={weight.toString()}
-                        onTermChange={newWeight => setWeight(newWeight.toString())}
+                        onTermChange={newWeight => setWeight(parseInt(newWeight))}
                     />
                 </View>
             </View>
@@ -191,7 +211,7 @@ const AnthropometricScreen = ({ navigation }) => {
                     <Input
                         input="Height"
                         term={height.toString()}
-                        onTermChange={newHeight => setHeight(newHeight)}
+                        onTermChange={newHeight => setHeight(parseInt(newHeight))}
                     />
                 </View>
             </View>
@@ -216,6 +236,7 @@ const AnthropometricScreen = ({ navigation }) => {
                     onPress={async () => {
                         computeBMI();
                         setDBW((height - 100) - ((height - 100) * 0.1));
+                        saveData('DBW', JSON.stringify((height - 100) - ((height - 100) * 0.1)));
                         navigation.replace('Home');
                     }}
                 />

@@ -1,14 +1,18 @@
 import { createStackNavigator, createAppContainer } from 'react-navigation';
+import AnthropometricScreen from './src/screens/AnthropometricScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import SearchFoodScreen from './src/screens/SearchFoodScreen';
+import UserProfileScreen from './src/screens/UserProfileScreen';
 import WelcomeScreen from './src/screens/WelcomeScreen';
-import AnthropometricScreen from './src/screens/AnthropometricScreen';
+
 
 const navigator = createStackNavigator({
+    Anthropometric: AnthropometricScreen,
     Home: HomeScreen,
     SearchFood: SearchFoodScreen,
+    UserProfile: UserProfileScreen,
     Welcome: WelcomeScreen,
-    Anthropometric: AnthropometricScreen
+    
 }, {
     initialRouteName: 'Anthropometric',
     defaultNavigationOptions: {
