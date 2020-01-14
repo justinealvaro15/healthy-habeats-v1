@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { AsyncStorage, Button, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { AsyncStorage, Image, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import Slider from "react-native-slider";
 import { withNavigation } from 'react-navigation';
-import MotionSlider from 'react-native-motion-slider';
-
-import ActivityInput from '../components/ActivityInput';
-import Input from '../components/Input';
 
 import * as ThemeConstants from '../common/Themes';
+import * as AnthroText from '../common/AnthropometricText';
+import { TouchableHighlight } from 'react-native-gesture-handler';
 
 const AnthropometricScreen = ({ navigation }) => {
+    const artAnthro = require('../../assets/art/art-anthro.png');
 
-    const [weight, setWeight] = useState('');
-    const [height, setHeight] = useState('');
+    const [weight, setWeight] = useState(0);
+    const [height, setHeight] = useState(0);
     const [DBW, setDBW] = useState(0);
     const [TEA, setTEA] = useState(0);
-    const [activityLevel, setActivityLevel] = useState(0);
+    const [activityLevel, setActivityLevel] = useState(3);
     const [activityLevelValue, setActivityLevelValue] = useState(0);
     const [bmi, setBmi] =  useState('');
     const [bmiAssessment, setBmiAssessment] =  useState('');
-    const [distributions, setDistributions] = useState({
+    const [distributions, setDistributions] = useState({ 
         carbsCalorie: 0,
         proteinsCalorie: 0,
         fatsCalorie: 0,
@@ -29,12 +29,6 @@ const AnthropometricScreen = ({ navigation }) => {
         meatAndFishExchange: 0,
         fatExchange: 0
     });
-    const activityDescription = 
-        "• Bedrest (but mobile; hospital patients)\n" +
-        "• Sedentary (mostly sitting)\n" +
-        "• Light (tailor, nurse, physician, jeepney driver)\n" +
-        "• Moderate (carpenter, painter, heavy housework)\n" +
-        "• Very Active (swimming, lumberman, athlete)";
 
     const computeBMI = () => {
         let a = '';
@@ -66,7 +60,6 @@ const AnthropometricScreen = ({ navigation }) => {
 
     const computeActivityLevel = () => {
         let value = 0;
-        console.log("HI");
         switch(activityLevel){
             case 1:
                 value = 27.5;
@@ -113,7 +106,6 @@ const AnthropometricScreen = ({ navigation }) => {
     };
 
     useEffect( () => {
-        console.log("THIS IS SUMMONED")
         setDistributions({
             carbsCalorie: TEA*0.65,
             proteinsCalorie: TEA*0.15,
@@ -167,150 +159,173 @@ const AnthropometricScreen = ({ navigation }) => {
 	};
 
     return (
-        <ScrollView style={styles.main}>
-            <MotionSlider
-                backgroundColor={[ThemeConstants.MAIN_GREEN]}
-                min={0}
-                max={250}
-                units={'kg'}
-                value={50}
-                onValueChanged={(input) => setWeight(input)}
-            />
+        <KeyboardAvoidingView 
+            behavior='padding'
+            style={{flex: 1}}
+        >
+            <ScrollView style={styles.main}>
+                <Image
+                    source={artAnthro}
+                    style={styles.art}
+                />
 
-            <MotionSlider  
-                backgroundColor={[ThemeConstants.MAIN_ORANGE]}
-                min={0}
-                max={250}
-                units={'cm'}
-                value={150}
-                onValueChanged={(input) => setHeight(input)}
-            />
-
-            <MotionSlider  
-                backgroundColor={[ThemeConstants.MAIN_BLUE, ThemeConstants.SHADOW_BLUE]}
-                min={1}
-                max={5}
-                value={3}
-                onValueChanged={(input) => setActivityLevel(input)}
-            />
-
-            <View style={styles.container}>
-                <View style={styles.details}>
-                    <Text style={styles.text_header}>Weight in kg</Text>
-                    <Input
-                        input="Weight"
-                        term={weight.toString()}
-                        onTermChange={newWeight => setWeight(parseInt(newWeight))}
-                    />
+                <View>
+                    <Text style={styles.text_title}>Personal Details</Text>
+                    <Text style={styles.text_subtitle}>
+                        {AnthroText.subheader}
+                    </Text>
                 </View>
-            </View>
 
-            <View style={styles.container}>
-                <View style={styles.details}>
-                    <Text style={styles.text_header}>Height in cm</Text>
-                    <Input
-                        input="Height"
-                        term={height.toString()}
-                        onTermChange={newHeight => setHeight(parseInt(newHeight))}
-                    />
+                <View style={styles.container}>
+                    <View style={styles.details}>
+                        <Text style={styles.text_header}>Weight (kg)</Text>
+                        <View style={styles.input_row}>
+                            <View style={styles.input}>
+                                <TextInput
+                                    keyboardType='numeric'
+                                    term={weight.toString()}
+                                    onChangeText={newWeight => setWeight(newWeight.length === 0 ? 0 : parseInt(newWeight))}
+                                    placeholder='Weight in kg'
+                                    style={{flex: 1}}
+                                />
+                            </View>
+                            <Text style={styles.input_converted}>{(weight*2.20462).toFixed(1)} lb</Text>
+                        </View>
+                    </View>
                 </View>
-            </View>
 
-            <View style={styles.container}>
-                <View style={styles.details}>
-                    {/* <Text style={styles.header}>{activityDescription}</Text> */}
-                    <Text style={styles.text_header}>Activity Level</Text>
-                    <Text style={styles.text_regular}>{activityDescription}</Text>
-                    <ActivityInput
-                        input="Activity Level"
-                        term={activityLevel}
-                        onTermChange={() => console.log('x')}
-                        // onTermChange={newTerm => setActivityLevel(newTerm)}
-                    />
+                <View style={styles.container}>
+                    <View style={styles.details}>
+                        <Text style={styles.text_header}>Height (cm)</Text>
+                        <View style={styles.input_row}>
+                            <View style={styles.input}>
+                                <TextInput
+                                    keyboardType='numeric'
+                                    term={weight.toString()}
+                                    onChangeText={newHeight => setHeight(newHeight.length === 0 ? 0 : parseInt(newHeight))}
+                                    placeholder='Height in cm'
+                                    style={{flex: 1}}
+                                />
+                            </View>
+                            <Text style={styles.input_converted}>
+                                {Math.floor((height/2.54)/12)} ft {'\n'}
+                                {Math.floor((height/2.54)%12)} in
+                            </Text>
+                        </View>
+                    </View>
                 </View>
-            </View>
 
-            <View style={styles.button}>
-                <Button
-                    title='Save'
+                <View style={styles.container}>
+                    <View style={styles.details}>
+                        <Text style={styles.text_header}>Activity Level</Text>
+                        <Slider
+                            value={activityLevel}
+                            maximumValue={5}
+                            minimumValue={1}
+                            onValueChange={(value) => setActivityLevel(value)}
+                            step={1}
+                        />
+                        <Text style={styles.text_regular2}>{AnthroText.activityTitle[activityLevel-1]}</Text>
+                        <Text>{AnthroText.activityDesc[activityLevel-1]}</Text>
+                    </View>
+                </View>
+
+                <TouchableHighlight
+                    style={styles.button}
+                    underlayColor={ThemeConstants.HIGHLIGHT_YELLOW}
                     onPress={async () => {
                         computeBMI();
                         setDBW((height - 100) - ((height - 100) * 0.1));
                         saveData('DBW', JSON.stringify((height - 100) - ((height - 100) * 0.1)));
                         navigation.replace('Home');
                     }}
-                />
-            </View>
-        </ScrollView>
-
-        // Insert inside ScrollView
-        //     <Text>Your BMI is: {bmi}</Text>
-        //     <Text>Your BMI Assessment is: {bmiAssessment}</Text>
-        //     <Text>Your Desirable Body Weight is {DBW}</Text>
-        //     <Text>Your Total Energy Allowance is: {TEA} calories</Text>
-        //     <Text>Calorie Allowance Distribution:</Text>
-        //     <Text>Carbohydrates: {distributions.carbsCalorie} calories</Text>
-        //     <Text>Proteins: {distributions.proteinsCalorie} calories</Text>
-        //     <Text>Fats: {distributions.fatsCalorie} calories</Text>
-        //     <Text>Grams Allowance Distribution:</Text>
-        //     <Text>Carbohydrates: {distributions.carbs} grams</Text>
-        //     <Text>Proteins: {distributions.proteins} grams</Text>
-        //     <Text>Fats: {distributions.fats} grams</Text>
-        //     <Text>Diet Prescription:</Text>
-        //     <Text>Calories: {Math.ceil(TEA/50)*50} {} calories</Text>
-        //     <Text>Carbohydrates: {Math.ceil((distributions.carbs)/5)*5} grams</Text>
-        //     <Text>Proteins: {Math.ceil((distributions.proteins)/5)*5} grams</Text>
-        //     <Text>Fats: {Math.ceil((distributions.fats)/5)*5} grams</Text>
-        //     <Text>Food Exchanges: </Text>
-        //     {distributions.riceExchange < 0 
-        //         ? <Text>Rice Exchanges: 0</Text>
-        //         : <Text>Rice Exchanges: {distributions.riceExchange}</Text>
-        //     }
-        //     {distributions.meatAndFishExchange < 0 
-        //         ? <Text>Meat and Fish Exchanges: 0 </Text>
-        //         : <Text>Meat and Fish Exchanges: {distributions.meatAndFishExchange}</Text>
-        //     }
-        //     {distributions.fatExchange < 0 
-        //         ? <Text>Fat Exchanges: 0 </Text>
-        //         : <Text>Fat Exchanges: {distributions.fatExchange}</Text>
-        //     }
+                >
+                    <Text style={styles.text_button}>Save</Text>
+                </TouchableHighlight>
+            </ScrollView>
+        </KeyboardAvoidingView>
     );
 };
 
 const styles = StyleSheet.create({
+    art: {
+        alignSelf: 'center',
+        marginTop: ThemeConstants.CONTAINER_MARGIN*4
+    },
     button: {
-        // color: ___
-        alignItems: 'center',
-        marginTop: ThemeConstants.CONTAINER_MARGIN+5,
+        backgroundColor: ThemeConstants.MAIN_YELLOW,
+        borderRadius: ThemeConstants.CONTAINER_RADIUS,
+        flex: 1,
+        marginHorizontal: ThemeConstants.CONTAINER_MARGIN*2,
+        marginVertical: ThemeConstants.CONTAINER_MARGIN*1.25
     },
     container: {
         backgroundColor: ThemeConstants.BACKGROUND_WHITE,
         borderRadius: ThemeConstants.CONTAINER_RADIUS,
-        marginHorizontal: ThemeConstants.CONTAINER_MARGIN,
-        marginTop: ThemeConstants.CONTAINER_MARGIN
+        marginHorizontal: ThemeConstants.CONTAINER_MARGIN*2,
+        marginTop: ThemeConstants.CONTAINER_MARGIN*1.25
     },
     details: {
-        marginHorizontal: ThemeConstants.CONTAINER_MARGIN+9,
-        paddingBottom: 15
+        marginHorizontal: ThemeConstants.CONTAINER_MARGIN,
+        paddingBottom: ThemeConstants.CONTAINER_MARGIN
     },
     input: {
+        borderBottomColor: ThemeConstants.BORDER_GRAY,
+        borderBottomWidth: 1,
+        borderTopColor: ThemeConstants.BORDER_GRAY,
+        borderTopWidth: 1,
         flex: 1,
-        fontSize: ThemeConstants.FONT_SIZE_REGULAR
+        flexDirection: 'row',
+        fontSize: ThemeConstants.FONT_SIZE_REGULAR,
+        marginRight: ThemeConstants.CONTAINER_MARGIN/2,
+        paddingVertical: ThemeConstants.CONTAINER_MARGIN/3
+    },
+    input_converted: {
+        alignSelf: 'center'
+    },
+    input_row: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
     main: {
-        backgroundColor: ThemeConstants.BACKGROUND_LIGHT_GRAY,
+        backgroundColor: ThemeConstants.MAIN_BLUE,
         flex: 1
+    },
+    text_button: {
+        alignContent: 'center',
+        color: ThemeConstants.MAIN_WHITE,
+        fontSize: ThemeConstants.FONT_SIZE_REGULAR,
+        fontWeight: 'bold',
+        marginVertical: ThemeConstants.CONTAINER_MARGIN/2,
+        textAlign: 'center'
     },
     text_header: {
         fontSize: ThemeConstants.FONT_SIZE_REGULAR,
         fontWeight: 'bold',
-        paddingVertical: ThemeConstants.CONTAINER_MARGIN-1
+        paddingVertical: ThemeConstants.CONTAINER_MARGIN
     },
     text_regular: {
-        borderTopColor: ThemeConstants.BORDER_GRAY,
-        borderTopWidth: 1,
         fontSize: ThemeConstants.FONT_SIZE_REGULAR,
         paddingVertical: ThemeConstants.CONTAINER_MARGIN
+    },
+    text_regular2: {
+        fontSize: ThemeConstants.FONT_SIZE_REGULAR,
+        fontWeight: 'bold',
+        paddingBottom: ThemeConstants.CONTAINER_MARGIN/4
+    },
+    text_subtitle: {
+        alignContent: 'center',
+        color: ThemeConstants.MAIN_WHITE,
+        fontSize: ThemeConstants.FONT_SIZE_REGULAR,
+        marginHorizontal: ThemeConstants.CONTAINER_MARGIN*2,
+        textAlign: 'center'
+    },
+    text_title: {
+        alignSelf: 'center',
+        color: ThemeConstants.MAIN_WHITE,
+        fontSize: ThemeConstants.FONT_SIZE_HEADER,
+        fontWeight: 'bold',
+        paddingVertical: ThemeConstants.CONTAINER_MARGIN*1.25,
     }
 });
 
