@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { AsyncStorage, Button, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { Permissions, Notifications } from 'expo';
-import ActivityInput from '../components/ActivityInput';
 import Input from '../components/Input';
 
 import * as ThemeConstants from '../common/Themes';
