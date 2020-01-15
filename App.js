@@ -7,21 +7,26 @@ import WelcomeScreen from './src/screens/WelcomeScreen';
 
 
 const navigator = createStackNavigator({
-    Anthropometric: AnthropometricScreen,
+    Anthropometric: {
+        screen: AnthropometricScreen,
+        navigationOptions: {
+            title: 'Anthropometric',
+            header: null
+        }
+    },
     Home: HomeScreen,
     SearchFood: SearchFoodScreen,
     UserProfile: UserProfileScreen,
     Welcome: WelcomeScreen,
     
 }, {
-
     initialRouteName: 'Anthropometric',
     defaultNavigationOptions: {
         title: 'Health Food App'
     }
 }, {
     headerMode: 'screen',
-    cardStyle: { backgroundColor: '#EFF0F1' }
+    cardStyle: { backgroundColor: '#FFFFFF' }
 });
 
 export default createAppContainer(navigator);

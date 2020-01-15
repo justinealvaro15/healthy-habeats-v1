@@ -7,9 +7,9 @@ import * as ThemeConstants from '../common/Themes';
 import { isNull } from 'util';
 
 
-//FOODARRAY: contains list of foods in a particular setting
-//when pressed => FOODARRAY[INDEX] get the food object
-//after deletion setFoodArray to
+// FOODARRAY: contains list of foods in a particular setting
+// when pressed => FOODARRAY[INDEX] get the food object
+// after deletion setFoodArray to
 
 var totalFood = [];
 const deleteData = async (key) => {

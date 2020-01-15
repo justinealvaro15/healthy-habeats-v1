@@ -22,6 +22,7 @@
     "react-native-motion-slider": "^1.0.3",
     "react-native-progress": "^4.0.2",
     "react-native-reanimated": "~1.2.0",
+    "react-native-slider": "^0.11.0",
     "react-native-swipeout": "^2.3.6",
     "react-native-web": "^0.11.7",
     "react-navigation": "^3.11.0",
