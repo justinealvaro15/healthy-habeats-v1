@@ -14,13 +14,19 @@ const navigator = createStackNavigator({
             header: null
         }
     },
-    Home: HomeScreen,
+    Home: {
+        screen: HomeScreen,
+        navigationOptions: {
+            title: 'Home',
+            header: null
+        }
+    },
     SearchFood: SearchFoodScreen,
     UserProfile: UserProfileScreen,
     Welcome: WelcomeScreen,
     
 }, {
-    initialRouteName: 'Anthropometric',
+    initialRouteName: 'Home',
     defaultNavigationOptions: {
         title: 'Health Food App'
     }
