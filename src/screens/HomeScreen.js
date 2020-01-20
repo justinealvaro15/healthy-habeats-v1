@@ -392,6 +392,7 @@ const HomeScreen = ({ navigation }) => {
                 }}
                 
             />
+            
             <StatsContainer
                 valuesTotal = {userData}
                 valuesCurrent = {current}
