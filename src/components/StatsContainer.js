@@ -26,9 +26,10 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around'
     },
     container: {
-        backgroundColor: ThemeConstants.BACKGROUND_LIGHT_GRAY,
+        backgroundColor: ThemeConstants.MAIN_WHITE,
         borderRadius: ThemeConstants.CONTAINER_RADIUS,
-        margin: ThemeConstants.CONTAINER_MARGIN,
+        marginHorizontal: ThemeConstants.CONTAINER_MARGIN,
+        marginVertical: ThemeConstants.CONTAINER_MARGIN/2,
         paddingBottom: 18,
         paddingHorizontal: 10
     }
