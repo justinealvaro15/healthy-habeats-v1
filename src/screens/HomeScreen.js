@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AsyncStorage, ScrollView, StyleSheet } from 'react-native';
+import { AsyncStorage, ScrollView, StyleSheet, View } from 'react-native';
 
 import CalendarStrip from 'react-native-calendar-strip';
 import moment from "moment";
@@ -9,6 +9,7 @@ import IntakeWaterContainer from '../components/IntakeWaterContainer';
 import StatsContainer from '../components/StatsContainer';
 
 import * as ThemeConstants from '../common/Themes';
+import Constants from 'expo-constants';
 
 const reducer = (state, action) => {
     return {...state, foodArray: state.foodArray.push(action.payload) }
@@ -30,6 +31,7 @@ const HomeScreen = ({ navigation }) => {
         current_proteins: 0,
         current_fats: 0,
     });
+
     const [totalFoodArray, setTotalFoodArray] = useState([]);
     const [breakfast, setBreakfast] = useState([]);
     const [lunch, setLunch] = useState([]);
@@ -53,16 +55,16 @@ const HomeScreen = ({ navigation }) => {
     const [isDeleted, setIsDeleted] = useState();
 
     const deleteData = async (key) => {
-		try {
-			await AsyncStorage.removeItem(key);
-		} catch (error) {
-			// Error retrieving data
-			console.log(error.message);
-		}
+        try {
+            await AsyncStorage.removeItem(key);
+        } catch (error) {
+            // Error retrieving data
+            console.log(error.message);
+        }
     }
-    
+
     const getUserData = async () => {
-		try {
+        try {
             const calories = await AsyncStorage.getItem('total_calories');
             const carbs = await AsyncStorage.getItem('total_carbs');
             const proteins = await AsyncStorage.getItem('total_proteins');
@@ -366,21 +368,23 @@ const HomeScreen = ({ navigation }) => {
         saveDeletionData();
         syncFoodsData();
     }, [isDeleted]);
-    
+
     return( 
         <ScrollView style={styles.main}>
+            <View style={styles.status_bar}/>
+
             <CalendarStrip
-                style={{height:100, paddingTop: 5, paddingBottom: 5}}
-                daySelectionAnimation={{type: 'background', duration: 200, highlightColor: '#a9a9ab'}}
+                style={styles.calendar}
+                daySelectionAnimation={{type: 'background', duration: 200, highlightColor: ThemeConstants.MAIN_YELLOW}}
                 calendarHeaderStyle={{color: 'white'}}
-                calendarColor={'#7743CE'}
+                calendarColor={ThemeConstants.MAIN_BLUE}
                 dateNumberStyle={{color: 'white'}}
                 dateNameStyle={{color: 'white'}}
-                highlightDateNumberStyle={{color: 'yellow'}}
-                highlightDateNameStyle={{color: 'yellow'}}
+                highlightDateNumberStyle={{color: 'white'}}
+                highlightDateNameStyle={{color: 'white'}}
                 disabledDateNameStyle={{color: 'grey'}}
                 disabledDateNumberStyle={{color: 'grey'}}
-                onDateSelected = { (onDateSelected) => {
+                onDateSelected={(onDateSelected) => {
                     var currentDateSelected = moment(onDateSelected).format('MMMM DD YYYY');
                     setDateSelected(currentDateSelected);
                     setDateMoment(moment(onDateSelected));
@@ -394,9 +398,7 @@ const HomeScreen = ({ navigation }) => {
             />
 
             <IntakeFoodContainer
-                bannerUri={bannerUriBreakfast}
                 food={current_breakfast}
-                highlight={ThemeConstants.HIGHLIGHT_GREEN}
                 mealTitle='Breakfast'
                 navigateToSearchFood={() => navigation.navigate('SearchFood', {
                     foodArray: breakfast,
@@ -404,17 +406,15 @@ const HomeScreen = ({ navigation }) => {
                     currentDate: dateMoment,
                     deleteID: Math.floor(Math.random() * 99999)
                 })}
-                onDeletion = {setCurrentBreakfast}
-                onDeletion2 = {setIsDeleted}
-                onDeletion3 = {setBreakfast}
-                onDeletion4 = {dateSelected}
-                onDeletion5 = {breakfast}
+                onDeletion={setCurrentBreakfast}
+                onDeletion2={setIsDeleted}
+                onDeletion3={setBreakfast}
+                onDeletion4={dateSelected}
+                onDeletion5={breakfast}
             />
 
             <IntakeFoodContainer
-                bannerUri={bannerUriLunch}
                 food={current_lunch}
-                highlight={ThemeConstants.HIGHLIGHT_ORANGE}
                 mealTitle='Lunch'
                 navigateToSearchFood={() => navigation.navigate('SearchFood', {
                     foodArray: lunch,
@@ -422,17 +422,15 @@ const HomeScreen = ({ navigation }) => {
                     currentDate: dateMoment,
                     deleteID: Math.floor(Math.random() * 99999)
                 })}
-                onDeletion = {setCurrentLunch}
-                onDeletion2 = {setIsDeleted}
-                onDeletion3 = {setLunch}
-                onDeletion4 = {dateSelected}
-                onDeletion5 = {lunch}
+                onDeletion={setCurrentLunch}
+                onDeletion2={setIsDeleted}
+                onDeletion3={setLunch}
+                onDeletion4={dateSelected}
+                onDeletion5={lunch}
             />
 
             <IntakeFoodContainer
-                bannerUri={bannerUriDinner}
                 food={current_dinner}
-                highlight={ThemeConstants.HIGHLIGHT_PURPLE}
                 mealTitle='Dinner'
                 navigateToSearchFood={() => navigation.navigate('SearchFood', {
                     foodArray: dinner,
@@ -440,17 +438,15 @@ const HomeScreen = ({ navigation }) => {
                     currentDate: dateMoment,
                     deleteID: Math.floor(Math.random() * 99999)
                 })}
-                onDeletion = {setCurrentDinner}
-                onDeletion2 = {setIsDeleted}
-                onDeletion3 = {setDinner}
-                onDeletion4 = {dateSelected}
-                onDeletion5 = {dinner}
+                onDeletion={setCurrentDinner}
+                onDeletion2={setIsDeleted}
+                onDeletion3={setDinner}
+                onDeletion4={dateSelected}
+                onDeletion5={dinner}
             />
 
             <IntakeFoodContainer
-                bannerUri={bannerUriSnacks}
                 food={current_snacks}
-                highlight={ThemeConstants.HIGHLIGHT_BLUE}
                 mealTitle='Snacks'
                 navigateToSearchFood={() => navigation.navigate('SearchFood', {
                     foodArray: snacks,
@@ -458,11 +454,11 @@ const HomeScreen = ({ navigation }) => {
                     currentDate: dateMoment,
                     deleteID: Math.floor(Math.random() * 99999)
                 })}
-                onDeletion = {setCurrentSnacks}
-                onDeletion2 = {setIsDeleted}
-                onDeletion3 = {setSnacks}
-                onDeletion4 = {dateSelected}
-                onDeletion5 = {snacks}
+                onDeletion={setCurrentSnacks}
+                onDeletion2={setIsDeleted}
+                onDeletion3={setSnacks}
+                onDeletion4={dateSelected}
+                onDeletion5={snacks}
             />
             
             <IntakeWaterContainer/>
@@ -471,9 +467,18 @@ const HomeScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+    calendar: {
+        height:100,
+        paddingTop: 5,
+        paddingBottom: 5
+    },
     main: {
-        backgroundColor: ThemeConstants.BACKGROUND_LIGHT_GRAY,
+        backgroundColor: ThemeConstants.MAIN_WHITE,
         flex: 1
+    },
+    status_bar: {
+        backgroundColor: ThemeConstants.MAIN_BLUE,
+        height: Constants.statusBarHeight+5
     }
 });
 
