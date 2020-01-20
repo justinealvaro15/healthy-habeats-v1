@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     },
     container: {
         backgroundColor: ThemeConstants.BACKGROUND_WHITE,
-        marginBottom: ThemeConstants.CONTAINER_MARGIN
+        marginBottom: ThemeConstants.CONTAINER_MARGIN*0.8
     },
     details: {
         marginHorizontal: ThemeConstants.CONTAINER_MARGIN*2
