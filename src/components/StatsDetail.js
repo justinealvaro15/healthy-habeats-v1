@@ -13,6 +13,7 @@ const StatsDetail = ({ title, valueTotal, valueCurrent }) => {
                 <Bar
                     color={ThemeConstants.MAIN_BLUE}
                     progress={progress}
+                    width={100}
                 />
             </View>
             <Text style={styles.text_header}>{title}</Text>
