@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { AsyncStorage, ScrollView, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+import { Tooltip } from 'react-native-elements';
 import { withNavigation } from 'react-navigation';
+import { Feather } from '@expo/vector-icons';
 
 import AnthropometricContainer from '../components/AnthropometricContainer';
 
@@ -107,7 +109,20 @@ const UserProfileScreen = ({ navigation }) => {
             <View style={{ justifyContent: 'flex-end' }}>
                 <View style={styles.container_blue}>
                     <View style={styles.container_dbw}>
-                        <Text style={styles.text_title}>Ideal Body Weight</Text>
+                        <View alignItems='center' flexDirection='row' justifyContent='space-between'>
+                            <Text style={styles.text_title}>Ideal Body Weight</Text>
+                            <Tooltip 
+                                backgroundColor={ThemeConstants.HIGHLIGHT_GRAY}
+                                height={100}
+                                popover={<Text>{DbwText.tooltip}</Text>}
+                                width={250}
+                            >
+                                <Feather
+                                    name='info'
+                                    style={styles.info_dbw}
+                                />
+                            </Tooltip>
+                        </View>
                         <View style={styles.details_dbw}>
                             <View style={styles.container_number}>
                                 <Text style={styles.text_number}>{userData.DBW} kg</Text>
@@ -158,6 +173,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginTop: ThemeConstants.CONTAINER_MARGIN/2,
+    },
+    info_dbw: {
+        color: ThemeConstants.FONT_GRAY,
+        fontSize: ThemeConstants.FONT_SIZE_MEDIUM,
+        fontWeight: 'bold'
     },
     padding: {
         backgroundColor: ThemeConstants.MAIN_BLUE,
