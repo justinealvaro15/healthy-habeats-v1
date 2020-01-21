@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     container: {
-        backgroundColor: ThemeConstants.BACKGROUND_WHITE,
+        backgroundColor: ThemeConstants.MAIN_WHITE,
         marginBottom: ThemeConstants.CONTAINER_MARGIN*0.8
     },
     details: {

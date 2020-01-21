@@ -79,13 +79,13 @@ const styles = StyleSheet.create({
 	},
 	container: {
 		alignItems: 'center',
-		backgroundColor: ThemeConstants.BACKGROUND_WHITE,
+		backgroundColor: ThemeConstants.MAIN_WHITE,
         borderRadius: ThemeConstants.CONTAINER_RADIUS,
         marginHorizontal: ThemeConstants.CONTAINER_MARGIN,
         marginTop: ThemeConstants.CONTAINER_MARGIN
 	},
     main: {
-        backgroundColor: ThemeConstants.BACKGROUND_LIGHT_GRAY,
+        backgroundColor: ThemeConstants.MAIN_WHITE,
         flex: 1
 	},
 	text: {

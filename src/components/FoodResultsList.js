@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
         paddingVertical: ThemeConstants.CONTAINER_MARGIN/2,
     },
     main: {
-        backgroundColor: ThemeConstants.BACKGROUND_WHITE
+        backgroundColor: ThemeConstants.MAIN_WHITE
     },
     text_regular: {
         fontSize: ThemeConstants.FONT_SIZE_REGULAR,
