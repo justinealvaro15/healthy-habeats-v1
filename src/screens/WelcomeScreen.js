@@ -3,8 +3,7 @@ import { AsyncStorage, Text, StyleSheet, View } from 'react-native';
 
 import * as ThemeConstants from '../common/Themes';
 
-const TIMER = 2000;
-
+const TIMER = 2500;
 
 export default class WelcomeScreen extends React.Component {
 	saveUserToken = async (userToken) => {
@@ -59,12 +58,9 @@ export default class WelcomeScreen extends React.Component {
 		}, TIMER);
 	}
 
-	//Pass Array as second argument
 	render() {
 		return(
 			<View style={styles.main}>
-				{/* <StatusBar backgroundColor={ThemeConstants.MAIN_YELLOW} barStyle="light-content" /> */}
-
 				<Text>HEALTHY</Text>
 				<Text>HABEATS</Text>
 			</View>

@@ -15,10 +15,24 @@ const reducer = (state, action) => {
     return {...state, foodArray: state.foodArray.push(action.payload) }
 }
 
+const magic = {
+    calories: 0,
+    carbs: 0,
+    dateConsumed: 'January 21 2020',
+    deleteID: '696969',
+    fats: 0,
+    foodName: 'Magic Pill',
+    grams: 0,
+    id: '696969',
+    proteins: 0
+};
+
+
+
 const HomeScreen = ({ navigation }) => {
     let totalFood = [];
     let current_totalFood = [];
-
+    
     const [userData, setUserData] = useState({
         calories: 0,
         carbs: 0,
@@ -76,11 +90,40 @@ const HomeScreen = ({ navigation }) => {
 		}      
     };
 
+    const deleteMagic = async () => {
+        
+        /*const data =  await AsyncStorage.getItem('total_breakfast');
+
+        counter = 0;
+        for (let i = 0; i < data.length; i++) {
+            if (data[i].foodName != 'Magic Pill' ){
+                counter = counter + 1;
+            }
+            else{
+                break;
+            }
+        }
+        let x = breakfast.filter(breakfast => breakfast.foodName !== 'Magic Pill');
+        console.log(x);
+        breakfast.splice(counter,1); // strip in total breakfast [1,2,3]
+        console.log('*****************************************');
+        console.log(x);
+        console.log('*****************************************');
+        setBreakfast(breakfast);*/
+
+        setIsDeleted(Math.random());
+        console.log("RE-INITIALIZE");
+
+    
+    };
+
     const syncBreakfastData = async (key) => {
 		try {
             let x = 0;
-            const data = await AsyncStorage.getItem(key) || 'empty';
-
+            let xx = []
+            const data = await (AsyncStorage.getItem(key));
+           
+            //console.log(data);
             if(data === 'empty'){
                 setBreakfast([]);
             } else{
@@ -92,7 +135,8 @@ const HomeScreen = ({ navigation }) => {
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);
-		}      
+        }      
+        console.log("function#1: breakfast sync");
     };
 
     const syncLunchData = async (key) => {
@@ -111,7 +155,8 @@ const HomeScreen = ({ navigation }) => {
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);
-		}      
+        }    
+        console.log("function#2: lunch sync");  
     };
 
     const syncDinnerData = async (key) => {
@@ -130,7 +175,8 @@ const HomeScreen = ({ navigation }) => {
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);
-		}      
+        }      
+        console.log("function#3: dinner sync");
     };
 
     const syncSnacksData = async (key) => {
@@ -149,13 +195,15 @@ const HomeScreen = ({ navigation }) => {
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);
-		}      
+        }      
+        console.log("function#4: snacks sync");
     };
 
     const syncFoodsData = async () => {
 		try {
             let a,b,c,d = 0;
             let x_date = [];
+           
             const breakfast1 = await AsyncStorage.getItem('total_breakfast') || 'empty';
             const lunch1 = await AsyncStorage.getItem('total_lunch') || 'empty';
             const dinner1 = await AsyncStorage.getItem('total_dinner') || 'empty';
@@ -175,6 +223,7 @@ const HomeScreen = ({ navigation }) => {
                 setCurrentBreakfast(x_date);
             }
             x_date = [];
+     
 
             if(lunch1 === 'empty'){
   
@@ -243,7 +292,9 @@ const HomeScreen = ({ navigation }) => {
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);
-		}      
+        }      
+        
+        console.log("function#5: current food sync");
     };
 
     const saveCurrentUserData = async (key, value) => {
@@ -252,7 +303,8 @@ const HomeScreen = ({ navigation }) => {
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);
-		}
+        }
+        console.log("function#6: save current user data");
 	};
 
     const saveData = async (key, value) => {
@@ -261,7 +313,8 @@ const HomeScreen = ({ navigation }) => {
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);
-		}
+        }
+        console.log("function#7: save data");
     };
     const saveDeletionData = async () => {
 		try {
@@ -272,7 +325,8 @@ const HomeScreen = ({ navigation }) => {
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);
-		}
+        }
+        console.log("function#8: delete save data");
     };
 
 
@@ -293,68 +347,62 @@ const HomeScreen = ({ navigation }) => {
         syncLunchData('total_lunch');
         syncDinnerData('total_dinner');
         syncSnacksData('total_snacks');
-        syncFoodsData();
+        
+        //syncFoodsData();
         //syncCurrentUserData();
         getUserData();
+        console.log("useEffect#1 in action: sync data from startup");
     },[]);
 
     useEffect(() => {
         if(breakfast.length == 0){
-            //console.log("NEW USERS");
-            //getData('total_breakfast');
             saveData('total_breakfast', JSON.stringify(breakfast));
         } else{
-            //console.log("OLD USER");
             saveData('total_breakfast', JSON.stringify(breakfast));
             //setTotalFoodArray([...totalFoodArray, breakfast]);
-            //getData('total_breakfast'); 
         }
+        console.log("useEffect#2 in action: breakfast sync ");
     }, [breakfast]);
 
     useEffect(() => {
         if(lunch.length == 0){
-            //console.log("NEW USERS");
-            //getData('total_breakfast');
             saveData('total_lunch', JSON.stringify(lunch));
-        } else{
-            //console.log("OLD USER");
+        }else{
             saveData('total_lunch', JSON.stringify(lunch));
-            //setTotalFoodArray([...totalFoodArray,lunch]);
-            //getData('total_lunch'); 
+            //setTotalFoodArray([...totalFoodArray,lunch]);  
         }
+        console.log("useEffect#3 in action: lunch sync ");
     }, [lunch]);
 
     useEffect(() => {
         if(dinner.length == 0){
-            //console.log("NEW USERS");
-            //getData('total_breakfast');
-            saveData('total_dinner', JSON.stringify(dinner));
-        } else{
-            //console.log("OLD USER");
+            saveData('total_dinner', JSON.stringify(dinner));   
+        }else{
             saveData('total_dinner', JSON.stringify(dinner));
             //setTotalFoodArray([...totalFoodArray, dinner]);
-            //getData('total_dinner'); 
         }
+        console.log("useEffect#4 in action: dinner sync ");
     }, [dinner]);
 
     useEffect(() => {
         if(snacks.length == 0){
-            //console.log("NEW USERS");
-            //getData('total_snacks');
-            saveData('total_snacks', JSON.stringify(snacks));
-        } else{
+            saveData('total_snacks',JSON.stringify(snacks));
+        }else{
             //console.log("OLD USER");
             saveData('total_snacks', JSON.stringify(snacks));
             //setTotalFoodArray([...totalFoodArray, snacks]);
-            //getData('total_snacks'); 
         }
+        console.log("useEffect#5 in action: snacks sync ");
     }, [snacks]);
 
-    useEffect(() => {
+    useEffect( () => {
         syncFoodsData();
-    }, [dateSelected]);
-
-    useEffect(() => {
+        console.log("useEffect#6 in action: new date selected ");
+        //console.log(dateSelected);
+        
+    },[dateSelected]);
+    useEffect( () => {
+        
         //syncCurrentUserData();
         //saveData('total_breakfast', JSON.stringify(breakfast));
         //saveData('total_lunch', JSON.stringify(lunch));
@@ -362,9 +410,14 @@ const HomeScreen = ({ navigation }) => {
         //saveData('total_snacks', JSON.stringify(snacks));
         saveDeletionData();
         syncFoodsData();
-    }, [isDeleted]);
+        console.log("useEffect#7 in action: data is deleted");
+    },[isDeleted]);
 
-    return( 
+    useEffect( () => {
+        setTimeout(function() { deleteMagic(); }, 1000);
+    }, []);
+
+    return(
         <ScrollView style={styles.main}>
             <View style={styles.status_bar}/>
 
