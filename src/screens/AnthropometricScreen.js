@@ -36,7 +36,7 @@ const AnthropometricScreen = ({ navigation }) => {
         const result = Math.ceil((parseFloat(weight)/pheight));
         setBmi(result.toString());
         computeActivityLevel();
-        if(result<18.5){
+        if(result < 18.5){
             setBmiAssessment('Underweight');
             a = 'Underweight';
         }
@@ -48,14 +48,15 @@ const AnthropometricScreen = ({ navigation }) => {
             setBmiAssessment('Overweight');
             a = 'Overweight';
         }
-        else if(result > 30){
+        else{
             setBmiAssessment('Obese');
             a = 'Obese';
         }
         saveData('weight', JSON.stringify(weight));
         saveData('height', JSON.stringify(height));
         saveData('bmi', JSON.stringify(result));
-        saveData('bmiAssessment', a);
+        saveData('bmiAssessment', JSON.stringify(a));
+        saveData('activityLevel', JSON.stringify(activityLevel));
     }; 
 
     const computeActivityLevel = () => {
@@ -98,9 +99,9 @@ const AnthropometricScreen = ({ navigation }) => {
         saveData('total_proteins', JSON.stringify(Math.ceil((((weight*value)*0.15)/4)/5)*5));
         saveData('total_fats', JSON.stringify(Math.ceil((((weight*value)*0.2)/9)/5)*5));
 
-        saveData('riceExchange', JSON.stringify( Math.round(((Math.ceil((((weight*value)*0.65)/4)/5)*5)-83)/23)));
-        saveData('meatAndFishExchange', JSON.stringify( Math.round(((Math.ceil((((weight*value)*0.15)/4)/5)*5)-24)/8)));
-        saveData('fatExchange', JSON.stringify( Math.round(((Math.ceil((((weight*value)*0.2)/9)/5)*5)-19)/5)));
+        saveData('riceExchange', JSON.stringify(Math.round(((Math.ceil((((weight*value)*0.65)/4)/5)*5)-83)/23)));
+        saveData('meatAndFishExchange', JSON.stringify(Math.round(((Math.ceil((((weight*value)*0.15)/4)/5)*5)-24)/8)));
+        saveData('fatExchange', JSON.stringify(Math.round(((Math.ceil((((weight*value)*0.2)/9)/5)*5)-19)/5)));
       
         saveData('TEA', JSON.stringify(weight*value));
     };
@@ -122,12 +123,11 @@ const AnthropometricScreen = ({ navigation }) => {
         saveData('total_proteins', JSON.stringify(Math.ceil(((TEA*0.15)/4)/5)*5));
         saveData('total_fats', JSON.stringify(Math.ceil(((TEA*0.2)/9)/5)*5));
 
-        saveData('riceExchange', JSON.stringify( Math.round(((Math.ceil((((TEA)*0.65)/4)/5)*5)-83)/23)));
-        saveData('meatAndFishExchange', JSON.stringify( Math.round(((Math.ceil((((TEA)*0.15)/4)/5)*5)-24)/8)));
-        saveData('fatExchange', JSON.stringify( Math.round(((Math.ceil((((TEA)*0.2)/9)/5)*5)-19)/5)));
+        saveData('riceExchange', JSON.stringify(Math.round(((Math.ceil((((TEA)*0.65)/4)/5)*5)-83)/23)));
+        saveData('meatAndFishExchange', JSON.stringify(Math.round(((Math.ceil((((TEA)*0.15)/4)/5)*5)-24)/8)));
+        saveData('fatExchange', JSON.stringify(Math.round(((Math.ceil((((TEA)*0.2)/9)/5)*5)-19)/5)));
         
         saveData('TEA', JSON.stringify(TEA));
-       
     }, [TEA]);
 
     const saveData = async (key, value) => {
