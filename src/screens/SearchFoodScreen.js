@@ -68,7 +68,7 @@ const SearchFoodScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     main: {
-        backgroundColor: ThemeConstants.BACKGROUND_LIGHT_GRAY,
+        backgroundColor: ThemeConstants.MAIN_WHITE,
         flex: 1
     }
 });

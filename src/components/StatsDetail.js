@@ -11,7 +11,7 @@ const StatsDetail = ({ title, valueTotal, valueCurrent }) => {
         <View style={styles.details}>
             <View style={styles.bar}>
                 <Bar
-                    color={ThemeConstants.SHADOW_BLUE}
+                    color={ThemeConstants.MAIN_BLUE}
                     progress={progress}
                 />
             </View>
@@ -24,7 +24,7 @@ const StatsDetail = ({ title, valueTotal, valueCurrent }) => {
 const styles = StyleSheet.create({
     bar: {
         alignSelf: 'center',
-        backgroundColor: ThemeConstants.BACKGROUND_LIGHT_GRAY,
+        backgroundColor: ThemeConstants.MAIN_WHITE,
         marginBottom: 4
     },
     details: {

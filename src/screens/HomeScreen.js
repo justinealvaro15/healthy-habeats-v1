@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AsyncStorage, ScrollView, StyleSheet } from 'react-native';
+import { AsyncStorage, ScrollView, StyleSheet, View } from 'react-native';
 
 import CalendarStrip from 'react-native-calendar-strip';
 import moment from "moment";
@@ -9,6 +9,7 @@ import IntakeWaterContainer from '../components/IntakeWaterContainer';
 import StatsContainer from '../components/StatsContainer';
 
 import * as ThemeConstants from '../common/Themes';
+import Constants from 'expo-constants';
 
 const reducer = (state, action) => {
     return {...state, foodArray: state.foodArray.push(action.payload) }
@@ -44,6 +45,7 @@ const HomeScreen = ({ navigation }) => {
         current_proteins: 0,
         current_fats: 0,
     });
+
     const [totalFoodArray, setTotalFoodArray] = useState([]);
     const [breakfast, setBreakfast] = useState([]);
     const [lunch, setLunch] = useState([]);
@@ -56,7 +58,7 @@ const HomeScreen = ({ navigation }) => {
     const [current_dinner, setCurrentDinner] = useState([]);
     const [current_snacks, setCurrentSnacks] = useState([]);
 
-    const [dateSelected, setDateSelected] = useState( moment().format('MMMM DD YYYY'));
+    const [dateSelected, setDateSelected] = useState(moment().format('MMMM DD YYYY'));
     const [dateMoment, setDateMoment] = useState(moment());
 
     const bannerUriBreakfast = require('../../assets/banners/banner-breakfast.png');
@@ -67,16 +69,16 @@ const HomeScreen = ({ navigation }) => {
     const [isDeleted, setIsDeleted] = useState();
 
     const deleteData = async (key) => {
-		try {
-			await AsyncStorage.removeItem(key);
-		} catch (error) {
-			// Error retrieving data
-			console.log(error.message);
-		}
+        try {
+            await AsyncStorage.removeItem(key);
+        } catch (error) {
+            // Error retrieving data
+            console.log(error.message);
+        }
     }
-    
+
     const getUserData = async () => {
-		try {
+        try {
             const calories = await AsyncStorage.getItem('total_calories');
             const carbs = await AsyncStorage.getItem('total_carbs');
             const proteins = await AsyncStorage.getItem('total_proteins');
@@ -87,8 +89,6 @@ const HomeScreen = ({ navigation }) => {
                 proteins: proteins,
                 fats: fats
             });
-           
-            //return data;
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);
@@ -96,30 +96,8 @@ const HomeScreen = ({ navigation }) => {
     };
 
     const deleteMagic = async () => {
-        
-        /*const data =  await AsyncStorage.getItem('total_breakfast');
-
-        counter = 0;
-        for (let i = 0; i < data.length; i++) {
-            if (data[i].foodName != 'Magic Pill' ){
-                counter = counter + 1;
-            }
-            else{
-                break;
-            }
-        }
-        let x = breakfast.filter(breakfast => breakfast.foodName !== 'Magic Pill');
-        console.log(x);
-        breakfast.splice(counter,1); // strip in total breakfast [1,2,3]
-        console.log('*****************************************');
-        console.log(x);
-        console.log('*****************************************');
-        setBreakfast(breakfast);*/
-
         setIsDeleted(Math.random());
         console.log("RE-INITIALIZE");
-
-    
     };
 
     const syncBreakfastData = async (key) => {
@@ -130,32 +108,9 @@ const HomeScreen = ({ navigation }) => {
            
             //console.log(data);
             if(data === 'empty'){
-                
                 setBreakfast([]);
-               
-            }else{
-                
+            } else{
                 x =  JSON.parse(data);
-                //console.log(x.length)
-                //let x_date = [];
-               // for (let i = 0; i < x.length; i++) {
-                //    if(x[i].dateConsumed === dateSelected){
-                        //x_date.push(x[i]);
-                //    }
-                    
-                //}
-                //FIX NAWAWALA DATA IF NAPUNTA SA IBANG DATE
-                //console.log("HELLO");
-                //console.log(x);
-                //console.log("WORLD");
-                //console.log(x_date);
-                //setCurrentBreakfast(x_date);
-                
-                //console.log('//////////////////////////////////////////////////');
-                //xx = x;
-                //xx = [...xx,magic];
-                //console.log(xx);
-                //console.log('//////////////////////////////////////////////////');
                 setBreakfast(x); //naooverwirite si breakfast 
             }
             
@@ -171,14 +126,12 @@ const HomeScreen = ({ navigation }) => {
 		try {
             let x = 0;
             const data = await AsyncStorage.getItem(key) || 'empty';
-            //console.log(data);
+
             if(data === 'empty'){
                 setLunch([]);
-                
-            }else{
+            } else{
                 x =  JSON.parse(data);
                 setLunch(x);
-                
             }
             
             return data;
@@ -193,14 +146,12 @@ const HomeScreen = ({ navigation }) => {
 		try {
             let x = 0;
             const data = await AsyncStorage.getItem(key) || 'empty';
-            //console.log(data);
+
             if(data === 'empty'){
                 setDinner([]);
-                
-            }else{
+            } else{
                 x =  JSON.parse(data);
                 setDinner(x);
-                
             }
             
             return data;
@@ -215,14 +166,12 @@ const HomeScreen = ({ navigation }) => {
 		try {
             let x = 0;
             const data = await AsyncStorage.getItem(key) || 'empty';
-            //console.log(data);
+
             if(data === 'empty'){
                 setSnacks([]);
-                
-            }else{
+            } else{
                 x =  JSON.parse(data);
                 setSnacks(x);
-               
             }
             
             return data;
@@ -234,9 +183,7 @@ const HomeScreen = ({ navigation }) => {
     };
 
     const syncFoodsData = async () => {
-        
 		try {
-            //console.log(totalFoodArray);
             let a,b,c,d = 0;
             let x_date = [];
            
@@ -246,8 +193,8 @@ const HomeScreen = ({ navigation }) => {
             const snacks1 = await AsyncStorage.getItem('total_snacks') || 'empty';
            
             if(breakfast1 === 'empty'){
-               
-            }else{
+
+            } else{
                 a =  JSON.parse(breakfast1);
                 
                 for (let i = 0; i < a.length; i++) {
@@ -257,17 +204,13 @@ const HomeScreen = ({ navigation }) => {
                     }
                 }
                 setCurrentBreakfast(x_date);
-                
-                
-               
-                
             }
             x_date = [];
      
 
             if(lunch1 === 'empty'){
-                
-            }else{
+  
+            } else{
                 b =  JSON.parse(lunch1);
                 for (let i = 0; i < b.length; i++) {
                     if(b[i].dateConsumed === dateSelected){
@@ -276,13 +219,12 @@ const HomeScreen = ({ navigation }) => {
                     }
                }
                setCurrentLunch(x_date);
-              
             }
             x_date = [];
 
             if(dinner1 === 'empty'){
-                
-            }else{
+
+            } else{
                 c =  JSON.parse(dinner1);
                 for (let i = 0; i < c.length; i++) {
                     if(c[i].dateConsumed === dateSelected){
@@ -291,14 +233,11 @@ const HomeScreen = ({ navigation }) => {
                     }
                }
                setCurrentDinner(x_date);
-                
             }
             x_date = [];
             if(snacks1 === 'empty'){
-               
-                //console.log(totalFoodArray);
-                
-            }else{
+ 
+            } else{
                 d =  JSON.parse(snacks1);
                 for (let i = 0; i < d.length; i++) {
                     if(d[i].dateConsumed === dateSelected){
@@ -307,10 +246,9 @@ const HomeScreen = ({ navigation }) => {
                     }
                }
                setCurrentSnacks(x_date);
-               
             }
             x_date = [];
-            //console.log(totalFood);
+
             var calories = 0;
             var carbs = 0;
             var proteins = 0;
@@ -333,11 +271,7 @@ const HomeScreen = ({ navigation }) => {
             saveCurrentUserData('current_fats', JSON.stringify(fats));
             
            
-            setTotalFoodArray(totalFood);
-            //var z = totalFood;
-           
-            //console.log(totalFood);  
-        
+            setTotalFoodArray(totalFood);            
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);
@@ -345,6 +279,7 @@ const HomeScreen = ({ navigation }) => {
         
         console.log("function#5: current food sync");
     };
+
     const saveCurrentUserData = async (key, value) => {
 		try {
 			await AsyncStorage.setItem(key, value);
@@ -389,10 +324,8 @@ const HomeScreen = ({ navigation }) => {
     //
     //////////////////////////////////////
 
-  
-    
-    useEffect( () => {
-        //console.log("RQTQYWU");
+
+    useEffect(() => {
         syncBreakfastData('total_breakfast');
         syncLunchData('total_lunch');
         syncDinnerData('total_dinner');
@@ -404,18 +337,16 @@ const HomeScreen = ({ navigation }) => {
         console.log("useEffect#1 in action: sync data from startup");
     },[]);
 
-    useEffect( () => {
+    useEffect(() => {
         if(breakfast.length == 0){
             saveData('total_breakfast', JSON.stringify(breakfast));
-        }else{
-            
+        } else{
+            //console.log("OLD USER");
             saveData('total_breakfast', JSON.stringify(breakfast));
-            //setTotalFoodArray([...totalFoodArray, breakfast]);
         }
-        console.log("useEffect#2 in action: breakfast sync ");
     }, [breakfast]);
 
-    useEffect( () => {
+    useEffect(() => {
         if(lunch.length == 0){
             saveData('total_lunch', JSON.stringify(lunch));
         }else{
@@ -425,41 +356,34 @@ const HomeScreen = ({ navigation }) => {
         console.log("useEffect#3 in action: lunch sync ");
     }, [lunch]);
 
-    useEffect( () => {
+    useEffect(() => {
         if(dinner.length == 0){
-            saveData('total_dinner', JSON.stringify(dinner));   
-        }else{
+            //console.log("NEW USERS");
             saveData('total_dinner', JSON.stringify(dinner));
-            //setTotalFoodArray([...totalFoodArray, dinner]);
+        } else{
+            //console.log("OLD USER");
+            saveData('total_dinner', JSON.stringify(dinner)); 
         }
         console.log("useEffect#4 in action: dinner sync ");
     }, [dinner]);
 
-    useEffect( () => {
+    useEffect(() => {
         if(snacks.length == 0){
             saveData('total_snacks',JSON.stringify(snacks));
         }else{
-            //console.log("OLD USER");
-            saveData('total_snacks',JSON.stringify(snacks));
-            //setTotalFoodArray([...totalFoodArray, snacks]);
+            //console.log("NEW USERS");
+            //getData('total_snacks');
+            saveData('total_snacks', JSON.stringify(snacks));
         }
         console.log("useEffect#5 in action: snacks sync ");
     }, [snacks]);
 
-    
-
-    useEffect( () => {
+    useEffect(() => {
         syncFoodsData();
-        console.log("useEffect#6 in action: new date selected ");
-        //console.log(dateSelected);
-        
-    },[dateSelected]);
-    useEffect( () => {
-        
+    }, [dateSelected]);
+
+    useEffect(() => {
         //syncCurrentUserData();
-        //console.log(totalFoodArray);
-        //console.log("JKJKKJK");
-        //console.log(breakfast);
         //saveData('total_breakfast', JSON.stringify(breakfast));
         //saveData('total_lunch', JSON.stringify(lunch));
         //saveData('total_dinner', JSON.stringify(dinner));
@@ -476,35 +400,39 @@ const HomeScreen = ({ navigation }) => {
     return(
          
         <ScrollView style={styles.main}>
+            <View style={styles.status_bar}/>
+
             <CalendarStrip
-                style={{height:100, paddingTop: 5, paddingBottom: 5}}
-                daySelectionAnimation={{type: 'background', duration: 200, highlightColor: '#a9a9ab'}}
+                style={styles.calendar}
+                daySelectionAnimation={{type: 'background', duration: 200, highlightColor: ThemeConstants.MAIN_YELLOW}}
                 calendarHeaderStyle={{color: 'white'}}
-                calendarColor={'#7743CE'}
+                calendarColor={ThemeConstants.MAIN_BLUE}
                 dateNumberStyle={{color: 'white'}}
                 dateNameStyle={{color: 'white'}}
-                highlightDateNumberStyle={{color: 'yellow'}}
-                highlightDateNameStyle={{color: 'yellow'}}
+                highlightDateNumberStyle={{color: 'white'}}
+                highlightDateNameStyle={{color: 'white'}}
                 disabledDateNameStyle={{color: 'grey'}}
                 disabledDateNumberStyle={{color: 'grey'}}
-                onDateSelected = { (onDateSelected) => {
+                onDateSelected={(onDateSelected) => {
                     var currentDateSelected = moment(onDateSelected).format('MMMM DD YYYY');
-                    //console.log(currentDateSelected);
                     setDateSelected(currentDateSelected);
                     setDateMoment(moment(onDateSelected));
                     //console.log(moment('2019-11-30T13:51:45.046Z').format('MMMM DD YYYY')); // FOR DEV PURPOSES ONLY
                 }}
                 
             />
-            <StatsContainer
-                valuesTotal = {userData}
-                valuesCurrent = {current}
-            />
+            
+            <View>
+                <View style={styles.padding}></View>
+
+                <StatsContainer
+                    valuesTotal = {userData}
+                    valuesCurrent = {current}
+                />
+            </View>
 
             <IntakeFoodContainer
-                bannerUri={bannerUriBreakfast}
                 food={current_breakfast}
-                highlight={ThemeConstants.HIGHLIGHT_GREEN}
                 mealTitle='Breakfast'
                 navigateToSearchFood={() => navigation.navigate('SearchFood', {
                     foodArray: breakfast,
@@ -512,17 +440,15 @@ const HomeScreen = ({ navigation }) => {
                     currentDate: dateMoment,
                     deleteID: Math.floor(Math.random() * 99999)
                 })}
-                onDeletion = {setCurrentBreakfast}
-                onDeletion2 = {setIsDeleted}
-                onDeletion3 = {setBreakfast}
-                onDeletion4 = {dateSelected}
-                onDeletion5 ={breakfast}
+                onDeletion={setCurrentBreakfast}
+                onDeletion2={setIsDeleted}
+                onDeletion3={setBreakfast}
+                onDeletion4={dateSelected}
+                onDeletion5={breakfast}
             />
 
             <IntakeFoodContainer
-                bannerUri={bannerUriLunch}
                 food={current_lunch}
-                highlight={ThemeConstants.HIGHLIGHT_ORANGE}
                 mealTitle='Lunch'
                 navigateToSearchFood={() => navigation.navigate('SearchFood', {
                     foodArray: lunch,
@@ -530,19 +456,15 @@ const HomeScreen = ({ navigation }) => {
                     currentDate: dateMoment,
                     deleteID: Math.floor(Math.random() * 99999)
                 })}
-                onDeletion = {setCurrentLunch}
-                onDeletion2 = {setIsDeleted}
-                onDeletion3 = {setLunch}
-                onDeletion4 = {dateSelected}
-                onDeletion5 ={lunch}
-                
-  
+                onDeletion={setCurrentLunch}
+                onDeletion2={setIsDeleted}
+                onDeletion3={setLunch}
+                onDeletion4={dateSelected}
+                onDeletion5={lunch}
             />
 
             <IntakeFoodContainer
-                bannerUri={bannerUriDinner}
                 food={current_dinner}
-                highlight={ThemeConstants.HIGHLIGHT_PURPLE}
                 mealTitle='Dinner'
                 navigateToSearchFood={() => navigation.navigate('SearchFood', {
                     foodArray: dinner,
@@ -550,17 +472,15 @@ const HomeScreen = ({ navigation }) => {
                     currentDate: dateMoment,
                     deleteID: Math.floor(Math.random() * 99999)
                 })}
-                onDeletion = {setCurrentDinner}
-                onDeletion2 = {setIsDeleted}
-                onDeletion3 = {setDinner}
-                onDeletion4 = {dateSelected}
-                onDeletion5 ={dinner}
+                onDeletion={setCurrentDinner}
+                onDeletion2={setIsDeleted}
+                onDeletion3={setDinner}
+                onDeletion4={dateSelected}
+                onDeletion5={dinner}
             />
 
             <IntakeFoodContainer
-                bannerUri={bannerUriSnacks}
                 food={current_snacks}
-                highlight={ThemeConstants.HIGHLIGHT_BLUE}
                 mealTitle='Snacks'
                 navigateToSearchFood={() => navigation.navigate('SearchFood', {
                     foodArray: snacks,
@@ -568,11 +488,11 @@ const HomeScreen = ({ navigation }) => {
                     currentDate: dateMoment,
                     deleteID: Math.floor(Math.random() * 99999)
                 })}
-                onDeletion = {setCurrentSnacks}
-                onDeletion2 = {setIsDeleted}
-                onDeletion3 = {setSnacks}
-                onDeletion4 = {dateSelected}
-                onDeletion5 ={snacks}
+                onDeletion={setCurrentSnacks}
+                onDeletion2={setIsDeleted}
+                onDeletion3={setSnacks}
+                onDeletion4={dateSelected}
+                onDeletion5={snacks}
             />
             
             <IntakeWaterContainer/>
@@ -581,9 +501,28 @@ const HomeScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+    calendar: {
+        height:100,
+        paddingTop: 5,
+        paddingBottom: 5
+    },
     main: {
-        backgroundColor: ThemeConstants.BACKGROUND_LIGHT_GRAY,
+        backgroundColor: ThemeConstants.MAIN_WHITE,
         flex: 1
+    },
+    padding: {
+        backgroundColor: ThemeConstants.MAIN_BLUE,
+        height: 100,
+        position: 'absolute',
+        left: 0,
+        right: 0
+    },
+    status_bar: {
+        backgroundColor: ThemeConstants.MAIN_BLUE,
+        height: Constants.statusBarHeight+5
+    },
+    stats: {
+        position: 'relative',
     }
 });
 

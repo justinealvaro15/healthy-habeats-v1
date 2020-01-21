@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Feather } from '@expo/vector-icons'
+import { StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 
 import * as ThemeConstants from '../common/Themes';
 
@@ -10,57 +9,80 @@ const IntakeWaterContainer = () => {
     return(
         <View style={styles.container}>
             <View style={styles.details}>
-                <Text style={styles.header}>Water Intake</Text>
+                <Text style={styles.text_header}>Water Intake</Text>
 
-                <Text style={styles.food}>
-                    Water intake: {water} glasses
-                </Text>
+                <View 
+                    style={{alignItems: 'center', 
+                        justifyContent: 'space-between',
+                        flexDirection: 'row'}}
+                    >
+                    <TouchableHighlight
+                        style={styles.button_add}
+                        onPress={() => water > 0 ? setWater(water-1) : null}
+                    >
+                        <View>
+                            <Text style={styles.text_button}>-</Text>
+                        </View>
+                    </TouchableHighlight>
 
-                <TouchableOpacity style={styles.add} onPress={() => setWater(water+1)}>
-                    <Feather
-                        name='plus-circle'
-                        style={styles.button}
-                    />
-                    <Text style={styles.text_light}>Add</Text>
-                </TouchableOpacity>
+                    <View style={styles.glass}>
+                        <Text style={styles.text_water}>{water} {water <= 1 ? 'glass' : 'glasses'}</Text>
+                    </View>
+
+                    <TouchableHighlight
+                        style={styles.button_add}
+                        onPress={() => setWater(water+1)}
+                    >
+                        <View>
+                            <Text style={styles.text_button}>+</Text>
+                        </View>
+                    </TouchableHighlight>
+                </View>
             </View>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    add: {
-        alignItems: 'center',
-        flex: 1,
-        flexDirection: 'row',
-        paddingVertical: 15
-    },
-    button: {
-        color: ThemeConstants.BUTTON_LIGHT_GRAY,
-        fontSize: 30,
-        marginRight: 10
+    button_add: {
+        backgroundColor: ThemeConstants.MAIN_YELLOW,
+        borderRadius: ThemeConstants.CONTAINER_RADIUS,
+        marginVertical: ThemeConstants.CONTAINER_MARGIN/2,
+        paddingHorizontal: ThemeConstants.CONTAINER_MARGIN
     },
     container: {
-        backgroundColor: ThemeConstants.BACKGROUND_WHITE,
-        marginBottom: ThemeConstants.CONTAINER_MARGIN,
+        backgroundColor: ThemeConstants.MAIN_BLUE,
+        borderTopLeftRadius: ThemeConstants.CONTAINER_RADIUS,
+        borderTopRightRadius: ThemeConstants.CONTAINER_RADIUS 
     },
     details: {
-        marginHorizontal: ThemeConstants.CONTAINER_MARGIN+9
+        marginHorizontal: ThemeConstants.CONTAINER_MARGIN*2,
+        marginBottom: ThemeConstants.CONTAINER_MARGIN
     },
-    header: {
-        borderBottomColor: ThemeConstants.BORDER_GRAY,
-        borderBottomWidth: 1,
+    glass: {
+        backgroundColor: ThemeConstants.MAIN_WHITE,
+        borderRadius: ThemeConstants.CONTAINER_RADIUS,
+        marginVertical: ThemeConstants.CONTAINER_MARGIN/2,
+        paddingHorizontal: ThemeConstants.CONTAINER_MARGIN*1.5
+    },
+    text_button: {
+        alignContent: 'center',
+        color: ThemeConstants.MAIN_WHITE,
+        fontSize: ThemeConstants.FONT_SIZE_REGULAR,
+        fontWeight: 'bold',
+        marginVertical: ThemeConstants.CONTAINER_MARGIN/2,
+        textAlign: 'center'
+    },
+    text_header: {
+        color: ThemeConstants.MAIN_WHITE,
         fontSize: ThemeConstants.FONT_SIZE_HEADER,
         fontWeight: 'bold',
-        paddingVertical: ThemeConstants.CONTAINER_MARGIN+5
+        paddingBottom: ThemeConstants.CONTAINER_MARGIN/3,
+        paddingTop: ThemeConstants.CONTAINER_MARGIN*1.25
     },
-    food: {
-        borderBottomColor: ThemeConstants.BORDER_GRAY,
-        borderBottomWidth: 1,
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        paddingVertical: 10,
+    text_water: {
+        fontSize: ThemeConstants.FONT_SIZE_REGULAR,
+        marginVertical: ThemeConstants.CONTAINER_MARGIN/2
     }
 });
 

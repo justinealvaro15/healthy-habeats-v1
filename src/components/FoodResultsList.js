@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
 
 import moment from "moment";
@@ -51,10 +51,8 @@ const FoodResultsList = ({ foodArray, setFoodArray, navigation, results, title, 
                             <TouchableOpacity 
                                 style={styles.food}
                                 onPress={() => {
-                                    //console.log(currentDate);
                                     item.dateConsumed = moment(currentDate).format('MMMM DD YYYY');
                                     item.deleteID = deleteID
-                                    //console.log(item);
                                     setFoodArray([...foodArray, item])
                                     navigation.navigate('Home')
                                 }}
@@ -78,27 +76,28 @@ const FoodResultsList = ({ foodArray, setFoodArray, navigation, results, title, 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginHorizontal: ThemeConstants.CONTAINER_MARGIN+9
+        marginHorizontal: ThemeConstants.CONTAINER_MARGIN*2
     },
     food: {
-        borderBottomColor: ThemeConstants.BORDER_GRAY,
-        borderBottomWidth: 1,
+        // borderBottomColor: ThemeConstants.BORDER_GRAY,
+        // borderBottomWidth: 1,
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingVertical: 10,
+        paddingVertical: ThemeConstants.CONTAINER_MARGIN/2,
     },
     main: {
         backgroundColor: ThemeConstants.BACKGROUND_WHITE
     },
     text_regular: {
         fontSize: ThemeConstants.FONT_SIZE_REGULAR,
-        fontWeight: '400'
+        fontWeight: '400',
+        paddingBottom: 4
     },
     text_small: {
         color: ThemeConstants.FONT_GRAY,
         fontSize: ThemeConstants.FONT_SIZE_SMALL
-    }
+    },
 });
 
 export default withNavigation(FoodResultsList);
