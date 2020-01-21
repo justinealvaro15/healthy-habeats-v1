@@ -119,22 +119,6 @@ const IntakeFoodContainer = ({ food, mealTitle, navigateToSearchFood, onDeletion
                     </View>
                 </TouchableHighlight>
             </View>
-
-            {/* <View>
-                <TouchableHighlight
-                    onPress={navigateToSearchFood}
-                    underlayColor={highlight}
-                    // style={styles.touchable}
-                >
-                    <View style={styles.add}>
-                        <Feather
-                            name='plus-circle'
-                            style={styles.button_add}
-                        />
-                        <Text style={styles.text_button}>Add</Text>
-                    </View>
-                </TouchableHighlight>
-            </View> */}
         </View>
     );
 };
@@ -160,7 +144,7 @@ const styles = StyleSheet.create({
     },
     container: {
         backgroundColor: ThemeConstants.BACKGROUND_WHITE,
-        marginBottom: ThemeConstants.CONTAINER_MARGIN
+        marginBottom: ThemeConstants.CONTAINER_MARGIN*0.8
     },
     details: {
         marginHorizontal: ThemeConstants.CONTAINER_MARGIN*2

@@ -392,10 +392,15 @@ const HomeScreen = ({ navigation }) => {
                 }}
                 
             />
-            <StatsContainer
-                valuesTotal = {userData}
-                valuesCurrent = {current}
-            />
+            
+            <View>
+                <View style={styles.padding}></View>
+
+                <StatsContainer
+                    valuesTotal = {userData}
+                    valuesCurrent = {current}
+                />
+            </View>
 
             <IntakeFoodContainer
                 food={current_breakfast}
@@ -476,9 +481,19 @@ const styles = StyleSheet.create({
         backgroundColor: ThemeConstants.MAIN_WHITE,
         flex: 1
     },
+    padding: {
+        backgroundColor: ThemeConstants.MAIN_BLUE,
+        height: 100,
+        position: 'absolute',
+        left: 0,
+        right: 0
+    },
     status_bar: {
         backgroundColor: ThemeConstants.MAIN_BLUE,
         height: Constants.statusBarHeight+5
+    },
+    stats: {
+        position: 'relative',
     }
 });
 
