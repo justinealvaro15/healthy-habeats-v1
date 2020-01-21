@@ -56,7 +56,8 @@ const ScreenTab = createBottomTabNavigator({
         UserProfile: {
             screen: UserProfileScreen,
             navigationOptions: {
-                title: 'Profile'
+                title: 'Profile',
+                header: null
             }
         }
     }, {
