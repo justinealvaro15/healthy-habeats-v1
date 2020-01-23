@@ -41,7 +41,7 @@ const AnthropometricScreen = ({ navigation }) => {
         setBmi(result.toString());
         computeActivityLevel();
         if(result < 18.5){
-            setBmiAssessment('Underweight');
+            setBmiAssessment('Underweight');activityLevel
             a = 'Underweight';
         }
         else if(result >= 18.5 && result <= 24.9){
