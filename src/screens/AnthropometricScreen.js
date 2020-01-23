@@ -55,7 +55,7 @@ const AnthropometricScreen = ({ navigation }) => {
         saveData('weight', JSON.stringify(weight));
         saveData('height', JSON.stringify(height));
         saveData('bmi', JSON.stringify(result));
-        saveData('bmiAssessment', a);
+        saveData('bmiAssessment', JSON.stringify(a));
     }; 
 
     const computeActivityLevel = () => {

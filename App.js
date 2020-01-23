@@ -32,7 +32,7 @@ const AppStack = createStackNavigator({
     },
     Welcome: WelcomeScreen
 }, {
-    initialRouteName: 'Home',
+    initialRouteName: 'Welcome',
     defaultNavigationOptions: {
         headerStyle: {
             backgroundColor: MAIN_BLUE
