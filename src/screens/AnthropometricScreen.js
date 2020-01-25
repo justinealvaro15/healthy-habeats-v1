@@ -34,6 +34,22 @@ const AnthropometricScreen = ({ navigation }) => {
     const [weightValid, setWeightValid] = useState();
     const [heightValid, setHeightValid] = useState();
 
+    const getUserData = async () => {
+
+        const data1 = await AsyncStorage.getItem('weight') || 0;
+        const data2 = await AsyncStorage.getItem('height') || 0;
+        const data3 = await AsyncStorage.getItem('activityLevel') || 3;
+
+        setWeight(parseInt(JSON.parse(data1)));
+        setHeight(parseInt(JSON.parse(data2)));
+        setActivityLevel(parseInt(JSON.parse(data3)));
+
+        console.log(data1);
+        console.log(data2);
+        console.log(data3);
+        
+    };
+
     const computeBMI = () => {
         let a = '';
         const pheight = Math.pow(parseFloat(height)/100,2);
@@ -134,6 +150,10 @@ const AnthropometricScreen = ({ navigation }) => {
         saveData('TEA', JSON.stringify(TEA));
     }, [TEA]);
 
+    useEffect( () => {
+        getUserData();
+    },[]);
+
     const saveData = async (key, value) => {
 		try {
 			await AsyncStorage.setItem(key, value);
@@ -190,8 +210,9 @@ const AnthropometricScreen = ({ navigation }) => {
                                 <TextInput
                                     keyboardType='numeric'
                                     term={weight.toString()}
+                                    value = {weight != 0 ? weight.toString() : null}
                                     onChangeText={newWeight => setWeight(newWeight.length === 0 ? 0 : parseInt(newWeight))}
-                                    placeholder='Weight in kg'
+                                    placeholder={weight == 0 ? 'Weight in kg' : null}
                                     style={{flex: 1}}
                                 />
                             </View>
@@ -208,9 +229,10 @@ const AnthropometricScreen = ({ navigation }) => {
                             <View style={styles.input}>
                                 <TextInput
                                     keyboardType='numeric'
-                                    term={weight.toString()}
+                                    term={height.toString()}
+                                    value = {height != 0 ? height.toString() : null}
                                     onChangeText={newHeight => setHeight(newHeight.length === 0 ? 0 : parseInt(newHeight))}
-                                    placeholder='Height in cm'
+                                    placeholder={height == 0 ? 'Height in cm' : null}
                                     style={{flex: 1}}
                                 />
                             </View>
@@ -227,7 +249,7 @@ const AnthropometricScreen = ({ navigation }) => {
                     <View style={styles.details}>
                         <Text style={styles.text_header}>Activity Level</Text>
                         <Slider
-                            value={activityLevel}
+                            value = {activityLevel != 3 ? activityLevel : activityLevel}
                             maximumValue={5}
                             minimumValue={1}
                             onValueChange={(value) => setActivityLevel(value)}
