@@ -70,11 +70,6 @@ const HomeScreen = ({ navigation }) => {
     const [dateSelected, setDateSelected] = useState(moment().format('MMMM DD YYYY'));
     const [dateMoment, setDateMoment] = useState(moment());
 
-    const bannerUriBreakfast = require('../../assets/banners/banner-breakfast.png');
-    const bannerUriLunch = require('../../assets/banners/banner-lunch.png')
-    const bannerUriDinner = require('../../assets/banners/banner-dinner.png')
-    const bannerUriSnacks = require('../../assets/banners/banner-snacks.png')
-
     const [isDeleted, setIsDeleted] = useState();
 
     const deleteData = async (key) => {

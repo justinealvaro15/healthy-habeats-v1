@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { AsyncStorage, Button, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { AsyncStorage, ScrollView, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+import { Tooltip } from 'react-native-elements';
 import { withNavigation } from 'react-navigation';
-import { Permissions, Notifications } from 'expo';
-import Input from '../components/Input';
+import { Feather } from '@expo/vector-icons';
+
+import AnthropometricContainer from '../components/AnthropometricContainer';
 
 import * as ThemeConstants from '../common/Themes';
+import * as DbwText from '../common/DbwText';
+import Constants from 'expo-constants';
 
 let home_counter = 1;
 let userProfile_counter = 1;
@@ -26,7 +30,8 @@ const UserProfileScreen = ({ navigation }) => {
         fats: 0,
         riceExchange: 0,
         meatAndFishExchange: 0,
-        fatExchange:0
+        fatExchange: 0,
+        activityLevel: 0
     });
     
     const saveData = async (key, value) => {
@@ -51,10 +56,7 @@ const UserProfileScreen = ({ navigation }) => {
             const carbs = await AsyncStorage.getItem('total_carbs');
             const proteins = await AsyncStorage.getItem('total_proteins');
             const fats = await AsyncStorage.getItem('total_fats');
-
-            const riceExchange = await AsyncStorage.getItem('riceExchange');
-            const meatAndFishExchange = await AsyncStorage.getItem('meatAndFishExchange');
-            const fatExchange = await AsyncStorage.getItem('fatExchange');
+            const activityLevel = await AsyncStorage.getItem('activityLevel');
             
             setUserData({
                 height: height,
@@ -67,9 +69,7 @@ const UserProfileScreen = ({ navigation }) => {
                 carbs: carbs,
                 proteins: proteins,
                 fats: fats,
-                riceExchange: riceExchange,
-                meatAndFishExchange: meatAndFishExchange,
-                fatExchange, fatExchange
+                activityLevel: activityLevel
             });
 		} catch (error) {
 			// Error retrieving data
@@ -127,106 +127,154 @@ const UserProfileScreen = ({ navigation }) => {
 	
 
     return (
-        <ScrollView style={styles.main}>
-            <View style={styles.container}>
-                <View style={styles.details}>
-                <Text>Your Height is: {(userData.height)} cm</Text>
-                <Text>Your Weight is: {(userData.weight)} kg</Text>
-                <Text>Your BMI is: {userData.bmi}</Text>
-                <Text>Your BMI Assessment is: {userData.bmiAssessment}</Text>
-                <Text>Your Desirable Body Weight is {userData.DBW}</Text>
-                <Text>Your Total Energy Allowance is: {userData.TEA} calories</Text>
-                <Text>Diet Prescription:</Text>
-                <Text>Calories: {userData.calories} calories</Text>
-                <Text>Carbohydrates: {userData.carbs} grams</Text>
-                <Text>Proteins: {userData.proteins} grams</Text>
-                <Text>Fats: {userData.fats} grams</Text>
-                <Text>Food Exchanges: </Text>
-                {userData.riceExchange < 0 
-                    ? <Text>Rice Exchanges: 0</Text>
-                    : <Text>Rice Exchanges: {userData.riceExchange}</Text>
-                }
-                {userData.meatAndFishExchange < 0 
-                    ? <Text>Meat and Fish Exchanges: 0 </Text>
-                    : <Text>Meat and Fish Exchanges: {userData.meatAndFishExchange}</Text>
-                }
-                {userData.fatExchange < 0 
-                    ? <Text>Fat Exchanges: 0 </Text>
-                    : <Text>Fat Exchanges: {userData.fatExchange}</Text>
-                }
+        <ScrollView 
+            contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between', flexDirection: 'column' }}
+            style={styles.main}
+        >
+            <View style={{ justifyContent: 'flex-start' }}>
+                <View style={styles.status_bar}/>
+
+                <View style={styles.container_blue}>
+                    <Text style={styles.text_header}>Personal Profile</Text>
                 </View>
+
+                <View>
+                    <View style={styles.padding}/>
+                    <AnthropometricContainer
+                        activityLevel={parseInt(userData.activityLevel)}
+                        height={userData.height}
+                        weight={userData.weight}
+                    />
+                </View>
+
+                <TouchableHighlight
+                    style={styles.button_edit}
+                    onPress={() => console.log('edit personal deets')}
+                    underlayColor={ThemeConstants.HIGHLIGHT_YELLOW}
+                >
+                    <View>
+                        <Text style={styles.text_button}>Edit Personal Details</Text>
+                    </View>
+                </TouchableHighlight>
+            </View>
+
+            {/* insert weekly stats here */}
+
+            <View style={{ justifyContent: 'flex-end' }}>
+                <View style={styles.container_blue}>
+                    <View style={styles.container_dbw}>
+                        <View alignItems='center' flexDirection='row' justifyContent='space-between'>
+                            <Text style={styles.text_title}>Ideal Body Weight</Text>
+                            <Tooltip 
+                                backgroundColor={ThemeConstants.HIGHLIGHT_GRAY}
+                                height={100}
+                                popover={<Text>{DbwText.tooltip}</Text>}
+                                width={250}
+                            >
+                                <Feather
+                                    name='info'
+                                    style={styles.info_dbw}
+                                />
+                            </Tooltip>
+                        </View>
+                        <View style={styles.details_dbw}>
+                            <View style={styles.container_number}>
+                                <Text style={styles.text_number}>{userData.DBW} kg</Text>
+                            </View>
+
+                            <View style={styles.container_desc}>
+                                <Text>
+                                    {userData.weight < userData.DBW*0.9 ? DbwText.message[0] :
+                                        (userData.weight > userData.DBW*1.1 ? DbwText.message[2] : DbwText.message[1])}
+                                </Text>
+                            </View>
+                        </View>
+                    </View>
+                </View> 
             </View>
         </ScrollView>
-
-        // Insert inside ScrollView
-        //     <Text>Your BMI is: {bmi}</Text>
-        //     <Text>Your BMI Assessment is: {bmiAssessment}</Text>
-        //     <Text>Your Desirable Body Weight is {DBW}</Text>
-        //     <Text>Your Total Energy Allowance is: {TEA} calories</Text>
-        //     <Text>Calorie Allowance Distribution:</Text>
-        //     <Text>Carbohydrates: {distributions.carbsCalorie} calories</Text>
-        //     <Text>Proteins: {distributions.proteinsCalorie} calories</Text>
-        //     <Text>Fats: {distributions.fatsCalorie} calories</Text>
-        //     <Text>Grams Allowance Distribution:</Text>
-        //     <Text>Carbohydrates: {distributions.carbs} grams</Text>
-        //     <Text>Proteins: {distributions.proteins} grams</Text>
-        //     <Text>Fats: {distributions.fats} grams</Text>
-        //     <Text>Diet Prescription:</Text>
-        //     <Text>Calories: {Math.ceil(TEA/50)*50} {} calories</Text>
-        //     <Text>Carbohydrates: {Math.ceil((distributions.carbs)/5)*5} grams</Text>
-        //     <Text>Proteins: {Math.ceil((distributions.proteins)/5)*5} grams</Text>
-        //     <Text>Fats: {Math.ceil((distributions.fats)/5)*5} grams</Text>
-        //     <Text>Food Exchanges: </Text>
-        //     {distributions.riceExchange < 0 
-        //         ? <Text>Rice Exchanges: 0</Text>
-        //         : <Text>Rice Exchanges: {distributions.riceExchange}</Text>
-        //     }
-        //     {distributions.meatAndFishExchange < 0 
-        //         ? <Text>Meat and Fish Exchanges: 0 </Text>
-        //         : <Text>Meat and Fish Exchanges: {distributions.meatAndFishExchange}</Text>
-        //     }
-        //     {distributions.fatExchange < 0 
-        //         ? <Text>Fat Exchanges: 0 </Text>
-        //         : <Text>Fat Exchanges: {distributions.fatExchange}</Text>
-        //     }
     );
 };
 
 const styles = StyleSheet.create({
-    button: {
-        // color: ___
-        alignItems: 'center',
-        marginTop: ThemeConstants.CONTAINER_MARGIN+5,
-    },
-    container: {
-        backgroundColor: ThemeConstants.BACKGROUND_WHITE,
+    button_edit: {
+        backgroundColor: ThemeConstants.MAIN_YELLOW,
         borderRadius: ThemeConstants.CONTAINER_RADIUS,
-        marginHorizontal: ThemeConstants.CONTAINER_MARGIN,
-        marginTop: ThemeConstants.CONTAINER_MARGIN
-    },
-    details: {
-        marginHorizontal: ThemeConstants.CONTAINER_MARGIN+9,
-        paddingBottom: 15
-    },
-    input: {
         flex: 1,
-        fontSize: ThemeConstants.FONT_SIZE_REGULAR
+        marginHorizontal: ThemeConstants.CONTAINER_MARGIN*2,
+        marginVertical: ThemeConstants.CONTAINER_MARGIN
     },
-    main: {
-        backgroundColor: ThemeConstants.BACKGROUND_LIGHT_GRAY,
+    container_blue: {
+        backgroundColor: ThemeConstants.MAIN_BLUE,
         flex: 1
     },
-    text_header: {
+    container_dbw: {
+        backgroundColor: ThemeConstants.MAIN_WHITE,
+        marginBottom: ThemeConstants.CONTAINER_MARGIN*1.5,
+        marginHorizontal: ThemeConstants.CONTAINER_MARGIN*1.5,
+        paddingBottom: ThemeConstants.CONTAINER_MARGIN,
+        paddingHorizontal: ThemeConstants.CONTAINER_MARGIN,
+        paddingTop: ThemeConstants.CONTAINER_MARGIN/2
+    },
+    container_number: {
+        alignItems: 'center'
+    },
+    container_desc: {
+        flex: 1
+    },
+    details_dbw: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: ThemeConstants.CONTAINER_MARGIN/2,
+    },
+    info_dbw: {
+        color: ThemeConstants.FONT_GRAY,
+        fontSize: ThemeConstants.FONT_SIZE_MEDIUM,
+        fontWeight: 'bold'
+    },
+    padding: {
+        backgroundColor: ThemeConstants.MAIN_BLUE,
+        height: 75,
+        position: 'absolute',
+        left: 0,
+        right: 0
+    },
+    status_bar: {
+        backgroundColor: ThemeConstants.MAIN_BLUE,
+        height: Constants.statusBarHeight
+    },
+    text_button: {
+        alignContent: 'center',
+        color: ThemeConstants.MAIN_WHITE,
         fontSize: ThemeConstants.FONT_SIZE_REGULAR,
         fontWeight: 'bold',
-        paddingVertical: ThemeConstants.CONTAINER_MARGIN-1
+        marginVertical: ThemeConstants.CONTAINER_MARGIN/2,
+        textAlign: 'center'
     },
-    text_regular: {
-        borderTopColor: ThemeConstants.BORDER_GRAY,
-        borderTopWidth: 1,
-        fontSize: ThemeConstants.FONT_SIZE_REGULAR,
+    text_header: {
+        color: ThemeConstants.MAIN_WHITE,
+        fontSize: ThemeConstants.FONT_SIZE_HEADER,
+        fontWeight: 'bold',
+        marginHorizontal: ThemeConstants.CONTAINER_MARGIN*1.5,
         paddingVertical: ThemeConstants.CONTAINER_MARGIN
-    }
+    },
+    text_number: {
+        fontSize: ThemeConstants.FONT_SIZE_MEDIUM,
+        fontWeight: 'bold',
+        includeFontPadding: false,
+        marginRight: ThemeConstants.CONTAINER_MARGIN/2,
+        padding: ThemeConstants.CONTAINER_MARGIN/2,
+        textTransform: 'uppercase',
+        borderWidth: 1,
+        borderColor: ThemeConstants.BORDER_GRAY,
+        borderRadius: ThemeConstants.CONTAINER_RADIUS
+    },
+    text_title: {
+        color: ThemeConstants.FONT_GRAY,
+        fontSize: ThemeConstants.FONT_SIZE_SMALL,
+        fontWeight: 'bold'
+    },
 });
 
 export default withNavigation(UserProfileScreen);

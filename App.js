@@ -37,8 +37,7 @@ const AppStack = createStackNavigator({
         navigationOptions: {
             title: 'Search for food'
         }
-    },
-    Welcome: WelcomeScreen
+    }
 }, {
     initialRouteName: 'Home',
     defaultNavigationOptions: {
@@ -64,7 +63,8 @@ const ScreenTab = createBottomTabNavigator({
         UserProfile: {
             screen: UserProfileScreen,
             navigationOptions: {
-                title: 'Profile'
+                title: 'Profile',
+                header: null
             }
         }
     }, {
@@ -106,9 +106,10 @@ const ScreenTab = createBottomTabNavigator({
 });
 
 export default createAppContainer(createSwitchNavigator({
-    App: ScreenTab
+    App: ScreenTab,
+    Splash: WelcomeScreen
 }, {
-    initialRouteName: 'App'
+    initialRouteName: 'Splash'
 }));
 
 

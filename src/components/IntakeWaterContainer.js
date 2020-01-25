@@ -113,11 +113,11 @@ const IntakeWaterContainer = ({water, setWater, currentDate, waterTemplate, wate
 };
 
 const styles = StyleSheet.create({
-    button_add: {
+    button: {
         backgroundColor: ThemeConstants.MAIN_YELLOW,
         borderRadius: ThemeConstants.CONTAINER_RADIUS,
         marginVertical: ThemeConstants.CONTAINER_MARGIN/2,
-        paddingHorizontal: ThemeConstants.CONTAINER_MARGIN
+        width: 50
     },
     container: {
         backgroundColor: ThemeConstants.MAIN_BLUE,
@@ -132,7 +132,8 @@ const styles = StyleSheet.create({
         backgroundColor: ThemeConstants.MAIN_WHITE,
         borderRadius: ThemeConstants.CONTAINER_RADIUS,
         marginVertical: ThemeConstants.CONTAINER_MARGIN/2,
-        paddingHorizontal: ThemeConstants.CONTAINER_MARGIN*1.5
+        paddingHorizontal: ThemeConstants.CONTAINER_MARGIN*1.5,
+        maxWidth: 160
     },
     text_button: {
         alignContent: 'center',
@@ -150,6 +151,7 @@ const styles = StyleSheet.create({
         paddingTop: ThemeConstants.CONTAINER_MARGIN*1.25
     },
     text_water: {
+        textAlign: 'center',
         fontSize: ThemeConstants.FONT_SIZE_REGULAR,
         marginVertical: ThemeConstants.CONTAINER_MARGIN/2
     }
