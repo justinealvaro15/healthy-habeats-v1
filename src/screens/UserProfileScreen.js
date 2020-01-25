@@ -97,6 +97,7 @@ const UserProfileScreen = ({ navigation }) => {
                 <TouchableHighlight
                     style={styles.button_edit}
                     onPress={() => console.log('edit personal deets')}
+                    underlayColor={ThemeConstants.HIGHLIGHT_YELLOW}
                 >
                     <View>
                         <Text style={styles.text_button}>Edit Personal Details</Text>

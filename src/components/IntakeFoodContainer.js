@@ -118,6 +118,7 @@ const IntakeFoodContainer = ({ food, mealTitle, navigateToSearchFood, onDeletion
                 <TouchableHighlight
                     style={styles.button_add}
                     onPress={navigateToSearchFood}
+                    underlayColor={ThemeConstants.HIGHLIGHT_YELLOW}
                 >
                     <View>
                         <Text style={styles.text_button}>Add {mealTitle}</Text>

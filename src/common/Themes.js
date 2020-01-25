@@ -3,7 +3,7 @@ export const MAIN_BLUE = '#0455AE';
 export const MAIN_WHITE = '#FFFFFF';
 export const MAIN_YELLOW = '#FBA707';
 
-export const HIGHLIGHT_YELLOW = '#FEE5B5';
+export const HIGHLIGHT_YELLOW = '#FBD007';
 export const HIGHLIGHT_GRAY = '#EFEFF0'
 
 export const BORDER_GRAY = '#D1D0D4';

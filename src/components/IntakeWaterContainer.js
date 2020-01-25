@@ -19,6 +19,7 @@ const IntakeWaterContainer = () => {
                     <TouchableHighlight
                         style={styles.button}
                         onPress={() => water > 0 ? setWater(water-1) : null}
+                        underlayColor={ThemeConstants.HIGHLIGHT_YELLOW}
                     >
                         <View>
                             <Text style={styles.text_button}>-</Text>
@@ -32,6 +33,7 @@ const IntakeWaterContainer = () => {
                     <TouchableHighlight
                         style={styles.button}
                         onPress={() => setWater(water+1)}
+                        underlayColor={ThemeConstants.HIGHLIGHT_YELLOW}
                     >
                         <View>
                             <Text style={styles.text_button}>+</Text>
