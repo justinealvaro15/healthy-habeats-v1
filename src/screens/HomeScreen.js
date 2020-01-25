@@ -414,7 +414,7 @@ const HomeScreen = ({ navigation }) => {
         } else{
             saveData('total_breakfast', JSON.stringify(breakfast));
         }
-        console.log("useEffect#2 in action: breakfast sync ");
+        //console.log("useEffect#2 in action: breakfast sync ");
     }, [breakfast]);
 
     useEffect(() => {
@@ -487,7 +487,7 @@ const HomeScreen = ({ navigation }) => {
     useEffect( () => {
         setTimeout(function() { deleteMagic(); }, 3000);
         //setTimeout(function() { syncWaterData2('total_water'); }, 5000);
-        //setTimeout(function() { saveWaterData(); }, 1000);
+        //setTimeout(function() { getUserData(); }, 2000);
     }, []);
 
     return(

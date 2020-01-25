@@ -113,6 +113,7 @@ const UserProfileScreen = ({ navigation }) => {
         getUserData();
         prepareCounter();
         //console.log(screen_counter);
+        console.log('USER PROFILE');
     },[]);
 
     useEffect( () => {
@@ -120,6 +121,7 @@ const UserProfileScreen = ({ navigation }) => {
 			//console.log('Screen Focused');
 			userProfile_counter+=1;
             saveUserProfileCounter('userProfile_counter', userProfile_counter);
+            getUserData();
 			console.log('UserProfile Counter: ' + userProfile_counter);	
 		});
 	},[]);
@@ -149,7 +151,7 @@ const UserProfileScreen = ({ navigation }) => {
 
                 <TouchableHighlight
                     style={styles.button_edit}
-                    onPress={() => console.log('edit personal deets')}
+                    onPress={() => navigation.navigate('Anthropometric')}
                     underlayColor={ThemeConstants.HIGHLIGHT_YELLOW}
                 >
                     <View>
