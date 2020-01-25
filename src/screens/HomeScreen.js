@@ -100,32 +100,10 @@ const HomeScreen = ({ navigation }) => {
     };
 
     const deleteMagic = async () => {
-        
-        /*const data =  await AsyncStorage.getItem('total_breakfast');
-
-        counter = 0;
-        for (let i = 0; i < data.length; i++) {
-            if (data[i].foodName != 'Magic Pill' ){
-                counter = counter + 1;
-            }
-            else{
-                break;
-            }
-        }
-        let x = breakfast.filter(breakfast => breakfast.foodName !== 'Magic Pill');
-        console.log(x);
-        breakfast.splice(counter,1); // strip in total breakfast [1,2,3]
-        console.log('*****************************************');
-        console.log(x);
-        console.log('*****************************************');
-        setBreakfast(breakfast);*/
-
         setIsDeleted(Math.random());
         setWaterDeleted(Math.random());
         //setIsWaterAdded(Math.random());
         console.log("RE-INITIALIZE");
-
-    
     };
 
     const syncBreakfastData = async (key) => {
@@ -259,10 +237,6 @@ const HomeScreen = ({ navigation }) => {
         }
     };
 
-  
-
-
-    
     const syncFoodsData = async () => {
 		try {
             let a,b,c,d = 0;
@@ -436,6 +410,7 @@ const HomeScreen = ({ navigation }) => {
     useEffect(() => {
         if(breakfast.length == 0){
             saveData('total_breakfast', JSON.stringify(breakfast));
+           
         } else{
             saveData('total_breakfast', JSON.stringify(breakfast));
         }
@@ -455,7 +430,7 @@ const HomeScreen = ({ navigation }) => {
     useEffect(() => {
         if(dinner.length == 0){
             saveData('total_dinner', JSON.stringify(dinner));   
-        }else{
+        } else{
             saveData('total_dinner', JSON.stringify(dinner));
             //setTotalFoodArray([...totalFoodArray, dinner]);
         }
@@ -465,7 +440,7 @@ const HomeScreen = ({ navigation }) => {
     useEffect(() => {
         if(snacks.length == 0){
             saveData('total_snacks',JSON.stringify(snacks));
-        }else{
+        } else{
             //console.log("OLD USER");
             saveData('total_snacks', JSON.stringify(snacks));
             //setTotalFoodArray([...totalFoodArray, snacks]);

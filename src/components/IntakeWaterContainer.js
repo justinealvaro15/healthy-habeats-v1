@@ -31,7 +31,6 @@ const IntakeWaterContainer = ({water, setWater, currentDate, waterTemplate, wate
                         onPress={ () => {
                             x_date = [];
                             counter = 0;
-
                             if(waterCount> 0){
                                 for (let i = 0; i < water.length; i++) {
                                     
