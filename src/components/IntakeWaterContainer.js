@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 
 import * as ThemeConstants from '../common/Themes';
@@ -7,8 +7,6 @@ import moment from "moment";
 
 
 const IntakeWaterContainer = ({water, setWater, currentDate, waterTemplate, waterCount, setWaterDeleted}) => {
-    
-    //console.log(waterIntake);
     let temp = [];
     let x_date = [];
     let counter = 0;
@@ -17,7 +15,6 @@ const IntakeWaterContainer = ({water, setWater, currentDate, waterTemplate, wate
         dateConsumed: waterTemplate.dateConsumed,
         waterID: waterTemplate.waterID
     };
-    //console.log(currentWater);
 
     return(
         <View style={styles.container}>
@@ -34,7 +31,6 @@ const IntakeWaterContainer = ({water, setWater, currentDate, waterTemplate, wate
                         onPress={ () => {
                             x_date = [];
                             counter = 0;
-                            //setCurrentWaterIntake(currentWaterIntake[0].count + 1);
                             if(waterCount> 0){
                                 for (let i = 0; i < water.length; i++) {
                                     
@@ -43,8 +39,8 @@ const IntakeWaterContainer = ({water, setWater, currentDate, waterTemplate, wate
                                         
                                     }
                                 }
-                                //
-                                //x_date contains all water for specific date
+
+                                // x_date contains all water for specific date
                                 deleteID = x_date[0].waterID;
                                 x_date.splice(0,1); //delete one water entry
                                 for (let i = 0; i < water.length; i++) {
@@ -63,8 +59,8 @@ const IntakeWaterContainer = ({water, setWater, currentDate, waterTemplate, wate
                                 setWaterDeleted(Math.random());
 
                             }
-                        }
-                    }
+                        }}
+                    underlayColor={ThemeConstants.HIGHLIGHT_YELLOW}
                     >
                         <View>
                             <Text style={styles.text_button}>-</Text>
@@ -80,27 +76,10 @@ const IntakeWaterContainer = ({water, setWater, currentDate, waterTemplate, wate
                         onPress={ () => {
                             waterDrink.dateConsumed = moment(currentDate).format('MMMM DD YYYY');
                             waterDrink.waterID = Math.floor(Math.random() * 99999);
-                            //console.log(waterTemplate.count);
-                            //console.log('----------------ADDED---------------');
-                            //console.log(waterDrink);
-                            //console.log('----------------ADDED---------------');
                             setWater([...water, waterDrink]);
-
-
-
-
-                            //setCurrentWaterIntake(currentWaterIntake[0].count + 1);
-                            //console.log(waterIntake.length);
-                            /*for (let i = 0; i < waterIntake.length; i++) {
-                                if(waterIntake[i].dateConsumed === dateSelected){
-                                    waterIntake[i].count = waterIntake[i].count + 1;
-                                }
-                            }
-                            setWaterIntake(waterIntake);
-                            setIsWaterAdded(Math.random());
-                            */
                             }
                         }
+                        underlayColor={ThemeConstants.HIGHLIGHT_YELLOW}
                     >
                         <View>
                             <Text style={styles.text_button}>+</Text>

@@ -237,10 +237,6 @@ const HomeScreen = ({ navigation }) => {
         }
     };
 
-  
-
-
-    
     const syncFoodsData = async () => {
 		try {
             let a,b,c,d = 0;
@@ -416,10 +412,9 @@ const HomeScreen = ({ navigation }) => {
             saveData('total_breakfast', JSON.stringify(breakfast));
            
         } else{
-            //console.log("OLD USER");
             saveData('total_breakfast', JSON.stringify(breakfast));
-            
         }
+        console.log("useEffect#2 in action: breakfast sync ");
     }, [breakfast]);
 
     useEffect(() => {
@@ -434,11 +429,10 @@ const HomeScreen = ({ navigation }) => {
 
     useEffect(() => {
         if(dinner.length == 0){
-            //console.log("NEW USERS");
-            saveData('total_dinner', JSON.stringify(dinner));
+            saveData('total_dinner', JSON.stringify(dinner));   
         } else{
-            //console.log("OLD USER");
-            saveData('total_dinner', JSON.stringify(dinner)); 
+            saveData('total_dinner', JSON.stringify(dinner));
+            //setTotalFoodArray([...totalFoodArray, dinner]);
         }
         //console.log("useEffect#4 in action: dinner sync ");
     }, [dinner]);
@@ -446,10 +440,10 @@ const HomeScreen = ({ navigation }) => {
     useEffect(() => {
         if(snacks.length == 0){
             saveData('total_snacks',JSON.stringify(snacks));
-        }else{
-            //console.log("NEW USERS");
-            //getData('total_snacks');
+        } else{
+            //console.log("OLD USER");
             saveData('total_snacks', JSON.stringify(snacks));
+            //setTotalFoodArray([...totalFoodArray, snacks]);
         }
         //console.log("useEffect#5 in action: snacks sync ");
     }, [snacks]);
@@ -484,20 +478,19 @@ const HomeScreen = ({ navigation }) => {
         saveDeletionData();
         syncFoodsData();
        // console.log("useEffect#7 in action: data is deleted");
-    },[isDeleted]);
+    }, [isDeleted]);
 
     useEffect( () => {
         syncWaterData2();
     },[waterDeleted])
 
- useEffect( () => {
-    setTimeout(function() { deleteMagic(); }, 3000);
-    //setTimeout(function() { syncWaterData2('total_water'); }, 5000);
-    //setTimeout(function() { saveWaterData(); }, 1000);
- }, []);
+    useEffect( () => {
+        setTimeout(function() { deleteMagic(); }, 3000);
+        //setTimeout(function() { syncWaterData2('total_water'); }, 5000);
+        //setTimeout(function() { saveWaterData(); }, 1000);
+    }, []);
 
     return(
-         
         <ScrollView style={styles.main}>
             <View style={styles.status_bar}/>
 
@@ -518,7 +511,6 @@ const HomeScreen = ({ navigation }) => {
                     setDateMoment(moment(onDateSelected));
                     //console.log(moment('2019-11-30T13:51:45.046Z').format('MMMM DD YYYY')); // FOR DEV PURPOSES ONLY
                 }}
-                
             />
             
             <View>

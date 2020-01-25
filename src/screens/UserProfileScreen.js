@@ -14,7 +14,6 @@ let home_counter = 1;
 let userProfile_counter = 1;
 
 const UserProfileScreen = ({ navigation }) => {
-
     const [hasSwitched, setHasSwitched] = useState(0);
 
     const [userData, setUserData] = useState({
@@ -97,7 +96,8 @@ const UserProfileScreen = ({ navigation }) => {
 			// Error retrieving data
 			console.log(error.message);
         }    
-	};
+    };
+    
 	const saveUserProfileCounter = async (key,value) => {
 		try {
 			
