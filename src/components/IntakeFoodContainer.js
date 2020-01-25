@@ -55,7 +55,7 @@ const IntakeFoodContainer = ({ food, mealTitle, navigateToSearchFood, onDeletion
                                 <View>
                                     <Text style={styles.text_regular}>{item.foodName}</Text>
                                     <Text style={styles.text_small}>
-                                        Weight: {item.grams} g  •  Energy: {item.calories} kCal
+                                        Weight: {item.grams} g  •  Energy: {item.calories} kcal
                                     </Text>
                                 </View>
 

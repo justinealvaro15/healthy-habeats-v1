@@ -4,7 +4,7 @@ import { Bar } from 'react-native-progress';
 
 import * as ThemeConstants from '../common/Themes';
 
-const StatsDetail = ({ title, valueTotal, valueCurrent }) => {
+const StatsDetail = ({ title, unit, valueTotal, valueCurrent }) => {
     const progress = valueCurrent/valueTotal ? valueCurrent/valueTotal : null;
 
     return(
@@ -17,7 +17,7 @@ const StatsDetail = ({ title, valueTotal, valueCurrent }) => {
                 />
             </View>
             <Text style={styles.text_header}>{title}</Text>
-            <Text style={styles.text_regular}>{valueCurrent}/{valueTotal}</Text>
+            <Text style={styles.text_regular}>{valueCurrent}/{valueTotal} {unit}</Text>
         </View>
     );
 };
