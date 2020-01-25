@@ -10,7 +10,12 @@ import * as ThemeConstants from '../common/Themes';
 import * as DbwText from '../common/DbwText';
 import Constants from 'expo-constants';
 
+let home_counter = 1;
+let userProfile_counter = 1;
+
 const UserProfileScreen = ({ navigation }) => {
+    const [hasSwitched, setHasSwitched] = useState(0);
+
     const [userData, setUserData] = useState({
         weight: 0,
         height: 0,
@@ -71,7 +76,55 @@ const UserProfileScreen = ({ navigation }) => {
 		}      
     };
 
-    useEffect(() => {getUserData()}, [])
+    const prepareCounter = async () => {
+		try {
+			const data2 = await AsyncStorage.getItem('home_counter') || 'empty';
+			const data3 = await AsyncStorage.getItem('userProfile_counter') || 'empty';
+
+			if(data2 === 'empty' ){
+				
+            } else{
+                home_counter = parseInt(JSON.parse(data2));
+			}
+			if(data3 === 'empty' ){
+				
+            } else{
+                userProfile_counter = parseInt(JSON.parse(data3));
+               
+            }
+		} catch (error) {
+			// Error retrieving data
+			console.log(error.message);
+        }    
+    };
+    
+	const saveUserProfileCounter = async (key,value) => {
+		try {
+			
+			await AsyncStorage.setItem(key,JSON.stringify(value));
+			
+		} catch (error) {
+			// Error retrieving data
+			console.log(error.message);
+		}
+	};
+
+    useEffect( () => {
+        getUserData();
+        prepareCounter();
+        //console.log(screen_counter);
+    },[]);
+
+    useEffect( () => {
+        focusListener = navigation.addListener('didFocus', () => {
+			//console.log('Screen Focused');
+			userProfile_counter+=1;
+            saveUserProfileCounter('userProfile_counter', userProfile_counter);
+			console.log('UserProfile Counter: ' + userProfile_counter);	
+		});
+	},[]);
+	
+	
 
     return (
         <ScrollView 

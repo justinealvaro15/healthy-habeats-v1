@@ -30,11 +30,11 @@ export default class WelcomeScreen extends React.Component {
 			// Error retrieving data
 			console.log(error.message);
 		}      
-	}
+	};
 
 	deleteUserToken = async () => {
 		try {
-			await AsyncStorage.removeItem('userToken');
+			await AsyncStorage.removeItem(token);
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);

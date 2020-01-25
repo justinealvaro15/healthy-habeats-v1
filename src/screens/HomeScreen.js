@@ -336,10 +336,10 @@ const HomeScreen = ({ navigation }) => {
             var proteins = 0;
             var fats = 0;
             for (let i = 0; i < totalFood.length; i++) {
-                calories = calories + totalFood[i].calories;
-                carbs = carbs + totalFood[i].carbs;
-                proteins = proteins + totalFood[i].proteins;
-                fats = fats + totalFood[i].fats;
+                calories = calories + (totalFood[i].calories * totalFood[i].serving);
+                carbs = carbs + (totalFood[i].carbs * totalFood[i].serving);
+                proteins = proteins + (totalFood[i].proteins * totalFood[i].serving);
+                fats = fats + (totalFood[i].fats * totalFood[i].serving);
             }
             setCurrent({
                 current_calories: calories,
@@ -554,7 +554,7 @@ const HomeScreen = ({ navigation }) => {
                     foodArray: breakfast,
                     setFoodArray: setBreakfast,
                     currentDate: dateMoment,
-                    deleteID: Math.floor(Math.random() * 99999)
+                    deleteID: 0
                 })}
                 onDeletion={setCurrentBreakfast}
                 onDeletion2={setIsDeleted}
@@ -570,7 +570,7 @@ const HomeScreen = ({ navigation }) => {
                     foodArray: lunch,
                     setFoodArray: setLunch,
                     currentDate: dateMoment,
-                    deleteID: Math.floor(Math.random() * 99999)
+                    deleteID: 0
                 })}
                 onDeletion={setCurrentLunch}
                 onDeletion2={setIsDeleted}
@@ -586,7 +586,7 @@ const HomeScreen = ({ navigation }) => {
                     foodArray: dinner,
                     setFoodArray: setDinner,
                     currentDate: dateMoment,
-                    deleteID: Math.floor(Math.random() * 99999)
+                    deleteID: 0
                 })}
                 onDeletion={setCurrentDinner}
                 onDeletion2={setIsDeleted}
@@ -602,7 +602,7 @@ const HomeScreen = ({ navigation }) => {
                     foodArray: snacks,
                     setFoodArray: setSnacks,
                     currentDate: dateMoment,
-                    deleteID: Math.floor(Math.random() * 99999)
+                    deleteID: 0
                 })}
                 onDeletion={setCurrentSnacks}
                 onDeletion2={setIsDeleted}
