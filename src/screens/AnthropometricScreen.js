@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { AsyncStorage, Image, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { AsyncStorage, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import Slider from "react-native-slider";
 import { withNavigation } from 'react-navigation';
 
@@ -8,8 +8,6 @@ import * as AnthroText from '../common/AnthropometricText';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 
 const AnthropometricScreen = ({ navigation }) => {
-    const artAnthro = require('../../assets/art/art-anthro.png');
-
     const [weight, setWeight] = useState(0);
     const [height, setHeight] = useState(0);
     const [DBW, setDBW] = useState(0);
@@ -30,13 +28,19 @@ const AnthropometricScreen = ({ navigation }) => {
         fatExchange: 0
     });
 
+    const weightError = 'Please enter your weight.';
+    const heightError = 'Please enter your height.';
+
+    const [weightValid, setWeightValid] = useState();
+    const [heightValid, setHeightValid] = useState();
+
     const computeBMI = () => {
         let a = '';
         const pheight = Math.pow(parseFloat(height)/100,2);
         const result = Math.ceil((parseFloat(weight)/pheight));
         setBmi(result.toString());
         computeActivityLevel();
-        if(result<18.5){
+        if(result < 18.5){
             setBmiAssessment('Underweight');
             a = 'Underweight';
         }
@@ -48,14 +52,15 @@ const AnthropometricScreen = ({ navigation }) => {
             setBmiAssessment('Overweight');
             a = 'Overweight';
         }
-        else if(result > 30){
+        else{
             setBmiAssessment('Obese');
             a = 'Obese';
         }
         saveData('weight', JSON.stringify(weight));
         saveData('height', JSON.stringify(height));
         saveData('bmi', JSON.stringify(result));
-        saveData('bmiAssessment', a);
+        saveData('bmiAssessment', JSON.stringify(a));
+        saveData('activityLevel', JSON.stringify(activityLevel));
     }; 
 
     const computeActivityLevel = () => {
@@ -98,9 +103,9 @@ const AnthropometricScreen = ({ navigation }) => {
         saveData('total_proteins', JSON.stringify(Math.ceil((((weight*value)*0.15)/4)/5)*5));
         saveData('total_fats', JSON.stringify(Math.ceil((((weight*value)*0.2)/9)/5)*5));
 
-        saveData('riceExchange', JSON.stringify( Math.round(((Math.ceil((((weight*value)*0.65)/4)/5)*5)-83)/23)));
-        saveData('meatAndFishExchange', JSON.stringify( Math.round(((Math.ceil((((weight*value)*0.15)/4)/5)*5)-24)/8)));
-        saveData('fatExchange', JSON.stringify( Math.round(((Math.ceil((((weight*value)*0.2)/9)/5)*5)-19)/5)));
+        saveData('riceExchange', JSON.stringify(Math.round(((Math.ceil((((weight*value)*0.65)/4)/5)*5)-83)/23)));
+        saveData('meatAndFishExchange', JSON.stringify(Math.round(((Math.ceil((((weight*value)*0.15)/4)/5)*5)-24)/8)));
+        saveData('fatExchange', JSON.stringify(Math.round(((Math.ceil((((weight*value)*0.2)/9)/5)*5)-19)/5)));
       
         saveData('TEA', JSON.stringify(weight*value));
     };
@@ -122,12 +127,11 @@ const AnthropometricScreen = ({ navigation }) => {
         saveData('total_proteins', JSON.stringify(Math.ceil(((TEA*0.15)/4)/5)*5));
         saveData('total_fats', JSON.stringify(Math.ceil(((TEA*0.2)/9)/5)*5));
 
-        saveData('riceExchange', JSON.stringify( Math.round(((Math.ceil((((TEA)*0.65)/4)/5)*5)-83)/23)));
-        saveData('meatAndFishExchange', JSON.stringify( Math.round(((Math.ceil((((TEA)*0.15)/4)/5)*5)-24)/8)));
-        saveData('fatExchange', JSON.stringify( Math.round(((Math.ceil((((TEA)*0.2)/9)/5)*5)-19)/5)));
+        saveData('riceExchange', JSON.stringify(Math.round(((Math.ceil((((TEA)*0.65)/4)/5)*5)-83)/23)));
+        saveData('meatAndFishExchange', JSON.stringify(Math.round(((Math.ceil((((TEA)*0.15)/4)/5)*5)-24)/8)));
+        saveData('fatExchange', JSON.stringify(Math.round(((Math.ceil((((TEA)*0.2)/9)/5)*5)-19)/5)));
         
         saveData('TEA', JSON.stringify(TEA));
-       
     }, [TEA]);
 
     const saveData = async (key, value) => {
@@ -156,19 +160,21 @@ const AnthropometricScreen = ({ navigation }) => {
 			// Error retrieving data
 			console.log(error.message);
 		}
-	};
+    };
+    
+    const submit = async () => {
+        computeBMI();
+        setDBW((height - 100) - ((height - 100) * 0.1));
+        saveData('DBW', JSON.stringify((height - 100) - ((height - 100) * 0.1)));
+        navigation.replace('Home');
+    }
 
     return (
         <KeyboardAvoidingView 
             behavior='padding'
             style={{flex: 1}}
         >
-            <ScrollView style={styles.main}>
-                <Image
-                    source={artAnthro}
-                    style={styles.art}
-                />
-
+            <ScrollView style={styles.main} keyboardShouldPersistTaps='handled'>
                 <View>
                     <Text style={styles.text_title}>Personal Details</Text>
                     <Text style={styles.text_subtitle}>
@@ -191,6 +197,7 @@ const AnthropometricScreen = ({ navigation }) => {
                             </View>
                             <Text style={styles.input_converted}>{(weight*2.20462).toFixed(1)} lb</Text>
                         </View>
+                        {weightValid === false && <Text style={styles.error}>{weightError}</Text>}
                     </View>
                 </View>
 
@@ -212,6 +219,7 @@ const AnthropometricScreen = ({ navigation }) => {
                                 {Math.floor((height/2.54)%12)} in
                             </Text>
                         </View>
+                        {heightValid === false && <Text style={styles.error}>{heightError}</Text>}
                     </View>
                 </View>
 
@@ -233,11 +241,16 @@ const AnthropometricScreen = ({ navigation }) => {
                 <TouchableHighlight
                     style={styles.button}
                     underlayColor={ThemeConstants.HIGHLIGHT_YELLOW}
-                    onPress={async () => {
-                        computeBMI();
-                        setDBW((height - 100) - ((height - 100) * 0.1));
-                        saveData('DBW', JSON.stringify((height - 100) - ((height - 100) * 0.1)));
-                        navigation.replace('Home');
+                    onPress={() => {
+                        const isWeightValid = weight > 0;
+                        const isHeightValid = height > 0;
+
+                        setWeightValid(isWeightValid);
+                        setHeightValid(isHeightValid);
+                        
+                        if(isWeightValid && isHeightValid){
+                            submit();
+                        }
                     }}
                 >
                     <Text style={styles.text_button}>Save</Text>
@@ -248,19 +261,17 @@ const AnthropometricScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-    art: {
-        alignSelf: 'center',
-        marginTop: ThemeConstants.CONTAINER_MARGIN*4
-    },
     button: {
         backgroundColor: ThemeConstants.MAIN_YELLOW,
         borderRadius: ThemeConstants.CONTAINER_RADIUS,
         flex: 1,
         marginHorizontal: ThemeConstants.CONTAINER_MARGIN*2,
-        marginVertical: ThemeConstants.CONTAINER_MARGIN*1.25
+        marginBottom: ThemeConstants.CONTAINER_MARGIN*3,
+        marginTop: ThemeConstants.CONTAINER_MARGIN*1.25
+
     },
     container: {
-        backgroundColor: ThemeConstants.BACKGROUND_WHITE,
+        backgroundColor: ThemeConstants.MAIN_WHITE,
         borderRadius: ThemeConstants.CONTAINER_RADIUS,
         marginHorizontal: ThemeConstants.CONTAINER_MARGIN*2,
         marginTop: ThemeConstants.CONTAINER_MARGIN*1.25
@@ -268,6 +279,10 @@ const styles = StyleSheet.create({
     details: {
         marginHorizontal: ThemeConstants.CONTAINER_MARGIN,
         paddingBottom: ThemeConstants.CONTAINER_MARGIN
+    },
+    error: {
+        color: 'red',
+        paddingTop: 5
     },
     input: {
         borderBottomColor: ThemeConstants.BORDER_GRAY,
@@ -325,6 +340,7 @@ const styles = StyleSheet.create({
         color: ThemeConstants.MAIN_WHITE,
         fontSize: ThemeConstants.FONT_SIZE_HEADER,
         fontWeight: 'bold',
+        marginTop: ThemeConstants.CONTAINER_MARGIN*2,
         paddingVertical: ThemeConstants.CONTAINER_MARGIN*1.25,
     }
 });

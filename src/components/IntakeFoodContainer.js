@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { AsyncStorage, FlatList, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View, Button } from 'react-native';
+import React, { useState } from 'react';
+import { Alert, AsyncStorage, FlatList, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
 import { Feather } from '@expo/vector-icons'
-import Swipeout from 'react-native-swipeout';
 
 import * as ThemeConstants from '../common/Themes';
-import { isNull } from 'util';
-
 
 // FOODARRAY: contains list of foods in a particular setting
 // when pressed => FOODARRAY[INDEX] get the food object
@@ -54,52 +51,60 @@ const IntakeFoodContainer = ({ food, mealTitle, navigateToSearchFood, onDeletion
                     showsVerticalScrollIndicator={false}
                     renderItem={({item,index})=>{
                         return (
-                            //<Swipeout {...swipeSettings}>
-                            <TouchableOpacity
-                                style={styles.food}
-                                onPress={() => console.log(item.foodName + ' is pressed.')}
-                            >
+                            <TouchableOpacity style={styles.food}>
                                 <View>
                                     <Text style={styles.text_regular}>{item.foodName}</Text>
                                     <Text style={styles.text_small}>
-                                        Weight: {item.grams} g  •  Energy: {item.calories} kCal
+                                        Weight: {item.grams} g  •  Energy: {item.calories} kcal
                                     </Text>
                                 </View>
 
                                 <View style={styles.button_delete}>
                                     <Feather
-                                        name='more-horizontal'
-                                        onPress={ () => {
-                                            counter = 0;
-                                            let x = foodArray.filter(foodArray => foodArray.foodName !== item.foodName);
-                                            let y = foodArray.filter(foodArray => foodArray.foodName === item.foodName);
-                                            let data = y[0].deleteID;
-                                            
-                                            for (let i = 0; i < meal.length; i++) {
-                                                if (meal[i].deleteID != data ){
-                                                    counter = counter + 1;
+                                        name='x-circle'
+                                        onPress={() => Alert.alert(
+                                            'Are you sure?',
+                                            'Remove ' + item.foodName + ' from ' + mealTitle + '?',
+                                            [
+                                                {
+                                                    text: 'Cancel',
+                                                    onPress: () => console.log('cancel pressed')
+                                                },
+                                                {
+                                                    text: 'Remove',
+                                                    onPress: () => {
+                                                        counter = 0;
+                                                        let x = foodArray.filter(foodArray => foodArray.foodName !== item.foodName);
+                                                        let y = foodArray.filter(foodArray => foodArray.foodName === item.foodName);
+                                                        let data = y[0].deleteID;
+                                                        
+                                                        for (let i = 0; i < meal.length; i++) {
+                                                            if (meal[i].deleteID != data ){
+                                                                counter = counter + 1;
+                                                            }
+                                                            else{
+                                                                break;
+                                                            }
+                                                        }
+                                                        
+                                                        meal.splice(counter,1); // strip in total breakfast [1,2,3]
+                                                        
+                                                        if (x.length == 0){
+                                                            setFoodArray([]);
+                                                            setIsDeleted(Math.random());
+                                                            setIsDelete(Math.random());
+                                                        }
+                                                        else{
+                                                            setFoodArray(x); //current meal we are setting breakfast to contain
+                                                            setTotalFoodArray(meal);
+                                                            setIsDeleted(Math.random());
+                                                            setIsDelete(Math.random());
+                                                        }
+                                                    }
                                                 }
-                                                else{
-                                                    break;
-                                                }
-                                            }
-                                            
-                                            meal.splice(counter,1); // strip in total breakfast [1,2,3]
-                                            
-                                            if (x.length == 0){
-                                                setFoodArray([]);
-                                                setIsDeleted(Math.random());
-                                                setIsDelete(Math.random());
-                                            }
-                                            else{
-                                                setFoodArray(x); //current meal we are setting breakfast to contain
-                                                setTotalFoodArray(meal);
-                                                setIsDeleted(Math.random());
-                                                setIsDelete(Math.random());
-                                            }
-                                        }}
-                                        style={{fontSize: 25
-                                        }}
+                                            ]
+                                        )}
+                                        style={{fontSize: 25, color: ThemeConstants.FONT_GRAY}}
                                     />
                                 </View>
                             </TouchableOpacity>
@@ -113,6 +118,7 @@ const IntakeFoodContainer = ({ food, mealTitle, navigateToSearchFood, onDeletion
                 <TouchableHighlight
                     style={styles.button_add}
                     onPress={navigateToSearchFood}
+                    underlayColor={ThemeConstants.HIGHLIGHT_YELLOW}
                 >
                     <View>
                         <Text style={styles.text_button}>Add {mealTitle}</Text>
@@ -143,7 +149,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     container: {
-        backgroundColor: ThemeConstants.BACKGROUND_WHITE,
+        backgroundColor: ThemeConstants.MAIN_WHITE,
         marginBottom: ThemeConstants.CONTAINER_MARGIN*0.8
     },
     details: {
@@ -183,22 +189,3 @@ const styles = StyleSheet.create({
 });
 
 export default IntakeFoodContainer;
-
-   /* const swipeSettings = {
-        autoClose: true,
-        onClose: (secId, rowId, direction) => {
-
-        },
-        onOpen: (secId, rowId, direction) => {
-
-        },
-        right: [
-            {
-                onPress: () => {
-
-                },
-                text: 'Delete', type: 'delete'
-            }
-        ]
-
-    };*/

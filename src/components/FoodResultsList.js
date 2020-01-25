@@ -60,7 +60,7 @@ const FoodResultsList = ({ foodArray, setFoodArray, navigation, results, title, 
                                 <View>
                                     <Text style={styles.text_regular}>{item.foodName}</Text>
                                     <Text style={styles.text_small}>
-                                        Weight: {item.grams} g  •  Energy: {item.calories} kCal
+                                        Weight: {item.grams} g  •  Energy: {item.calories} kcal
                                     </Text>
                                 </View>
                             </TouchableOpacity>
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
         paddingVertical: ThemeConstants.CONTAINER_MARGIN/2,
     },
     main: {
-        backgroundColor: ThemeConstants.BACKGROUND_WHITE
+        backgroundColor: ThemeConstants.MAIN_WHITE
     },
     text_regular: {
         fontSize: ThemeConstants.FONT_SIZE_REGULAR,
