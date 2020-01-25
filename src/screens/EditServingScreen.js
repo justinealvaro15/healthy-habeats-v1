@@ -18,11 +18,19 @@ let quickServing = 0;
 
 const EditServingScreen = ({ navigation }) => {
    
-    const [serving, setServing] = useState(0.5);
+    const [serving, setServing] = useState(1);
+
+    let deleteID = 0;
+    let counter = 0;
 
     let foodItem = navigation.getParam('foodItem');
     let foodArray = navigation.getParam('foodArray');
     let setFoodArray = navigation.getParam('setFoodArray');
+    let action = navigation.getParam('action');
+
+    //let foodItemEdit = navigation.getParam('foodItemEdit');
+    //let foodArrayEdit = navigation.getParam('foodArrayEdit');
+    //let setFoodArrayEdit = navigation.getParam('setFoodArrayEdit');
     
 
     return(
@@ -49,9 +57,30 @@ const EditServingScreen = ({ navigation }) => {
                     onPress={ () => {
                         //console.log(serving);
                         foodItem.serving = parseFloat(serving);
-                        console.log(foodItem);
+                        //console.log(foodItem);
+                        if(action === 'add'){
+                            //console.log("ADD");
+                            setFoodArray([...foodArray, foodItem]);
+                            console.log(foodArray);
+                        }
+                        else if(action === 'edit'){
+                            //console.log('EDIT');
+                            deleteID = foodItem.deleteID;
+                            
+                            for (let i = 0; i < foodArray.length; i++) {
+                                if (foodArray[i].deleteID != deleteID ){
+                                    counter = counter + 1;
+                                }
+                                else{
+                                    break;
+                                }
+                            }
+                            foodArray.splice(counter,1);
+                            setFoodArray([...foodArray, foodItem]);
+                            //console.log(foodArray);
+                        }
                         
-                        setFoodArray([...foodArray, foodItem]);
+                        //console.log('SETT');
                         navigation.navigate('Home');
                     }}
                 >

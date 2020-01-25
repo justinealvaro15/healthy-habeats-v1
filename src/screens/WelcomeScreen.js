@@ -14,88 +14,7 @@ let welcome_counter= 0;
 let home_counter = 1;
 
 const WelcomeScreen = ({ navigation }) => {
-
-
-	const localNotification = { 
-		sound: 'default',
-		title: 'Local Notifications', 
-		body: 'Done!' 
-	};
-	const scheduledNotification = { 
-		sound: 'default',
-		title: 'Scheduled Local Notifications', 
-		body: 'Delivered!' 
-	};
-	const schedulingOptions = {
-
-	};
-
-	const [expoState, setExpoState] = useState({
-		expoPushToken : '',
-		notification: {},
-	  });
-
 	
-
-	  registerForPushNotificationsAsync = async () => {
-		if (Constants.isDevice) {
-		  const { status: existingStatus } = await Permissions.getAsync(
-			Permissions.NOTIFICATIONS
-		  );
-		  let finalStatus = existingStatus;
-		  if (existingStatus !== 'granted') {
-			const { status } = await Permissions.askAsync(
-			  Permissions.NOTIFICATIONS
-			);
-			finalStatus = status;
-		  }
-		  if (finalStatus !== 'granted') {
-			alert('Failed to get push token for push notification!');
-			return;
-		  }
-		  let token = await Notifications.getExpoPushTokenAsync();
-		  //console.log(token);
-		  setExpoState({expoPushToken: token});
-		} else {
-		  alert('Must use physical device for Push Notifications');
-		}
-	  }; 
-
-	  useEffect(() => {
-			registerForPushNotificationsAsync();
-			_notificationSubscription = Notifications.addListener(
-				_handleNotification
-			  );
-		
-	},[]);
-
-	
-	_handleNotification = notification => {
-		Vibration.vibrate();
-		setExpoState({ notification: notification });
-	};
-
-	sendPushNotification = async () => {
-		const message = {
-		  to: expoState.expoPushToken,
-		  sound: 'default',
-		  title: 'Welcome to EatUP',
-		  body: 'Be healthy and stay fit!',
-		  data: { data: 'SAMPLE DATA' },
-		};
-		const response = await fetch('https://exp.host/--/api/v2/push/send', {
-		  method: 'POST',
-		  headers: {
-			Accept: 'application/json',
-			'Accept-encoding': 'gzip, deflate',
-			'Content-Type': 'application/json',
-		  },
-		  body: JSON.stringify(message),
-		});
-		const data = response._bodyInit;
-		console.log(`Status & Response ID-> ${JSON.stringify(data)}`);
-	  };
-
 	const [state, setState] = useState('');
 	const [isCount, setIsCount] = useState(0);
 
@@ -202,23 +121,7 @@ const WelcomeScreen = ({ navigation }) => {
 								saveUserToken('oldUser');
 								navigation.navigate('Anthropometric');
 							} else {
-								sendPushNotification();
-								//navigation.replace('Home');
-								Notifications.presentLocalNotificationAsync(localNotification);
-								Notifications.cancelAllScheduledNotificationsAsync();
-								let currentDate = Date.now();
-								currentDate = new Date(currentDate);
-								// get the day, month and year from current date to create time to schedule
-								let year = currentDate.getFullYear();
-								let month = currentDate.getMonth();
-								let date = currentDate.getDate();
-								let not0 = new Date(year, month, date, 22, 36);
-								//console.log(not0);
-								not0 = Date.parse(not0);
-								//console.log(not0);
-								const schedulingOptions = { time: not0, repeat: 'minute' };
-								//Notifications.scheduleLocalNotificationAsync(scheduledNotification, schedulingOptions);
-								
+								navigation.navigate('Home');
 								
 							}
 						}}
