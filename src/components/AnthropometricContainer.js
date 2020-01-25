@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { AsyncStorage, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View, Button } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
 import * as ThemeConstants from '../common/Themes';
 import * as AnthroText from '../common/AnthropometricText';

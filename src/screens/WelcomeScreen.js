@@ -1,5 +1,5 @@
 import React from 'react';
-import { AsyncStorage, Text, StatusBar, StyleSheet, View } from 'react-native';
+import { AsyncStorage, Text, StyleSheet, View } from 'react-native';
 
 import * as ThemeConstants from '../common/Themes';
 
