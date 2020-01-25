@@ -31,8 +31,9 @@ const FoodResultsList = ({ foodArray, setFoodArray, navigation, results, title, 
             const fats = data[i].fats;
             const proteins = data[i].proteins;
             const dateConsumed = data[i].dateConsumed;
-            const deleteID = data[i].deleteID
-            foodItems.push({id, foodName, grams, calories, carbs, fats, proteins, dateConsumed, deleteID});
+            const deleteID = data[i].deleteID;
+            const serving = data[i].serving;
+            foodItems.push({id, foodName, grams, calories, carbs, fats, proteins, dateConsumed, deleteID, serving});
         }       
         results = foodItems;
     }
@@ -52,9 +53,15 @@ const FoodResultsList = ({ foodArray, setFoodArray, navigation, results, title, 
                                 style={styles.food}
                                 onPress={() => {
                                     item.dateConsumed = moment(currentDate).format('MMMM DD YYYY');
-                                    item.deleteID = deleteID
-                                    setFoodArray([...foodArray, item])
-                                    navigation.navigate('Home')
+                                    item.deleteID = Math.floor(Math.random() * 99999);
+                                    //setFoodArray([...foodArray, item])
+                                    navigation.navigate('EditServing',{
+                                        foodArray: foodArray,
+                                        setFoodArray: setFoodArray,
+                                        foodItem: item,
+                                        action: 'add'
+                                    });
+                                    
                                 }}
                             >
                                 <View>

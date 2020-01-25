@@ -10,15 +10,34 @@ import StatsContainer from '../components/StatsContainer';
 
 import * as ThemeConstants from '../common/Themes';
 import Constants from 'expo-constants';
+import { any } from 'prop-types';
+
+
+
 
 const reducer = (state, action) => {
     return {...state, foodArray: state.foodArray.push(action.payload) }
 }
 
+const total_water_data = [];
+
+
+let ccc= 0;
+
+let global = '';
+let token = 0;
+
+const waterTemplate = 
+    {
+    dateConsumed: '',
+};
+
+
+
 const HomeScreen = ({ navigation }) => {
     let totalFood = [];
     let current_totalFood = [];
-
+    
     const [userData, setUserData] = useState({
         calories: 0,
         carbs: 0,
@@ -37,6 +56,10 @@ const HomeScreen = ({ navigation }) => {
     const [lunch, setLunch] = useState([]);
     const [dinner, setDinner] = useState([]);
     const [snacks, setSnacks] = useState([]);
+    //array of waters
+    const [water, setWater] = useState([]);
+    const [currentWater, setCurrentWater] = useState([]);
+    const [waterDeleted, setWaterDeleted] = useState();
 
     const [current_totalFoodArray, setCurrentTotalFoodArray] = useState([]);
     const [current_breakfast, setCurrentBreakfast] = useState([]);
@@ -76,23 +99,37 @@ const HomeScreen = ({ navigation }) => {
 		}      
     };
 
+    const deleteMagic = async () => {
+        setIsDeleted(Math.random());
+        setWaterDeleted(Math.random());
+        //setIsWaterAdded(Math.random());
+        console.log("RE-INITIALIZE");
+    };
+
     const syncBreakfastData = async (key) => {
 		try {
             let x = 0;
-            const data = await AsyncStorage.getItem(key) || 'empty';
-
-            if(data === 'empty'){
+            let xx = []
+            //const data2 = await (AsyncStorage.getItem('total_water') || 'empty');
+            //console.log("HAAAAAAAHAHAAHA");
+            //console.log(data2);
+            //console.log("HAAAAAAAHAHAAHA");
+            const data = await (AsyncStorage.getItem(key) || 'empty');
+           
+            //console.log(data);
+            if(data === 'empty' || Array.isArray(JSON.parse(data)) == false ){
                 setBreakfast([]);
             } else{
                 x =  JSON.parse(data);
-                setBreakfast(x); // overwrites breakfast
-            }
+                setBreakfast(x); //naooverwirite si breakfast 
+            } 
             
             return data;
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);
-		}      
+        }      
+        //console.log("function#1: breakfast sync");
     };
 
     const syncLunchData = async (key) => {
@@ -100,7 +137,7 @@ const HomeScreen = ({ navigation }) => {
             let x = 0;
             const data = await AsyncStorage.getItem(key) || 'empty';
 
-            if(data === 'empty'){
+            if(data === 'empty' || Array.isArray(JSON.parse(data)) == false ){
                 setLunch([]);
             } else{
                 x =  JSON.parse(data);
@@ -111,7 +148,8 @@ const HomeScreen = ({ navigation }) => {
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);
-		}      
+        }    
+        //console.log("function#2: lunch sync");  
     };
 
     const syncDinnerData = async (key) => {
@@ -119,7 +157,7 @@ const HomeScreen = ({ navigation }) => {
             let x = 0;
             const data = await AsyncStorage.getItem(key) || 'empty';
 
-            if(data === 'empty'){
+            if(data === 'empty' || Array.isArray(JSON.parse(data)) == false){
                 setDinner([]);
             } else{
                 x =  JSON.parse(data);
@@ -130,7 +168,8 @@ const HomeScreen = ({ navigation }) => {
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);
-		}      
+        }      
+        //console.log("function#3: dinner sync");
     };
 
     const syncSnacksData = async (key) => {
@@ -138,7 +177,7 @@ const HomeScreen = ({ navigation }) => {
             let x = 0;
             const data = await AsyncStorage.getItem(key) || 'empty';
 
-            if(data === 'empty'){
+            if(data === 'empty' || Array.isArray(JSON.parse(data)) == false){
                 setSnacks([]);
             } else{
                 x =  JSON.parse(data);
@@ -149,17 +188,65 @@ const HomeScreen = ({ navigation }) => {
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);
-		}      
+        }      
+        //console.log("function#4: snacks sync");
+    };
+    const syncWaterDataFromJson = async (key) => {
+        try {
+            let x = 0;
+            const data = await AsyncStorage.getItem(key) || 'empty';
+            
+            if(data === 'empty' || Array.isArray(JSON.parse(data)) == false){
+                setWater([]);
+            } else{
+                x =  JSON.parse(data);
+                setWater(x);
+            }
+            return data;
+		} catch (error) {
+			// Error retrieving data
+			console.log(error.message);
+        }      
+    };
+
+    const syncWaterData2 =  async () => {
+        try{
+            let a = 0;
+            let x_date = [];
+            const water1 = await AsyncStorage.getItem('total_water') || 'empty';
+            //console.log('------------DATA---------------');
+            //console.log(water1);
+            //console.log('------------DATA---------------');
+            if(water1 === 'empty'){
+                setCurrentWater(0);
+            }else{
+                a = JSON.parse(water1);
+                for (let i = 0; i < a.length; i++) {
+                    if(a[i].dateConsumed === dateSelected){
+                        //console.log(a[i].count);
+                        x_date.push(a[i]);
+                    }
+                }
+            
+                setCurrentWater(x_date.length);
+            }
+            x_date = [];
+
+        }catch(error){
+            console.log(error.message);
+        }
     };
 
     const syncFoodsData = async () => {
 		try {
             let a,b,c,d = 0;
             let x_date = [];
+           
             const breakfast1 = await AsyncStorage.getItem('total_breakfast') || 'empty';
             const lunch1 = await AsyncStorage.getItem('total_lunch') || 'empty';
             const dinner1 = await AsyncStorage.getItem('total_dinner') || 'empty';
             const snacks1 = await AsyncStorage.getItem('total_snacks') || 'empty';
+            
            
             if(breakfast1 === 'empty'){
 
@@ -175,6 +262,7 @@ const HomeScreen = ({ navigation }) => {
                 setCurrentBreakfast(x_date);
             }
             x_date = [];
+     
 
             if(lunch1 === 'empty'){
   
@@ -222,10 +310,10 @@ const HomeScreen = ({ navigation }) => {
             var proteins = 0;
             var fats = 0;
             for (let i = 0; i < totalFood.length; i++) {
-                calories = calories + totalFood[i].calories;
-                carbs = carbs + totalFood[i].carbs;
-                proteins = proteins + totalFood[i].proteins;
-                fats = fats + totalFood[i].fats;
+                calories = calories + (totalFood[i].calories * totalFood[i].serving);
+                carbs = carbs + (totalFood[i].carbs * totalFood[i].serving);
+                proteins = proteins + (totalFood[i].proteins * totalFood[i].serving);
+                fats = fats + (totalFood[i].fats * totalFood[i].serving);
             }
             setCurrent({
                 current_calories: calories,
@@ -243,7 +331,9 @@ const HomeScreen = ({ navigation }) => {
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);
-		}      
+        }      
+        
+        //console.log("function#5: current food sync");
     };
 
     const saveCurrentUserData = async (key, value) => {
@@ -252,7 +342,8 @@ const HomeScreen = ({ navigation }) => {
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);
-		}
+        }
+        //console.log("function#6: save current user data");
 	};
 
     const saveData = async (key, value) => {
@@ -261,8 +352,21 @@ const HomeScreen = ({ navigation }) => {
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);
-		}
+        }
+       // console.log("function#7: save data");
     };
+
+    const saveWaterData = async (key,value) => {
+        try {
+            await (AsyncStorage.setItem(key, value), syncWaterData2());
+		} catch (error) {
+			// Error retrieving data
+			console.log(error.message);
+        }
+        //console.log("function#12: SAVE WATER DATA");
+    };
+    
+
     const saveDeletionData = async () => {
 		try {
             await (AsyncStorage.setItem('total_breakfast', JSON.stringify(breakfast)));
@@ -272,9 +376,10 @@ const HomeScreen = ({ navigation }) => {
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);
-		}
+        }
+        //console.log("function#8: delete save data");
     };
-
+    
 
     //////////////////////////////////////
     //
@@ -283,6 +388,7 @@ const HomeScreen = ({ navigation }) => {
     // deleteData('total_lunch');
     // deleteData('total_dinner');
     // deleteData('total_snacks');
+    // deleteData('total_water');
     // console.log(totalFoodArray);
     //
     //////////////////////////////////////
@@ -293,65 +399,74 @@ const HomeScreen = ({ navigation }) => {
         syncLunchData('total_lunch');
         syncDinnerData('total_dinner');
         syncSnacksData('total_snacks');
-        syncFoodsData();
+        syncWaterDataFromJson('total_water');
+        
+        //syncFoodsData();
         //syncCurrentUserData();
         getUserData();
+        //console.log("useEffect#1 in action: sync data from startup");
     },[]);
 
     useEffect(() => {
         if(breakfast.length == 0){
-            //console.log("NEW USERS");
-            //getData('total_breakfast');
             saveData('total_breakfast', JSON.stringify(breakfast));
+           
         } else{
-            //console.log("OLD USER");
             saveData('total_breakfast', JSON.stringify(breakfast));
-            //setTotalFoodArray([...totalFoodArray, breakfast]);
-            //getData('total_breakfast'); 
         }
+        console.log("useEffect#2 in action: breakfast sync ");
     }, [breakfast]);
 
     useEffect(() => {
         if(lunch.length == 0){
-            //console.log("NEW USERS");
-            //getData('total_breakfast');
             saveData('total_lunch', JSON.stringify(lunch));
-        } else{
-            //console.log("OLD USER");
+        }else{
             saveData('total_lunch', JSON.stringify(lunch));
-            //setTotalFoodArray([...totalFoodArray,lunch]);
-            //getData('total_lunch'); 
+            //setTotalFoodArray([...totalFoodArray,lunch]);  
         }
+        //console.log("useEffect#3 in action: lunch sync ");
     }, [lunch]);
 
     useEffect(() => {
         if(dinner.length == 0){
-            //console.log("NEW USERS");
-            //getData('total_breakfast');
-            saveData('total_dinner', JSON.stringify(dinner));
+            saveData('total_dinner', JSON.stringify(dinner));   
         } else{
-            //console.log("OLD USER");
             saveData('total_dinner', JSON.stringify(dinner));
             //setTotalFoodArray([...totalFoodArray, dinner]);
-            //getData('total_dinner'); 
         }
+        //console.log("useEffect#4 in action: dinner sync ");
     }, [dinner]);
 
     useEffect(() => {
         if(snacks.length == 0){
-            //console.log("NEW USERS");
-            //getData('total_snacks');
-            saveData('total_snacks', JSON.stringify(snacks));
+            saveData('total_snacks',JSON.stringify(snacks));
         } else{
             //console.log("OLD USER");
             saveData('total_snacks', JSON.stringify(snacks));
             //setTotalFoodArray([...totalFoodArray, snacks]);
-            //getData('total_snacks'); 
         }
+        //console.log("useEffect#5 in action: snacks sync ");
     }, [snacks]);
+
+    useEffect( () => {
+        if(water.length == 0){
+            saveWaterData('total_water',JSON.stringify(water));
+        }else{
+            saveWaterData('total_water', JSON.stringify(water));
+        }
+    }, [water]);
+
+    useEffect( () => {
+        if(water.length == 0){
+            saveWaterData('total_water',JSON.stringify(water));
+        }else{
+            saveWaterData('total_water', JSON.stringify(water));
+        }
+    }, [waterDeleted]);
 
     useEffect(() => {
         syncFoodsData();
+        syncWaterData2();
     }, [dateSelected]);
 
     useEffect(() => {
@@ -362,9 +477,20 @@ const HomeScreen = ({ navigation }) => {
         //saveData('total_snacks', JSON.stringify(snacks));
         saveDeletionData();
         syncFoodsData();
+       // console.log("useEffect#7 in action: data is deleted");
     }, [isDeleted]);
 
-    return( 
+    useEffect( () => {
+        syncWaterData2();
+    },[waterDeleted])
+
+    useEffect( () => {
+        setTimeout(function() { deleteMagic(); }, 3000);
+        //setTimeout(function() { syncWaterData2('total_water'); }, 5000);
+        //setTimeout(function() { saveWaterData(); }, 1000);
+    }, []);
+
+    return(
         <ScrollView style={styles.main}>
             <View style={styles.status_bar}/>
 
@@ -385,7 +511,6 @@ const HomeScreen = ({ navigation }) => {
                     setDateMoment(moment(onDateSelected));
                     //console.log(moment('2019-11-30T13:51:45.046Z').format('MMMM DD YYYY')); // FOR DEV PURPOSES ONLY
                 }}
-                
             />
             
             <View>
@@ -396,7 +521,7 @@ const HomeScreen = ({ navigation }) => {
                     valuesCurrent = {current}
                 />
             </View>
-
+            
             <IntakeFoodContainer
                 food={current_breakfast}
                 mealTitle='Breakfast'
@@ -404,13 +529,15 @@ const HomeScreen = ({ navigation }) => {
                     foodArray: breakfast,
                     setFoodArray: setBreakfast,
                     currentDate: dateMoment,
-                    deleteID: Math.floor(Math.random() * 99999)
+                    deleteID: 0
                 })}
                 onDeletion={setCurrentBreakfast}
                 onDeletion2={setIsDeleted}
                 onDeletion3={setBreakfast}
                 onDeletion4={dateSelected}
                 onDeletion5={breakfast}
+                foodArray1 = {breakfast}
+                setFoodArray1 = {setBreakfast}
             />
 
             <IntakeFoodContainer
@@ -420,13 +547,16 @@ const HomeScreen = ({ navigation }) => {
                     foodArray: lunch,
                     setFoodArray: setLunch,
                     currentDate: dateMoment,
-                    deleteID: Math.floor(Math.random() * 99999)
+                    deleteID: 0
                 })}
                 onDeletion={setCurrentLunch}
                 onDeletion2={setIsDeleted}
                 onDeletion3={setLunch}
                 onDeletion4={dateSelected}
                 onDeletion5={lunch}
+                foodArray1 = {lunch}
+                setFoodArray1 = {setLunch}
+                
             />
 
             <IntakeFoodContainer
@@ -436,13 +566,15 @@ const HomeScreen = ({ navigation }) => {
                     foodArray: dinner,
                     setFoodArray: setDinner,
                     currentDate: dateMoment,
-                    deleteID: Math.floor(Math.random() * 99999)
+                    deleteID: 0
                 })}
                 onDeletion={setCurrentDinner}
                 onDeletion2={setIsDeleted}
                 onDeletion3={setDinner}
                 onDeletion4={dateSelected}
                 onDeletion5={dinner}
+                foodArray1 = {dinner}
+                setFoodArray1 = {setDinner}
             />
 
             <IntakeFoodContainer
@@ -452,16 +584,25 @@ const HomeScreen = ({ navigation }) => {
                     foodArray: snacks,
                     setFoodArray: setSnacks,
                     currentDate: dateMoment,
-                    deleteID: Math.floor(Math.random() * 99999)
+                    deleteID: 0
                 })}
                 onDeletion={setCurrentSnacks}
                 onDeletion2={setIsDeleted}
                 onDeletion3={setSnacks}
                 onDeletion4={dateSelected}
                 onDeletion5={snacks}
+                foodArray1 = {snacks}
+                setFoodArray1 = {setSnacks}
             />
             
-            <IntakeWaterContainer/>
+            <IntakeWaterContainer
+                water = {water}
+                setWater = {setWater}
+                currentDate = {dateMoment}
+                waterTemplate = {waterTemplate}
+                waterCount = {currentWater}
+                setWaterDeleted = {setWaterDeleted}
+            />
         </ScrollView>
     );
 };

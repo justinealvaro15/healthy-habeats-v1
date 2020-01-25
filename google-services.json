@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "705946190721",
+    "firebase_url": "https://eatup-cs199.firebaseio.com",
+    "project_id": "eatup-cs199",
+    "storage_bucket": "eatup-cs199.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:705946190721:android:087518620cefcfb0ecde80",
+        "android_client_info": {
+          "package_name": "com.cs198.eatup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "705946190721-ea08rvci0no1ropvpqut9ob9is41r9iv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBR-oxoM3nIhn6_Wi_REWo-Qac0l6dw8SU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "705946190721-ea08rvci0no1ropvpqut9ob9is41r9iv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
