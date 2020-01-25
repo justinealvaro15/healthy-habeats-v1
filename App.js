@@ -1,6 +1,7 @@
 import React from 'react';
 import { createAppContainer, createBottomTabNavigator, createStackNavigator, createSwitchNavigator } from 'react-navigation';
 import AnthropometricScreen from './src/screens/AnthropometricScreen';
+import EditServingScreen from './src/screens/EditServingScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import SearchFoodScreen from './src/screens/SearchFoodScreen';
 import UserProfileScreen from './src/screens/UserProfileScreen';
@@ -14,6 +15,13 @@ const AppStack = createStackNavigator({
         screen: AnthropometricScreen,
         navigationOptions: {
             title: 'Anthropometric',
+            header: null
+        }
+    },
+    EditServing: {
+        screen: EditServingScreen,
+        navigationOptions:{
+            title: 'EditServing',
             header: null
         }
     },
@@ -32,7 +40,7 @@ const AppStack = createStackNavigator({
     },
     Welcome: WelcomeScreen
 }, {
-    initialRouteName: 'Welcome',
+    initialRouteName: 'Home',
     defaultNavigationOptions: {
         headerStyle: {
             backgroundColor: MAIN_BLUE

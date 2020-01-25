@@ -5,17 +5,37 @@ import { withNavigation } from 'react-navigation';
 import {Notifications} from 'expo';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
-
+import moment from "moment";
 
 import * as ThemeConstants from '../common/Themes';
 
+
+let welcome_counter= 0;
+let home_counter = 1;
+
 const WelcomeScreen = ({ navigation }) => {
-	/*
+
+
+	const localNotification = { 
+		sound: 'default',
+		title: 'Local Notifications', 
+		body: 'Done!' 
+	};
+	const scheduledNotification = { 
+		sound: 'default',
+		title: 'Scheduled Local Notifications', 
+		body: 'Delivered!' 
+	};
+	const schedulingOptions = {
+
+	};
+
 	const [expoState, setExpoState] = useState({
 		expoPushToken : '',
 		notification: {},
 	  });
 
+	
 
 	  registerForPushNotificationsAsync = async () => {
 		if (Constants.isDevice) {
@@ -34,7 +54,7 @@ const WelcomeScreen = ({ navigation }) => {
 			return;
 		  }
 		  let token = await Notifications.getExpoPushTokenAsync();
-		  console.log(token);
+		  //console.log(token);
 		  setExpoState({expoPushToken: token});
 		} else {
 		  alert('Must use physical device for Push Notifications');
@@ -74,9 +94,10 @@ const WelcomeScreen = ({ navigation }) => {
 		});
 		const data = response._bodyInit;
 		console.log(`Status & Response ID-> ${JSON.stringify(data)}`);
-	  };*/
+	  };
 
 	const [state, setState] = useState('');
+	const [isCount, setIsCount] = useState(0);
 
 	const saveUserToken = async (userToken) => {
 		setState(userToken);
@@ -88,9 +109,9 @@ const WelcomeScreen = ({ navigation }) => {
 		}
 	};
 	  
-	const getUserToken = async () => {
+	const getUserToken = async (key) => {
 		try {
-			const userToken = await AsyncStorage.getItem('userToken') || 'firstTime'
+			const userToken = await AsyncStorage.getItem(key) || 'firstTime'
 			setState(userToken);
 
 			return userToken;
@@ -98,25 +119,76 @@ const WelcomeScreen = ({ navigation }) => {
 			// Error retrieving data
 			console.log(error.message);
 		}      
-	}
+	};
 
-	const deleteUserToken = async () => {
+	const deleteUserToken = async (token) => {
 		try {
-			await AsyncStorage.removeItem('userToken');
+			await AsyncStorage.removeItem(token);
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);
 		}
-	}
-	////////////////////////////////////////  
+	};
+//
+	const prepareCounter = async () => {
+		try {
+			const data1 = await AsyncStorage.getItem('welcome_counter') || 'empty';
+			const data2 = await AsyncStorage.getItem('home_counter') || 'empty';
+
+            if(data1 === 'empty' ){
+				
+            } else{
+				welcome_counter = parseInt(JSON.parse(data1));
+				
+			}
+			if(data2 === 'empty' ){
+				
+            } else{
+                home_counter = parseInt(JSON.parse(data2));
+			}
+		} catch (error) {
+			// Error retrieving data
+			console.log(error.message);
+        }    
+	};
+	const saveWelcomeCounter = async (key,value) => {
+		try {
+			
+			await AsyncStorage.setItem(key,JSON.stringify(value));
+			
+		} catch (error) {
+			// Error retrieving data
+			console.log(error.message);
+		}
+	};
+
+	/////////////////////////////////////////// 
 	// USE TO RESET STORAGE
-	//deleteUserToken();
+	// deleteUserToken('userToken');
+	// deleteUserToken('welcome_counter');
+	// deleteUserToken('home_counter');
+	// deleteUserToken('userProfile_counter');
 	// comment it out again and rebuild
 	///////////////////////////////////////////
-	useEffect(() => {
-		getUserToken();
+	useEffect( () => {
+		getUserToken('userToken');
+		prepareCounter();
 	}, []);
 	
+	useEffect( () => {
+        focusListener = navigation.addListener('didFocus', () => {
+			//console.log('Screen Focused');
+			welcome_counter+=1;
+			setIsCount(Math.random());
+			console.log('Welcome Counter: ' + welcome_counter);	
+		});
+	},[]);
+	
+	useEffect( () => {
+		saveWelcomeCounter('welcome_counter', welcome_counter);
+	},[isCount]);
+
+
 	//Pass Array as second argument
     return( 
 		<View style={styles.main}>
@@ -130,8 +202,24 @@ const WelcomeScreen = ({ navigation }) => {
 								saveUserToken('oldUser');
 								navigation.navigate('Anthropometric');
 							} else {
-								//sendPushNotification();
-								navigation.replace('Home');
+								sendPushNotification();
+								//navigation.replace('Home');
+								Notifications.presentLocalNotificationAsync(localNotification);
+								Notifications.cancelAllScheduledNotificationsAsync();
+								let currentDate = Date.now();
+								currentDate = new Date(currentDate);
+								// get the day, month and year from current date to create time to schedule
+								let year = currentDate.getFullYear();
+								let month = currentDate.getMonth();
+								let date = currentDate.getDate();
+								let not0 = new Date(year, month, date, 22, 36);
+								//console.log(not0);
+								not0 = Date.parse(not0);
+								//console.log(not0);
+								const schedulingOptions = { time: not0, repeat: 'minute' };
+								//Notifications.scheduleLocalNotificationAsync(scheduledNotification, schedulingOptions);
+								
+								
 							}
 						}}
 					/>

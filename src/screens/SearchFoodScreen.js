@@ -32,7 +32,8 @@ const filterResultsBySearch = (term) => {
                 const proteins = data[i].proteins;
                 const dateConsumed = data[i].dateConsumed;
                 const deleteID = data[i].deleteID;
-                foodArray.push({id, foodName, grams, calories, carbs, fats, proteins, dateConsumed, deleteID});
+                const serving = data[i].serving;
+                foodArray.push({id, foodName, grams, calories, carbs, fats, proteins, dateConsumed, deleteID, serving});
             }
         };
         return foodArray;
