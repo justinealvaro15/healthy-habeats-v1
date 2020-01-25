@@ -29,8 +29,7 @@ const AppStack = createStackNavigator({
         navigationOptions: {
             title: 'Search for food'
         }
-    },
-    Welcome: WelcomeScreen
+    }
 }, {
     initialRouteName: 'Home',
     defaultNavigationOptions: {
@@ -99,9 +98,10 @@ const ScreenTab = createBottomTabNavigator({
 });
 
 export default createAppContainer(createSwitchNavigator({
-    App: ScreenTab
+    App: ScreenTab,
+    Splash: WelcomeScreen
 }, {
-    initialRouteName: 'App'
+    initialRouteName: 'Splash'
 }));
 
 

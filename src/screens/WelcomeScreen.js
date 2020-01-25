@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { AsyncStorage, Button, Text, StyleSheet, View } from 'react-native';
-import { withNavigation } from 'react-navigation';
-
-import {Permissions, Notifications} from 'expo';
+import React from 'react';
+import { AsyncStorage, Text, StatusBar, StyleSheet, View } from 'react-native';
 
 import * as ThemeConstants from '../common/Themes';
 
-const WelcomeScreen = ({ navigation }) => {
-	const [state, setState] = useState('');
+const TIMER = 2000;
 
-	const saveUserToken = async (userToken) => {
-		setState(userToken);
+
+export default class WelcomeScreen extends React.Component {
+	saveUserToken = async (userToken) => {
+		this.setState({ userToken });
 		try {
 			await AsyncStorage.setItem('userToken', userToken);
 		} catch (error) {
@@ -18,11 +16,15 @@ const WelcomeScreen = ({ navigation }) => {
 			console.log(error.message);
 		}
 	};
-	  
-	const getUserToken = async () => {
+		
+	getUserToken = async () => {
 		try {
 			const userToken = await AsyncStorage.getItem('userToken') || 'firstTime'
-			setState(userToken);
+			this.setState(state => {
+				return {
+					userToken
+				};
+			})
 
 			return userToken;
 		} catch (error) {
@@ -31,7 +33,7 @@ const WelcomeScreen = ({ navigation }) => {
 		}      
 	}
 
-	const deleteUserToken = async () => {
+	deleteUserToken = async () => {
 		try {
 			await AsyncStorage.removeItem('userToken');
 		} catch (error) {
@@ -39,60 +41,42 @@ const WelcomeScreen = ({ navigation }) => {
 			console.log(error.message);
 		}
 	}
-	  
-	// USE TO RESET STORAGE
-	//deleteUserToken();
-	// comment it out again and rebuild
 	
-	useEffect(() => {
-		getUserToken();
-	}, []);
-	
+	componentDidMount() {
+		setTimeout(() => {
+			// USE TO RESET STORAGE
+			// this.deleteUserToken().then(() => 
+				this.getUserToken()
+			// )
+			.then((state) => {
+				if(this.state.userToken === 'firstTime'){
+					this.saveUserToken('oldUser');
+					this.props.navigation.navigate('Anthropometric');
+				} else {
+					this.props.navigation.navigate('Home');
+				}
+			})
+		}, TIMER);
+	}
+
 	//Pass Array as second argument
-    return( 
-		<View style={styles.main}>
-			<View style={styles.container}>
-				<Text style={styles.text}>Hello WSG!</Text>
-				<View style={styles.button}>
-					<Button
-						title='CONTINUE'
-						onPress={ () => {
-							if(state === 'firstTime'){
-								saveUserToken('oldUser');
-								navigation.navigate('Anthropometric');
-							} else {
-								navigation.replace('Home');
-							}
-						}}
-					/>
-				</View>
+	render() {
+		return(
+			<View style={styles.main}>
+				{/* <StatusBar backgroundColor={ThemeConstants.MAIN_YELLOW} barStyle="light-content" /> */}
+
+				<Text>HEALTHY</Text>
+				<Text>HABEATS</Text>
 			</View>
-		</View>
-    );
+		);
+	}
 };
 
 const styles = StyleSheet.create({
-	button: {
-        // color: ___
-        alignItems: 'center',
-        margin: ThemeConstants.CONTAINER_MARGIN*1.5,
-	},
-	container: {
+	main: {
 		alignItems: 'center',
-		backgroundColor: ThemeConstants.MAIN_WHITE,
-        borderRadius: ThemeConstants.CONTAINER_RADIUS,
-        marginHorizontal: ThemeConstants.CONTAINER_MARGIN,
-        marginTop: ThemeConstants.CONTAINER_MARGIN
-	},
-    main: {
-        backgroundColor: ThemeConstants.MAIN_WHITE,
-        flex: 1
-	},
-	text: {
-		fontSize: ThemeConstants.FONT_SIZE_REGULAR,
-        fontWeight: 'bold',
-        paddingVertical: ThemeConstants.CONTAINER_MARGIN*4
+		backgroundColor: ThemeConstants.MAIN_BLUE,
+		flex: 1,
+		justifyContent: 'center'
 	}
 });
-
-export default withNavigation(WelcomeScreen);
