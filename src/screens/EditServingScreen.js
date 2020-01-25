@@ -14,11 +14,20 @@ import Constants from 'expo-constants';
 import { any } from 'prop-types';
 
 
-let quickServing = 0;
+            /*const foodName = data[i].foodName;
+            const id = data[i].id;
+            const grams = data[i].grams;
+            const calories = data[i].calories;
+            const carbs = data[i].carbs;
+            const fats = data[i].fats;
+            const proteins = data[i].proteins;
+            const dateConsumed = data[i].dateConsumed;
+            const deleteID = data[i].deleteID;
+            const serving = data[i].serving;*/
 
 const EditServingScreen = ({ navigation }) => {
    
-    const [serving, setServing] = useState(1);
+    
 
     let deleteID = 0;
     let counter = 0;
@@ -27,6 +36,8 @@ const EditServingScreen = ({ navigation }) => {
     let foodArray = navigation.getParam('foodArray');
     let setFoodArray = navigation.getParam('setFoodArray');
     let action = navigation.getParam('action');
+
+    const [serving, setServing] = useState(foodItem.serving);
 
     //let foodItemEdit = navigation.getParam('foodItemEdit');
     //let foodArrayEdit = navigation.getParam('foodArrayEdit');
@@ -40,9 +51,19 @@ const EditServingScreen = ({ navigation }) => {
             <Text>EditServingScreen</Text>
             <Text>EditServingScreen</Text>
             <Text>EditServingScreen</Text>
+
+            <Text>Serving: {foodItem.serving} </Text>
+            <Text>Calories: {foodItem.calories * serving } </Text>
+            <Text>Carbohydrates: {foodItem.carbs * serving} </Text>
+            <Text>Proteins: {foodItem.proteins * serving} </Text>
+            <Text>Fats: {foodItem.fats * serving} </Text>
+
+
+
+
             <TextInput
                 keyboardType='numeric'
-                term={serving.toString()}
+                value={serving.toString()}
                 onChangeText={newServing => {
                     setServing(newServing);
                     }
@@ -61,7 +82,7 @@ const EditServingScreen = ({ navigation }) => {
                         if(action === 'add'){
                             //console.log("ADD");
                             setFoodArray([...foodArray, foodItem]);
-                            console.log(foodArray);
+                            //console.log(foodArray);
                         }
                         else if(action === 'edit'){
                             //console.log('EDIT');

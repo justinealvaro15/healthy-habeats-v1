@@ -36,6 +36,9 @@ export default class WelcomeScreen extends React.Component {
 	deleteUserToken = async () => {
 		try {
 			await AsyncStorage.removeItem('userToken');
+			await AsyncStorage.removeItem('weight');
+			await AsyncStorage.removeItem('height');
+			await AsyncStorage.removeItem('activityLevel');
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);
@@ -45,9 +48,9 @@ export default class WelcomeScreen extends React.Component {
 	componentDidMount() {
 		setTimeout(() => {
 			// USE TO RESET STORAGE
-			// this.deleteUserToken().then(() => 
+			 this.deleteUserToken().then(() => 
 				this.getUserToken()
-			// )
+			 )
 			.then((state) => {
 				if(this.state.userToken === 'firstTime'){
 					this.saveUserToken('oldUser');
