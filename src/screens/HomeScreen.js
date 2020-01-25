@@ -562,6 +562,8 @@ const HomeScreen = ({ navigation }) => {
                 onDeletion3={setLunch}
                 onDeletion4={dateSelected}
                 onDeletion5={lunch}
+                foodArray1 = {lunch}
+                setFoodArray1 = {setLunch}
                 
             />
 
@@ -579,6 +581,8 @@ const HomeScreen = ({ navigation }) => {
                 onDeletion3={setDinner}
                 onDeletion4={dateSelected}
                 onDeletion5={dinner}
+                foodArray1 = {dinner}
+                setFoodArray1 = {setDinner}
             />
 
             <IntakeFoodContainer
@@ -595,6 +599,8 @@ const HomeScreen = ({ navigation }) => {
                 onDeletion3={setSnacks}
                 onDeletion4={dateSelected}
                 onDeletion5={snacks}
+                foodArray1 = {snacks}
+                setFoodArray1 = {setSnacks}
             />
             
             <IntakeWaterContainer
