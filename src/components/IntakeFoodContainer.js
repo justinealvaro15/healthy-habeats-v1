@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Alert, AsyncStorage, FlatList, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
 import { Feather } from '@expo/vector-icons'
-
+import { withNavigation } from 'react-navigation';
 import * as ThemeConstants from '../common/Themes';
 
 // FOODARRAY: contains list of foods in a particular setting
@@ -26,7 +26,7 @@ const saveData = async (key, value) => {
     }
 };
 
-const IntakeFoodContainer = ({ food, mealTitle, navigateToSearchFood, onDeletion, onDeletion2, onDeletion3, onDeletion4, onDeletion5 }) => {
+const IntakeFoodContainer = ({ food, mealTitle, navigateToSearchFood, onDeletion, onDeletion2, onDeletion3, onDeletion4, onDeletion5, foodArray1, setFoodArray1, navigation }) => {
     const meal = onDeletion5;
     const foodArray = food;
     let x_date = foodArray;
@@ -51,7 +51,19 @@ const IntakeFoodContainer = ({ food, mealTitle, navigateToSearchFood, onDeletion
                     showsVerticalScrollIndicator={false}
                     renderItem={({item,index})=>{
                         return (
-                            <TouchableOpacity style={styles.food}>
+                            <TouchableOpacity style={styles.food}
+                                onPress = { () => {
+                                    console.log(item);
+                                    navigation.navigate('EditServing',{
+                                        foodArray: foodArray1,
+                                        setFoodArray: setFoodArray1,
+                                        foodItem: item,
+                                        action: 'edit'
+                                    });
+                                }
+
+                                }
+                            >
                                 <View>
                                     <Text style={styles.text_regular}>{item.foodName}</Text>
                                     <Text style={styles.text_small}>
@@ -188,4 +200,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default IntakeFoodContainer;
+export default withNavigation(IntakeFoodContainer);

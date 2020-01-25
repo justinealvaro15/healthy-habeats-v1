@@ -521,7 +521,7 @@ const HomeScreen = ({ navigation }) => {
                     valuesCurrent = {current}
                 />
             </View>
-
+            
             <IntakeFoodContainer
                 food={current_breakfast}
                 mealTitle='Breakfast'
@@ -536,6 +536,8 @@ const HomeScreen = ({ navigation }) => {
                 onDeletion3={setBreakfast}
                 onDeletion4={dateSelected}
                 onDeletion5={breakfast}
+                foodArray1 = {breakfast}
+                setFoodArray1 = {setBreakfast}
             />
 
             <IntakeFoodContainer
@@ -552,6 +554,7 @@ const HomeScreen = ({ navigation }) => {
                 onDeletion3={setLunch}
                 onDeletion4={dateSelected}
                 onDeletion5={lunch}
+                
             />
 
             <IntakeFoodContainer

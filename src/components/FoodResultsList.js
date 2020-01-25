@@ -58,7 +58,8 @@ const FoodResultsList = ({ foodArray, setFoodArray, navigation, results, title, 
                                     navigation.navigate('EditServing',{
                                         foodArray: foodArray,
                                         setFoodArray: setFoodArray,
-                                        foodItem :item
+                                        foodItem: item,
+                                        action: 'add'
                                     });
                                     
                                 }}
