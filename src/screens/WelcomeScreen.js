@@ -48,9 +48,9 @@ export default class WelcomeScreen extends React.Component {
 	componentDidMount() {
 		setTimeout(() => {
 			// USE TO RESET STORAGE
-			 this.deleteUserToken().then(() => 
+			//  this.deleteUserToken().then(() => 
 				this.getUserToken()
-			 )
+			//  )
 			.then((state) => {
 				if(this.state.userToken === 'firstTime'){
 					this.saveUserToken('oldUser');
