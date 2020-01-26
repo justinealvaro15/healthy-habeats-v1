@@ -1,34 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { AsyncStorage, Button, Text, TextInput , ScrollView, StyleSheet, View } from 'react-native';
+import React, { useState } from 'react';
+import { Text, TextInput , StyleSheet, View, Button } from 'react-native';
+
 import { TouchableHighlight } from 'react-native-gesture-handler';
-
-import CalendarStrip from 'react-native-calendar-strip';
-import moment from "moment";
-
-import IntakeFoodContainer from '../components/IntakeFoodContainer';
-import IntakeWaterContainer from '../components/IntakeWaterContainer';
-import StatsContainer from '../components/StatsContainer';
+import { Feather } from '@expo/vector-icons';
 
 import * as ThemeConstants from '../common/Themes';
-import Constants from 'expo-constants';
-import { any } from 'prop-types';
-
-
-            /*const foodName = data[i].foodName;
-            const id = data[i].id;
-            const grams = data[i].grams;
-            const calories = data[i].calories;
-            const carbs = data[i].carbs;
-            const fats = data[i].fats;
-            const proteins = data[i].proteins;
-            const dateConsumed = data[i].dateConsumed;
-            const deleteID = data[i].deleteID;
-            const serving = data[i].serving;*/
 
 const EditServingScreen = ({ navigation }) => {
-   
-    
-
     let deleteID = 0;
     let counter = 0;
 
@@ -39,55 +17,64 @@ const EditServingScreen = ({ navigation }) => {
 
     const [serving, setServing] = useState(foodItem.serving);
 
-    //let foodItemEdit = navigation.getParam('foodItemEdit');
-    //let foodArrayEdit = navigation.getParam('foodArrayEdit');
-    //let setFoodArrayEdit = navigation.getParam('setFoodArrayEdit');
-    
+    // console.log(foodItem)
 
     return(
         <View>
+            <View style={styles.main}>
+                <Text style={styles.text_header}>{foodItem.foodName}</Text>
 
-            <Text>EditServingScreen</Text>
-            <Text>EditServingScreen</Text>
-            <Text>EditServingScreen</Text>
-            <Text>EditServingScreen</Text>
+                <View style={styles.container}>
+                    <View style={styles.details}>
+                        <Text style={styles.text_title}>Calories</Text>
+                        <Text style={styles.text_stat}>{Math.round(foodItem.calories*serving*100)/100} kcal</Text>
+                    </View>
+                </View>
 
-            <Text>Serving: {foodItem.serving} </Text>
-            <Text>Calories: {foodItem.calories * serving } </Text>
-            <Text>Carbohydrates: {foodItem.carbs * serving} </Text>
-            <Text>Proteins: {foodItem.proteins * serving} </Text>
-            <Text>Fats: {foodItem.fats * serving} </Text>
+                <View style={styles.container}>
+                    <View style={styles.details}>
+                        <Text style={styles.text_title}>Carbs</Text>
+                        <Text style={styles.text_stat}>{Math.round(foodItem.carbs*serving*100)/100} g</Text>
+                    </View>
 
+                    <View style={styles.details}>
+                        <Text style={styles.text_title}>Fats</Text>
+                        <Text style={styles.text_stat}>{Math.round(foodItem.fats*serving*100)/100} g</Text>
+                    </View>
 
+                    <View style={styles.details}>
+                        <Text style={styles.text_title}>Proteins</Text>
+                        <Text style={styles.text_stat}>{Math.round(foodItem.proteins*serving*100)/100} g</Text>
+                    </View>
+                </View>
+            </View>
 
+            <View>
+                <View style={styles.input_background}>
+                    <Text style={styles.input_title}>Number of serving(s):</Text>
+                    <TextInput
+                        keyboardType='numeric'
+                        value={serving.toString()}
+                        onChangeText={newServing => {
+                            setServing(newServing);
+                            }
+                        }
+                        placeholder='Serving count'
+                        style={styles.input}
+                    />
+                </View>
 
-            <TextInput
-                keyboardType='numeric'
-                value={serving.toString()}
-                onChangeText={newServing => {
-                    setServing(newServing);
-                    }
-                }
-                placeholder='Serving Count'
-                style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-            />
-            <Button
-                    title = "Submit"
+                <TouchableHighlight
                     style={styles.button}
                     underlayColor={ThemeConstants.HIGHLIGHT_YELLOW}
-                    onPress={ () => {
-                        //console.log(serving);
+                    onPress={() => {
                         foodItem.serving = parseFloat(serving);
-                        //console.log(foodItem);
                         if(action === 'add'){
-                            //console.log("ADD");
                             setFoodArray([...foodArray, foodItem]);
-                            //console.log(foodArray);
                         }
                         else if(action === 'edit'){
-                            //console.log('EDIT');
                             deleteID = foodItem.deleteID;
-                            
+
                             for (let i = 0; i < foodArray.length; i++) {
                                 if (foodArray[i].deleteID != deleteID ){
                                     counter = counter + 1;
@@ -98,52 +85,81 @@ const EditServingScreen = ({ navigation }) => {
                             }
                             foodArray.splice(counter,1);
                             setFoodArray([...foodArray, foodItem]);
-                            //console.log(foodArray);
                         }
-                        
-                        //console.log('SETT');
+
                         navigation.navigate('Home');
                     }}
                 >
                     <Text style={styles.text_button}>Save</Text>
-            </Button>
-
-
+                </TouchableHighlight>
+            </View>
         </View>
-        
     );
 };
 
 const styles = StyleSheet.create({
-    calendar: {
-        height:100,
-        paddingTop: 5,
-        paddingBottom: 5
-    },
-    main: {
-        backgroundColor: ThemeConstants.MAIN_WHITE,
-        flex: 1
-    },
-    padding: {
-        backgroundColor: ThemeConstants.MAIN_BLUE,
-        height: 100,
-        position: 'absolute',
-        left: 0,
-        right: 0
-    },
-    status_bar: {
-        backgroundColor: ThemeConstants.MAIN_BLUE,
-        height: Constants.statusBarHeight+5
-    },
-    stats: {
-        position: 'relative',
-    },
     button: {
         backgroundColor: ThemeConstants.MAIN_YELLOW,
         borderRadius: ThemeConstants.CONTAINER_RADIUS,
-        flex: 1,
         marginHorizontal: ThemeConstants.CONTAINER_MARGIN*2,
-        marginVertical: ThemeConstants.CONTAINER_MARGIN*1.25
+        marginTop: ThemeConstants.CONTAINER_MARGIN/2
+    },
+    container: {
+        flexDirection: 'row',
+        justifyContent: 'space-around'
+    },
+    details: {
+        alignItems: 'center',
+        flex: 1,
+        paddingVertical: ThemeConstants.CONTAINER_MARGIN/2
+    },
+    main: {
+        marginHorizontal: ThemeConstants.CONTAINER_MARGIN*2
+    },
+    input_background: {
+        backgroundColor: ThemeConstants.MAIN_WHITE,
+        borderBottomWidth: 1,
+        borderBottomColor: ThemeConstants.BORDER_GRAY,
+        borderTopWidth: 1,
+        borderTopColor: ThemeConstants.BORDER_GRAY,
+        flexDirection: 'row',
+        height: 50,
+        marginVertical: ThemeConstants.CONTAINER_MARGIN/2,
+        marginHorizontal: ThemeConstants.CONTAINER_MARGIN*2,
+    },
+    input_title: {
+        alignSelf: 'center',
+        color: ThemeConstants.FONT_GRAY,
+        fontSize: ThemeConstants.FONT_SIZE_SMALL,
+        fontWeight: 'bold',
+        margin: 10,
+        marginRight: 15
+    },
+    input: {
+        flex: 1,
+        fontSize: ThemeConstants.FONT_SIZE_REGULAR
+    },
+    text_button: {
+        color: ThemeConstants.MAIN_WHITE,
+        fontSize: ThemeConstants.FONT_SIZE_REGULAR,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        paddingVertical: ThemeConstants.CONTAINER_MARGIN/2
+    },
+    text_stat: {
+        fontSize: ThemeConstants.FONT_SIZE_MEDIUM,
+        fontWeight: 'bold',
+    },
+    text_header: {
+        fontSize: ThemeConstants.FONT_SIZE_HEADER,
+        fontWeight: 'bold',
+        marginTop: ThemeConstants.CONTAINER_MARGIN*1,
+        paddingBottom: ThemeConstants.CONTAINER_MARGIN/3
+    },
+    text_title: {
+        color: ThemeConstants.FONT_GRAY,
+        fontSize: ThemeConstants.FONT_SIZE_SMALL,
+        fontWeight: 'bold'
     },
 });
 

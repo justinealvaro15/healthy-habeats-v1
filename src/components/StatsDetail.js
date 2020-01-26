@@ -17,7 +17,7 @@ const StatsDetail = ({ title, unit, valueTotal, valueCurrent }) => {
                 />
             </View>
             <Text style={styles.text_header}>{title}</Text>
-            <Text style={styles.text_regular}>{valueCurrent}/{valueTotal} {unit}</Text>
+            <Text style={styles.text_regular}>{Math.round(valueCurrent*100)/100}/{Math.round(valueTotal*100)/100} {unit}</Text>
         </View>
     );
 };

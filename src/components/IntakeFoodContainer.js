@@ -53,7 +53,7 @@ const IntakeFoodContainer = ({ food, mealTitle, navigateToSearchFood, onDeletion
                         return (
                             <TouchableOpacity style={styles.food}
                                 onPress = { () => {
-                                    console.log(item);
+                                    // console.log(item);
                                     navigation.navigate('EditServing',{
                                         foodArray: foodArray1,
                                         setFoodArray: setFoodArray1,
