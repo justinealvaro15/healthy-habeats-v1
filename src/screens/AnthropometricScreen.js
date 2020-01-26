@@ -290,7 +290,6 @@ const styles = StyleSheet.create({
         marginHorizontal: ThemeConstants.CONTAINER_MARGIN*2,
         marginBottom: ThemeConstants.CONTAINER_MARGIN*3,
         marginTop: ThemeConstants.CONTAINER_MARGIN*1.25
-
     },
     container: {
         backgroundColor: ThemeConstants.MAIN_WHITE,
