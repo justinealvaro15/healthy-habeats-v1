@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, TextInput, ToastAndroid, StyleSheet, View } from 'react-native';
+import { Keyboard, Text, TextInput, ToastAndroid, StyleSheet, View } from 'react-native';
 
 import { TouchableHighlight } from 'react-native-gesture-handler';
 
@@ -16,7 +16,7 @@ const EditServingScreen = ({ navigation }) => {
 
     const [serving, setServing] = useState(foodItem.serving);
 
-    // console.log(foodItem)
+    let actionSubmit = '';
 
     return(
         <View>
@@ -67,12 +67,15 @@ const EditServingScreen = ({ navigation }) => {
                     style={styles.button}
                     underlayColor={ThemeConstants.HIGHLIGHT_YELLOW}
                     onPress={() => {
+                        Keyboard.dismiss();
                         foodItem.serving = parseFloat(serving);
                         if(action === 'add'){
                             setFoodArray([...foodArray, foodItem]);
+                            actionSubmit = 'Added';
                         }
                         else if(action === 'edit'){
                             deleteID = foodItem.deleteID;
+                            actionSubmit = 'Edited';
 
                             for (let i = 0; i < foodArray.length; i++) {
                                 if (foodArray[i].deleteID != deleteID ){
@@ -87,7 +90,7 @@ const EditServingScreen = ({ navigation }) => {
                         }
 
                         navigation.navigate('Home');
-                        ToastAndroid.show('Saved successfully!', ToastAndroid.LONG);
+                        ToastAndroid.show(`${actionSubmit} ${foodItem.foodName} successfully!`, ToastAndroid.SHORT);
                     }}
                 >
                     <Text style={styles.text_button}>Save</Text>

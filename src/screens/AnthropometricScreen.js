@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { AsyncStorage, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, ToastAndroid, View } from 'react-native';
+import { AsyncStorage, Keyboard, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, ToastAndroid, View } from 'react-native';
 import Slider from "react-native-slider";
 import { withNavigation } from 'react-navigation';
 // import Snackbar from 'react-native-snackbar';
@@ -163,11 +163,12 @@ const AnthropometricScreen = ({ navigation }) => {
 	};
     
     const submit = async () => {
+        Keyboard.dismiss();
         computeBMI();
         setDBW((height - 100) - ((height - 100) * 0.1));
         saveData('DBW', JSON.stringify((height - 100) - ((height - 100) * 0.1)));
         navigation.replace('Home');
-        ToastAndroid.show('Saved successfully!', ToastAndroid.LONG);
+        ToastAndroid.show('Saved successfully!', ToastAndroid.SHORT);
     }
 
     return (
