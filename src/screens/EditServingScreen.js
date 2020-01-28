@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Text, TextInput , StyleSheet, View, Button } from 'react-native';
+import { Text, TextInput, ToastAndroid, StyleSheet, View } from 'react-native';
 
 import { TouchableHighlight } from 'react-native-gesture-handler';
-import { Feather } from '@expo/vector-icons';
 
 import * as ThemeConstants from '../common/Themes';
 
@@ -88,6 +87,7 @@ const EditServingScreen = ({ navigation }) => {
                         }
 
                         navigation.navigate('Home');
+                        ToastAndroid.show('Saved successfully!', ToastAndroid.LONG);
                     }}
                 >
                     <Text style={styles.text_button}>Save</Text>

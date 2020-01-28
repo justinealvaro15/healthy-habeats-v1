@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { AsyncStorage, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { AsyncStorage, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, ToastAndroid, View } from 'react-native';
 import Slider from "react-native-slider";
 import { withNavigation } from 'react-navigation';
+// import Snackbar from 'react-native-snackbar';
 
 import * as ThemeConstants from '../common/Themes';
 import * as AnthroText from '../common/AnthropometricText';
@@ -35,7 +36,6 @@ const AnthropometricScreen = ({ navigation }) => {
     const [heightValid, setHeightValid] = useState();
 
     const getUserData = async () => {
-
         const data1 = await AsyncStorage.getItem('weight') || 0;
         const data2 = await AsyncStorage.getItem('height') || 0;
         const data3 = await AsyncStorage.getItem('activityLevel') || 3;
@@ -47,7 +47,6 @@ const AnthropometricScreen = ({ navigation }) => {
         console.log(data1);
         console.log(data2);
         console.log(data3);
-        
     };
 
     const computeBMI = () => {
@@ -187,6 +186,7 @@ const AnthropometricScreen = ({ navigation }) => {
         setDBW((height - 100) - ((height - 100) * 0.1));
         saveData('DBW', JSON.stringify((height - 100) - ((height - 100) * 0.1)));
         navigation.replace('Home');
+        ToastAndroid.show('Saved successfully!', ToastAndroid.LONG);
     }
 
     return (

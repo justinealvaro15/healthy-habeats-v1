@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, AsyncStorage, FlatList, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
+import { Alert, AsyncStorage, FlatList, StyleSheet, Text, ToastAndroid, TouchableHighlight, TouchableOpacity, View } from 'react-native';
 import { Feather } from '@expo/vector-icons'
 import { withNavigation } from 'react-navigation';
 import * as ThemeConstants from '../common/Themes';
@@ -112,6 +112,8 @@ const IntakeFoodContainer = ({ food, mealTitle, navigateToSearchFood, onDeletion
                                                             setIsDeleted(Math.random());
                                                             setIsDelete(Math.random());
                                                         }
+
+                                                        ToastAndroid.show(`Removed ${item.foodName} successfully.`, ToastAndroid.LONG);                                                        
                                                     }
                                                 }
                                             ]
