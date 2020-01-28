@@ -27,7 +27,7 @@ const IntakeWaterContainer = ({water, setWater, currentDate, waterTemplate, wate
                         flexDirection: 'row'}}
                     >
                     <TouchableHighlight
-                        style={styles.button_add}
+                        style={styles.button}
                         onPress={ () => {
                             x_date = [];
                             counter = 0;
@@ -72,7 +72,7 @@ const IntakeWaterContainer = ({water, setWater, currentDate, waterTemplate, wate
                     </View>
 
                     <TouchableHighlight
-                        style={styles.button_add}
+                        style={styles.button}
                         onPress={ () => {
                             waterDrink.dateConsumed = moment(currentDate).format('MMMM DD YYYY');
                             waterDrink.waterID = Math.floor(Math.random() * 99999);

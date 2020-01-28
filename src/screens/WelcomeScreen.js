@@ -1,10 +1,11 @@
 import React from 'react';
-import { AsyncStorage, Text, StyleSheet, View } from 'react-native';
+import { AsyncStorage, Dimensions, Image, StyleSheet, View } from 'react-native';
 
 import * as ThemeConstants from '../common/Themes';
 
 const TIMER = 2000;
-
+const dimensions = Dimensions.get('window');
+const ratio = dimensions.width/350*0.7;
 
 export default class WelcomeScreen extends React.Component {
 	saveUserToken = async (userToken) => {
@@ -48,9 +49,9 @@ export default class WelcomeScreen extends React.Component {
 	componentDidMount() {
 		setTimeout(() => {
 			// USE TO RESET STORAGE
-			 this.deleteUserToken().then(() => 
+			//  this.deleteUserToken().then(() => 
 				this.getUserToken()
-			 )
+			//  )
 			.then((state) => {
 				if(this.state.userToken === 'firstTime'){
 					this.saveUserToken('oldUser');
@@ -66,16 +67,17 @@ export default class WelcomeScreen extends React.Component {
 	render() {
 		return(
 			<View style={styles.main}>
-				{/* <StatusBar backgroundColor={ThemeConstants.MAIN_YELLOW} barStyle="light-content" /> */}
-
-				<Text>HEALTHY</Text>
-				<Text>HABEATS</Text>
+				<Image source={require('../../assets/logo.png')} style={styles.logo}/>
 			</View>
 		);
 	}
 };
 
 const styles = StyleSheet.create({
+	logo: {
+		height: ratio*380,
+		width: dimensions.width*0.7
+	},
 	main: {
 		alignItems: 'center',
 		backgroundColor: ThemeConstants.MAIN_BLUE,

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { AsyncStorage, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { AsyncStorage, Keyboard, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, ToastAndroid, View } from 'react-native';
 import Slider from "react-native-slider";
 import { withNavigation } from 'react-navigation';
+// import Snackbar from 'react-native-snackbar';
 
 import * as ThemeConstants from '../common/Themes';
 import * as AnthroText from '../common/AnthropometricText';
@@ -35,7 +36,6 @@ const AnthropometricScreen = ({ navigation }) => {
     const [heightValid, setHeightValid] = useState();
 
     const getUserData = async () => {
-
         const data1 = await AsyncStorage.getItem('weight') || 0;
         const data2 = await AsyncStorage.getItem('height') || 0;
         const data3 = await AsyncStorage.getItem('activityLevel') || 3;
@@ -47,7 +47,6 @@ const AnthropometricScreen = ({ navigation }) => {
         console.log(data1);
         console.log(data2);
         console.log(data3);
-        
     };
 
     const computeBMI = () => {
@@ -162,31 +161,14 @@ const AnthropometricScreen = ({ navigation }) => {
 			console.log(error.message);
 		}
 	};
-	  
-	const getData = async (key) => {
-		try {
-			const data = await AsyncStorage.getItem(key);
-            return data;
-		} catch (error) {
-			// Error retrieving data
-			console.log(error.message);
-		}      
-	};
-
-	const deleteData = async (key) => {
-		try {
-			await AsyncStorage.removeItem(key);
-		} catch (error) {
-			// Error retrieving data
-			console.log(error.message);
-		}
-    };
     
     const submit = async () => {
+        Keyboard.dismiss();
         computeBMI();
         setDBW((height - 100) - ((height - 100) * 0.1));
         saveData('DBW', JSON.stringify((height - 100) - ((height - 100) * 0.1)));
         navigation.replace('Home');
+        ToastAndroid.show('Saved successfully!', ToastAndroid.SHORT);
     }
 
     return (
@@ -290,7 +272,6 @@ const styles = StyleSheet.create({
         marginHorizontal: ThemeConstants.CONTAINER_MARGIN*2,
         marginBottom: ThemeConstants.CONTAINER_MARGIN*3,
         marginTop: ThemeConstants.CONTAINER_MARGIN*1.25
-
     },
     container: {
         backgroundColor: ThemeConstants.MAIN_WHITE,

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { AsyncStorage, ScrollView, StyleSheet, View } from 'react-native';
 
 import CalendarStrip from 'react-native-calendar-strip';
-import moment from "moment";
+import moment from 'moment';
 
 import IntakeFoodContainer from '../components/IntakeFoodContainer';
 import IntakeWaterContainer from '../components/IntakeWaterContainer';
@@ -10,33 +10,15 @@ import StatsContainer from '../components/StatsContainer';
 
 import * as ThemeConstants from '../common/Themes';
 import Constants from 'expo-constants';
-import { any } from 'prop-types';
 
-
-
-
-const reducer = (state, action) => {
-    return {...state, foodArray: state.foodArray.push(action.payload) }
-}
-
-const total_water_data = [];
-
-
-let ccc= 0;
-
-let global = '';
-let token = 0;
 
 const waterTemplate = 
     {
     dateConsumed: '',
 };
 
-
-
 const HomeScreen = ({ navigation }) => {
     let totalFood = [];
-    let current_totalFood = [];
     
     const [userData, setUserData] = useState({
         calories: 0,
@@ -56,7 +38,7 @@ const HomeScreen = ({ navigation }) => {
     const [lunch, setLunch] = useState([]);
     const [dinner, setDinner] = useState([]);
     const [snacks, setSnacks] = useState([]);
-    //array of waters
+
     const [water, setWater] = useState([]);
     const [currentWater, setCurrentWater] = useState([]);
     const [waterDeleted, setWaterDeleted] = useState();
@@ -109,11 +91,6 @@ const HomeScreen = ({ navigation }) => {
     const syncBreakfastData = async (key) => {
 		try {
             let x = 0;
-            let xx = []
-            //const data2 = await (AsyncStorage.getItem('total_water') || 'empty');
-            //console.log("HAAAAAAAHAHAAHA");
-            //console.log(data2);
-            //console.log("HAAAAAAAHAHAAHA");
             const data = await (AsyncStorage.getItem(key) || 'empty');
            
             //console.log(data);
@@ -214,12 +191,10 @@ const HomeScreen = ({ navigation }) => {
             let a = 0;
             let x_date = [];
             const water1 = await AsyncStorage.getItem('total_water') || 'empty';
-            //console.log('------------DATA---------------');
-            //console.log(water1);
-            //console.log('------------DATA---------------');
+
             if(water1 === 'empty'){
                 setCurrentWater(0);
-            }else{
+            } else{
                 a = JSON.parse(water1);
                 for (let i = 0; i < a.length; i++) {
                     if(a[i].dateConsumed === dateSelected){
@@ -331,9 +306,7 @@ const HomeScreen = ({ navigation }) => {
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);
-        }      
-        
-        //console.log("function#5: current food sync");
+        }
     };
 
     const saveCurrentUserData = async (key, value) => {
@@ -380,7 +353,6 @@ const HomeScreen = ({ navigation }) => {
         //console.log("function#8: delete save data");
     };
     
-
     //////////////////////////////////////
     //
     // DELETE FOR DEV PURPOSES ONLY
@@ -393,14 +365,13 @@ const HomeScreen = ({ navigation }) => {
     //
     //////////////////////////////////////
 
-
     useEffect(() => {
         syncBreakfastData('total_breakfast');
         syncLunchData('total_lunch');
         syncDinnerData('total_dinner');
         syncSnacksData('total_snacks');
         syncWaterDataFromJson('total_water');
-        
+
         //syncFoodsData();
         //syncCurrentUserData();
         getUserData();
@@ -452,7 +423,7 @@ const HomeScreen = ({ navigation }) => {
     useEffect( () => {
         if(water.length == 0){
             saveWaterData('total_water',JSON.stringify(water));
-        }else{
+        } else{
             saveWaterData('total_water', JSON.stringify(water));
         }
     }, [water]);
@@ -460,7 +431,7 @@ const HomeScreen = ({ navigation }) => {
     useEffect( () => {
         if(water.length == 0){
             saveWaterData('total_water',JSON.stringify(water));
-        }else{
+        } else{
             saveWaterData('total_water', JSON.stringify(water));
         }
     }, [waterDeleted]);
