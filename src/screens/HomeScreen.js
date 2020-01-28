@@ -404,7 +404,8 @@ const HomeScreen = ({ navigation }) => {
         //syncFoodsData();
         //syncCurrentUserData();
         getUserData();
-        //console.log("useEffect#1 in action: sync data from startup");
+        
+        console.log("useEffect#1 in action: sync data from startup");
     },[]);
 
     useEffect(() => {
@@ -485,7 +486,7 @@ const HomeScreen = ({ navigation }) => {
     },[waterDeleted])
 
     useEffect( () => {
-        setTimeout(function() { deleteMagic(); }, 3000);
+        setTimeout(function() { deleteMagic(); }, 2000);
         //setTimeout(function() { syncWaterData2('total_water'); }, 5000);
         //setTimeout(function() { getUserData(); }, 2000);
     }, []);

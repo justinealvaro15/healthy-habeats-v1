@@ -4,6 +4,7 @@ import AnthropometricScreen from './src/screens/AnthropometricScreen';
 import EditServingScreen from './src/screens/EditServingScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import SearchFoodScreen from './src/screens/SearchFoodScreen';
+import TestScreen from './src/screens/TestScreen';
 import UserProfileScreen from './src/screens/UserProfileScreen';
 import WelcomeScreen from './src/screens/WelcomeScreen';
 
@@ -36,6 +37,12 @@ const AppStack = createStackNavigator({
         screen: SearchFoodScreen,
         navigationOptions: {
             title: 'Search for food'
+        }
+    },
+    Test:{
+        screen: TestScreen,
+        navigationOptions:{
+            title: 'Test Screen'
         }
     }
 }, {
