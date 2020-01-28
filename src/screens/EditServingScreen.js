@@ -68,29 +68,36 @@ const EditServingScreen = ({ navigation }) => {
                     underlayColor={ThemeConstants.HIGHLIGHT_YELLOW}
                     onPress={() => {
                         Keyboard.dismiss();
-                        foodItem.serving = parseFloat(serving);
-                        if(action === 'add'){
-                            setFoodArray([...foodArray, foodItem]);
-                            actionSubmit = 'Added';
-                        }
-                        else if(action === 'edit'){
-                            deleteID = foodItem.deleteID;
-                            actionSubmit = 'Edited';
 
-                            for (let i = 0; i < foodArray.length; i++) {
-                                if (foodArray[i].deleteID != deleteID ){
-                                    counter = counter + 1;
-                                }
-                                else{
-                                    break;
-                                }
+                        const isServingValid = serving > 0;
+
+                        if(isServingValid){
+                            foodItem.serving = parseFloat(serving);
+                            if(action === 'add'){
+                                setFoodArray([...foodArray, foodItem]);
+                                actionSubmit = 'Added';
                             }
-                            foodArray.splice(counter,1);
-                            setFoodArray([...foodArray, foodItem]);
-                        }
+                            else if(action === 'edit'){
+                                deleteID = foodItem.deleteID;
+                                actionSubmit = 'Edited';
 
-                        navigation.navigate('Home');
-                        ToastAndroid.show(`${actionSubmit} ${foodItem.foodName} successfully!`, ToastAndroid.SHORT);
+                                for (let i = 0; i < foodArray.length; i++) {
+                                    if (foodArray[i].deleteID != deleteID ){
+                                        counter = counter + 1;
+                                    }
+                                    else{
+                                        break;
+                                    }
+                                }
+                                foodArray.splice(counter,1);
+                                setFoodArray([...foodArray, foodItem]);
+                            }
+
+                            navigation.navigate('Home');
+                            ToastAndroid.show(`${actionSubmit} ${foodItem.foodName} successfully!`, ToastAndroid.SHORT);
+                        } else{
+                            ToastAndroid.show('Please enter number of food serving(s).', ToastAndroid.SHORT);
+                        }
                     }}
                 >
                     <Text style={styles.text_button}>Save</Text>
