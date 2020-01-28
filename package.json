@@ -28,6 +28,7 @@
     "react-native-swipeout": "^2.3.6",
     "react-native-web": "^0.11.7",
     "react-navigation": "^3.11.0",
+    "react-navigation-drawer": "^2.3.3",
     "util": "^0.12.1",
     "which": "^2.0.1",
     "write-json-file": "^4.2.0"

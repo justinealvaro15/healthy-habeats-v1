@@ -133,10 +133,6 @@ const UserProfileScreen = ({ navigation }) => {
             <View style={{ justifyContent: 'flex-start' }}>
                 <View style={styles.status_bar}/>
 
-                <View style={styles.container_blue}>
-                    <Text style={styles.text_header}>Personal Profile</Text>
-                </View>
-
                 <View>
                     <View style={styles.padding}/>
                     <AnthropometricContainer
