@@ -8,24 +8,6 @@ import * as ThemeConstants from '../common/Themes';
 // when pressed => FOODARRAY[INDEX] get the food object
 // after deletion setFoodArray to
 
-var totalFood = [];
-const deleteData = async (key) => {
-    try {
-        await AsyncStorage.removeItem(key);
-    } catch (error) {
-        // Error retrieving data
-        console.log(error.message);
-    }
-}
-const saveData = async (key, value) => {
-    try {
-        await (AsyncStorage.setItem(key, value));
-    } catch (error) {
-        // Error retrieving data
-        console.log(error.message);
-    }
-};
-
 const IntakeFoodContainer = ({ food, mealTitle, navigateToSearchFood, onDeletion, onDeletion2, onDeletion3, onDeletion4, onDeletion5, foodArray1, setFoodArray1, navigation }) => {
     const meal = onDeletion5;
     const foodArray = food;

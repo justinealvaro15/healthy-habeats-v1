@@ -161,25 +161,6 @@ const AnthropometricScreen = ({ navigation }) => {
 			console.log(error.message);
 		}
 	};
-	  
-	const getData = async (key) => {
-		try {
-			const data = await AsyncStorage.getItem(key);
-            return data;
-		} catch (error) {
-			// Error retrieving data
-			console.log(error.message);
-		}      
-	};
-
-	const deleteData = async (key) => {
-		try {
-			await AsyncStorage.removeItem(key);
-		} catch (error) {
-			// Error retrieving data
-			console.log(error.message);
-		}
-    };
     
     const submit = async () => {
         computeBMI();

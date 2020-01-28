@@ -66,8 +66,6 @@ export default class WelcomeScreen extends React.Component {
 	render() {
 		return(
 			<View style={styles.main}>
-				{/* <StatusBar backgroundColor={ThemeConstants.MAIN_YELLOW} barStyle="light-content" /> */}
-
 				<Text>HEALTHY</Text>
 				<Text>HABEATS</Text>
 			</View>

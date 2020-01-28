@@ -10,12 +10,9 @@ import * as ThemeConstants from '../common/Themes';
 import * as DbwText from '../common/DbwText';
 import Constants from 'expo-constants';
 
-let home_counter = 1;
 let userProfile_counter = 1;
 
 const UserProfileScreen = ({ navigation }) => {
-    const [hasSwitched, setHasSwitched] = useState(0);
-
     const [userData, setUserData] = useState({
         weight: 0,
         height: 0,
