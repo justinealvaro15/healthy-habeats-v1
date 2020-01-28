@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AsyncStorage, ScrollView, StyleSheet, View } from 'react-native';
+import { AsyncStorage, ScrollView, StyleSheet, View, Text } from 'react-native';
 
 import CalendarStrip from 'react-native-calendar-strip';
 import moment from 'moment';
@@ -508,6 +508,14 @@ const HomeScreen = ({ navigation }) => {
 			//console.log('UserProfile Counter: ' + userProfile_counter);	
 		});
 	},[]);
+
+    if(isLoading1 && isLoading2 && isLoading3 && isLoading4 && isLoading5 && isLoading6 && isLoading7 && isLoading8){
+        return(
+            <View>
+                <Text>LOADING</Text>
+            </View>
+        )
+    }
 
     return(
         <ScrollView style={styles.main}>
