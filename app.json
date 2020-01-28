@@ -7,7 +7,6 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "description": "CS 198 Thesis",
-    "backgroundColor": "#0455AE",
     "primaryColor": "#0455AE",
     "android": {
       "googleServicesFile": "./google-services.json",

@@ -167,7 +167,7 @@ const AnthropometricScreen = ({ navigation }) => {
         computeBMI();
         setDBW((height - 100) - ((height - 100) * 0.1));
         saveData('DBW', JSON.stringify((height - 100) - ((height - 100) * 0.1)));
-        navigation.replace('Home');
+        navigation.navigate('UserProfile');
         ToastAndroid.show('Saved successfully!', ToastAndroid.SHORT);
     }
 
@@ -177,13 +177,6 @@ const AnthropometricScreen = ({ navigation }) => {
             style={{flex: 1}}
         >
             <ScrollView style={styles.main} keyboardShouldPersistTaps='handled'>
-                <View>
-                    <Text style={styles.text_title}>Personal Details</Text>
-                    <Text style={styles.text_subtitle}>
-                        {AnthroText.subheader}
-                    </Text>
-                </View>
-
                 <View style={styles.container}>
                     <View style={styles.details}>
                         <Text style={styles.text_header}>Weight (kg)</Text>
@@ -270,7 +263,7 @@ const styles = StyleSheet.create({
         borderRadius: ThemeConstants.CONTAINER_RADIUS,
         flex: 1,
         marginHorizontal: ThemeConstants.CONTAINER_MARGIN*2,
-        marginBottom: ThemeConstants.CONTAINER_MARGIN*3,
+        marginBottom: ThemeConstants.CONTAINER_MARGIN*4,
         marginTop: ThemeConstants.CONTAINER_MARGIN*1.25
     },
     container: {
