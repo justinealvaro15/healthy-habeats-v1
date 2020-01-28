@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, AsyncStorage, FlatList, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
+import { Alert, FlatList, Keyboard, StyleSheet, Text, ToastAndroid, TouchableHighlight, TouchableOpacity, View } from 'react-native';
 import { Feather } from '@expo/vector-icons'
 import { withNavigation } from 'react-navigation';
 import * as ThemeConstants from '../common/Themes';
@@ -7,24 +7,6 @@ import * as ThemeConstants from '../common/Themes';
 // FOODARRAY: contains list of foods in a particular setting
 // when pressed => FOODARRAY[INDEX] get the food object
 // after deletion setFoodArray to
-
-var totalFood = [];
-const deleteData = async (key) => {
-    try {
-        await AsyncStorage.removeItem(key);
-    } catch (error) {
-        // Error retrieving data
-        console.log(error.message);
-    }
-}
-const saveData = async (key, value) => {
-    try {
-        await (AsyncStorage.setItem(key, value));
-    } catch (error) {
-        // Error retrieving data
-        console.log(error.message);
-    }
-};
 
 const IntakeFoodContainer = ({ food, mealTitle, navigateToSearchFood, onDeletion, onDeletion2, onDeletion3, onDeletion4, onDeletion5, foodArray1, setFoodArray1, navigation }) => {
     const meal = onDeletion5;
@@ -85,6 +67,7 @@ const IntakeFoodContainer = ({ food, mealTitle, navigateToSearchFood, onDeletion
                                                 {
                                                     text: 'Remove',
                                                     onPress: () => {
+                                                        Keyboard.dismiss();
                                                         counter = 0;
                                                         let x = foodArray.filter(foodArray => foodArray.foodName !== item.foodName);
                                                         let y = foodArray.filter(foodArray => foodArray.foodName === item.foodName);
@@ -112,6 +95,8 @@ const IntakeFoodContainer = ({ food, mealTitle, navigateToSearchFood, onDeletion
                                                             setIsDeleted(Math.random());
                                                             setIsDelete(Math.random());
                                                         }
+
+                                                        ToastAndroid.show(`Removed ${item.foodName} successfully.`, ToastAndroid.SHORT);                                                        
                                                     }
                                                 }
                                             ]

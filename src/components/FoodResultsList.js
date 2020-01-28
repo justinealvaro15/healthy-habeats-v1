@@ -7,7 +7,7 @@ import moment from "moment";
 import * as foodData from '../../assets/samplefooditems.json';
 import * as ThemeConstants from '../common/Themes';
 
-const FoodResultsList = ({ foodArray, setFoodArray, navigation, results, title, currentDate, deleteID }) => {
+const FoodResultsList = ({ foodArray, setFoodArray, navigation, results, currentDate, deleteID }) => {
     // results === [Food Items]; 
     //      used for filtering search
     // foodArray === [Food Items]; 
