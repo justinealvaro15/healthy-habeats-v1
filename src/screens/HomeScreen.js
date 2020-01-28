@@ -28,6 +28,7 @@ const HomeScreen = ({ navigation }) => {
     const [isLoading5, setIsLoading5] = useState(true);
     const [isLoading6, setIsLoading6] = useState(true);
     const [isLoading7, setIsLoading7] = useState(true);
+    const [isLoading8, setIsLoading8] = useState(true);
 
     const [userData, setUserData] = useState({
         calories: 0,
@@ -347,7 +348,9 @@ const HomeScreen = ({ navigation }) => {
 
     const saveWaterData = async (key,value) => {
         try {
-            await (AsyncStorage.setItem(key, value), syncWaterData2());
+            await (AsyncStorage.setItem(key, value), syncWaterData2().then( () => {
+                setIsLoading7(false);
+            }));
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);
@@ -400,7 +403,9 @@ const HomeScreen = ({ navigation }) => {
 
         //syncFoodsData();
         //syncCurrentUserData();
-        getUserData();
+        getUserData().then( () => {
+            setIsLoading8(false);
+        });
         
         console.log("useEffect#1 in action: sync data from startup");
     },[]);
