@@ -26,7 +26,7 @@ const firebaseConfig = {
     storageBucket: "healthyhabeats-cs199.appspot.com",
   };
   
-  //firebase.initializeApp(firebaseConfig);
+  firebase.initializeApp(firebaseConfig);
 
 
 
@@ -118,7 +118,7 @@ const database = {
                                 console.log('First Time');
 							} else {
                                 console.log('Old User');
-                                //submitData();
+                                submitData();
 								
 							}
 						}}

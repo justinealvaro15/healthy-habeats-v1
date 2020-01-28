@@ -468,10 +468,16 @@ const HomeScreen = ({ navigation }) => {
         //setTimeout(function() { getUserData(); }, 2000);
     }, []);
 
+    useEffect( () => {
+        focusListener = navigation.addListener('didFocus', () => {
+			console.log('Screen Focused');
+            getUserData();
+			//console.log('UserProfile Counter: ' + userProfile_counter);	
+		});
+	},[]);
+
     return(
         <ScrollView style={styles.main}>
-            <View style={styles.status_bar}/>
-
             <CalendarStrip
                 style={styles.calendar}
                 daySelectionAnimation={{type: 'background', duration: 200, highlightColor: ThemeConstants.MAIN_YELLOW}}
@@ -601,10 +607,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         left: 0,
         right: 0
-    },
-    status_bar: {
-        backgroundColor: ThemeConstants.MAIN_BLUE,
-        height: Constants.statusBarHeight+5
     },
     stats: {
         position: 'relative',
