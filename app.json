@@ -7,10 +7,13 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "description": "CS 198 Thesis",
+    "backgroundColor": "#0455AE",
+    "primaryColor": "#0455AE",
     "android": {
       "googleServicesFile": "./google-services.json",
       "package": "com.cs198.eatup",
-      "versionCode": 1     
+      "versionCode": 1,
+      "icon": "./assets/icon.png"
     }
   }
 }
