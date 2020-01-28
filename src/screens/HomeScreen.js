@@ -11,6 +11,7 @@ import StatsContainer from '../components/StatsContainer';
 import * as ThemeConstants from '../common/Themes';
 import Constants from 'expo-constants';
 
+let current_breakfast1 = [];
 
 const waterTemplate = 
     {
@@ -64,11 +65,13 @@ const HomeScreen = ({ navigation }) => {
     }
 
     const getUserData = async () => {
+        
         try {
             const calories = await AsyncStorage.getItem('total_calories');
             const carbs = await AsyncStorage.getItem('total_carbs');
             const proteins = await AsyncStorage.getItem('total_proteins');
             const fats = await AsyncStorage.getItem('total_fats');
+            console.log(calories+'/'+carbs+'/'+proteins+'/'+fats);
             setUserData({
                 calories: calories,
                 carbs: carbs,
@@ -221,7 +224,8 @@ const HomeScreen = ({ navigation }) => {
             const lunch1 = await AsyncStorage.getItem('total_lunch') || 'empty';
             const dinner1 = await AsyncStorage.getItem('total_dinner') || 'empty';
             const snacks1 = await AsyncStorage.getItem('total_snacks') || 'empty';
-            
+
+           
            
             if(breakfast1 === 'empty'){
 
@@ -235,6 +239,7 @@ const HomeScreen = ({ navigation }) => {
                     }
                 }
                 setCurrentBreakfast(x_date);
+                
             }
             x_date = [];
      
@@ -320,6 +325,7 @@ const HomeScreen = ({ navigation }) => {
 	};
 
     const saveData = async (key, value) => {
+        //console.log('FOOD IS ADDED');
 		try {
             await (AsyncStorage.setItem(key, value), syncFoodsData());
 		} catch (error) {

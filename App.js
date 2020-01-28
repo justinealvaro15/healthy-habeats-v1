@@ -21,8 +21,9 @@ const AppStack = createStackNavigator({
     },
     EditServing: {
         screen: EditServingScreen,
-        navigationOptions: {
-            title: 'Food servings'
+        navigationOptions:{
+            title: 'EditServing',
+            header: null
         }
     },
     Home: {
@@ -51,7 +52,7 @@ const AppStack = createStackNavigator({
             backgroundColor: MAIN_BLUE
         },
         headerTintColor: MAIN_WHITE,
-        title: 'HEALTHY HABEATS'
+        title: 'Health Food App'
     }
 }, {
     headerMode: 'screen',

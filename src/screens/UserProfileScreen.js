@@ -110,7 +110,7 @@ const UserProfileScreen = ({ navigation }) => {
         getUserData();
         prepareCounter();
         //console.log(screen_counter);
-        console.log('USER PROFILE');
+        //console.log('USER PROFILE');
     },[]);
 
     useEffect( () => {
@@ -119,7 +119,7 @@ const UserProfileScreen = ({ navigation }) => {
 			userProfile_counter+=1;
             saveUserProfileCounter('userProfile_counter', userProfile_counter);
             getUserData();
-			console.log('UserProfile Counter: ' + userProfile_counter);	
+			//console.log('UserProfile Counter: ' + userProfile_counter);	
 		});
 	},[]);
 	
