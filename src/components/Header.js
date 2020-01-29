@@ -18,11 +18,7 @@ export default function Header({ navigation, title }) {
                 style={styles.icon}
             />
 
-            <View>
-                <View>
-                    <Text style={styles.text_header}>{ title }</Text>
-                </View>
-            </View>
+            <View>{title}</View>
         </View>
     );
 };

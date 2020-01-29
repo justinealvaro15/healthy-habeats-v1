@@ -2,6 +2,7 @@
 export const MAIN_BLUE = '#0455AE';
 export const MAIN_WHITE = '#FFFFFF';
 export const MAIN_YELLOW = '#FBA707';
+export const MAIN_GREEN = '#8AC64C';
 
 export const HIGHLIGHT_YELLOW = '#FBD007';
 export const HIGHLIGHT_GRAY = '#EFEFF0'

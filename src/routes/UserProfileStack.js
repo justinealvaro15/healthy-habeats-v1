@@ -1,18 +1,21 @@
 import React from 'react';
 import { createStackNavigator } from 'react-navigation';
+import { StyleSheet, Text } from 'react-native';
 
 import AnthropometricScreen from '../screens/AnthropometricScreen';
 import UserProfileScreen from '../screens/UserProfileScreen';
 
 import Header from '../components/Header';
-import { MAIN_BLUE, MAIN_WHITE } from '../common/Themes';
+import { FONT_SIZE_MEDIUM, MAIN_BLUE, MAIN_WHITE } from '../common/Themes';
 
 const screens = {
     UserProfile: {
         screen: UserProfileScreen,
         navigationOptions: ({ navigation }) => {
             return {
-                headerTitle: () => <Header navigation={navigation} title='My Profile'/>
+                headerTitle: () => {
+                    return <Header navigation={navigation} title={<Text style={styles.text_header}>Profile</Text>}/>
+                }
             }
         }
     },
@@ -28,6 +31,19 @@ const UserProfileStack = createStackNavigator(screens, {
     defaultNavigationOptions: {
         headerTintColor: MAIN_WHITE,
         headerStyle: { backgroundColor: MAIN_BLUE, height: 60 }
+    },
+    text_header: {
+        color: MAIN_WHITE,
+        fontSize: FONT_SIZE_MEDIUM,
+        fontWeight: 'bold',
+    }
+});
+
+const styles = StyleSheet.create({
+    text_header: {
+        color: MAIN_WHITE,
+        fontSize: FONT_SIZE_MEDIUM,
+        fontWeight: 'bold',
     }
 });
 

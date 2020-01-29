@@ -8,7 +8,7 @@ import AboutStack from './AboutStack';
 import TestScreen from '../screens/TestScreen';
 
 import { Feather } from '@expo/vector-icons';
-import { MAIN_BLUE, MAIN_WHITE } from '../common/Themes';
+import { MAIN_BLUE, MAIN_GREEN, MAIN_WHITE } from '../common/Themes';
 import Constants from 'expo-constants';
 
 const RootDrawerNavigator = createDrawerNavigator({
@@ -42,8 +42,8 @@ const RootDrawerNavigator = createDrawerNavigator({
     }
 }, {
     contentComponent: (props) => (
-        <View style={{ flex: 1 }}>
-            <Image source={require('../../assets/icon.png')} style={styles.logo}/>
+        <View style={{ flex: 1, backgroundColor: MAIN_BLUE }}>
+            <Image source={require('../../assets/logo.png')} style={styles.logo}/>
 
             <ScrollView>
                 <DrawerItems {...props}/>
@@ -51,16 +51,18 @@ const RootDrawerNavigator = createDrawerNavigator({
         </View> 
     ),
     contentOptions: {
-        activeBackgroundColor: MAIN_BLUE,
-        activeTintColor: MAIN_WHITE,
+        activeBackgroundColor: MAIN_WHITE,
+        activeTintColor: MAIN_GREEN,
+        inactiveTintColor: MAIN_WHITE
     }
 });
 
 const styles = StyleSheet.create({
 	logo: {
         alignSelf: 'center',
-        marginTop: Constants.statusBarHeight*1.5,
-		height: 150,
+        marginBottom: Constants.statusBarHeight*1.5,
+        marginTop: Constants.statusBarHeight*2.5,
+		height: 163,
         width: 150,
     }
 });
