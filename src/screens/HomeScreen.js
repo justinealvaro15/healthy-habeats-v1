@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AsyncStorage, ScrollView, StyleSheet, View } from 'react-native';
+import { AsyncStorage, ScrollView, StyleSheet, View, Text } from 'react-native';
 
 import CalendarStrip from 'react-native-calendar-strip';
 import moment from 'moment';
@@ -11,6 +11,7 @@ import StatsContainer from '../components/StatsContainer';
 import * as ThemeConstants from '../common/Themes';
 import Constants from 'expo-constants';
 
+let current_breakfast1 = [];
 
 const waterTemplate = 
     {
@@ -20,6 +21,15 @@ const waterTemplate =
 const HomeScreen = ({ navigation }) => {
     let totalFood = [];
     
+    const [isLoading1, setIsLoading1] = useState(true);
+    const [isLoading2, setIsLoading2] = useState(true);
+    const [isLoading3, setIsLoading3] = useState(true);
+    const [isLoading4, setIsLoading4] = useState(true);
+    const [isLoading5, setIsLoading5] = useState(true);
+    const [isLoading6, setIsLoading6] = useState(true);
+    const [isLoading7, setIsLoading7] = useState(true);
+    const [isLoading8, setIsLoading8] = useState(true);
+
     const [userData, setUserData] = useState({
         calories: 0,
         carbs: 0,
@@ -64,11 +74,13 @@ const HomeScreen = ({ navigation }) => {
     }
 
     const getUserData = async () => {
+        
         try {
             const calories = await AsyncStorage.getItem('total_calories');
             const carbs = await AsyncStorage.getItem('total_carbs');
             const proteins = await AsyncStorage.getItem('total_proteins');
             const fats = await AsyncStorage.getItem('total_fats');
+            console.log(calories+'/'+carbs+'/'+proteins+'/'+fats);
             setUserData({
                 calories: calories,
                 carbs: carbs,
@@ -221,7 +233,8 @@ const HomeScreen = ({ navigation }) => {
             const lunch1 = await AsyncStorage.getItem('total_lunch') || 'empty';
             const dinner1 = await AsyncStorage.getItem('total_dinner') || 'empty';
             const snacks1 = await AsyncStorage.getItem('total_snacks') || 'empty';
-            
+
+           
            
             if(breakfast1 === 'empty'){
 
@@ -235,6 +248,7 @@ const HomeScreen = ({ navigation }) => {
                     }
                 }
                 setCurrentBreakfast(x_date);
+                
             }
             x_date = [];
      
@@ -320,8 +334,11 @@ const HomeScreen = ({ navigation }) => {
 	};
 
     const saveData = async (key, value) => {
+        //console.log('FOOD IS ADDED');
 		try {
-            await (AsyncStorage.setItem(key, value), syncFoodsData());
+            await (AsyncStorage.setItem(key, value), syncFoodsData().then( () => {
+                setIsLoading6(false);
+            }));
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);
@@ -331,7 +348,9 @@ const HomeScreen = ({ navigation }) => {
 
     const saveWaterData = async (key,value) => {
         try {
-            await (AsyncStorage.setItem(key, value), syncWaterData2());
+            await (AsyncStorage.setItem(key, value), syncWaterData2().then( () => {
+                setIsLoading7(false);
+            }));
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);
@@ -366,16 +385,29 @@ const HomeScreen = ({ navigation }) => {
     //////////////////////////////////////
 
     useEffect(() => {
-        syncBreakfastData('total_breakfast');
-        syncLunchData('total_lunch');
-        syncDinnerData('total_dinner');
-        syncSnacksData('total_snacks');
-        syncWaterDataFromJson('total_water');
+        syncBreakfastData('total_breakfast').then( () => {
+            setIsLoading1(false);
+        });
+        syncLunchData('total_lunch').then( () => {
+            setIsLoading2(false);
+        });;
+        syncDinnerData('total_dinner').then( () => {
+            setIsLoading3(false);
+        });;
+        syncSnacksData('total_snacks').then( () => {
+            setIsLoading4(false);
+        });;
+        syncWaterDataFromJson('total_water').then( () => {
+            setIsLoading5(false);
+        });;
 
         //syncFoodsData();
         //syncCurrentUserData();
-        getUserData();
-        //console.log("useEffect#1 in action: sync data from startup");
+        getUserData().then( () => {
+            setIsLoading8(false);
+        });
+        
+        console.log("useEffect#1 in action: sync data from startup");
     },[]);
 
     useEffect(() => {
@@ -436,8 +468,12 @@ const HomeScreen = ({ navigation }) => {
     }, [waterDeleted]);
 
     useEffect(() => {
-        syncFoodsData();
-        syncWaterData2();
+        syncFoodsData().then( () => {
+            setIsLoading6(false);
+        });
+        syncWaterData2().then( () => {
+            setIsLoading7(false);
+        });;
     }, [dateSelected]);
 
     useEffect(() => {
@@ -447,19 +483,39 @@ const HomeScreen = ({ navigation }) => {
         //saveData('total_dinner', JSON.stringify(dinner));
         //saveData('total_snacks', JSON.stringify(snacks));
         saveDeletionData();
-        syncFoodsData();
+        syncFoodsData().then( () => {
+            setIsLoading6(false);
+        });
        // console.log("useEffect#7 in action: data is deleted");
     }, [isDeleted]);
 
     useEffect( () => {
-        syncWaterData2();
+        syncWaterData2().then( () => {
+            setIsLoading7(false);
+        });;
     },[waterDeleted])
 
     useEffect( () => {
-        setTimeout(function() { deleteMagic(); }, 3000);
+        setTimeout(function() { deleteMagic(); }, 2000);
         //setTimeout(function() { syncWaterData2('total_water'); }, 5000);
         //setTimeout(function() { getUserData(); }, 2000);
     }, []);
+
+    useEffect( () => {
+        focusListener = navigation.addListener('didFocus', () => {
+			console.log('Screen Focused');
+            getUserData();
+			//console.log('UserProfile Counter: ' + userProfile_counter);	
+		});
+	},[]);
+
+    if(isLoading1 && isLoading2 && isLoading3 && isLoading4 && isLoading5 && isLoading6 && isLoading7 && isLoading8){
+        return(
+            <View>
+                <Text>LOADING</Text>
+            </View>
+        )
+    }
 
     return(
         <ScrollView style={styles.main}>
