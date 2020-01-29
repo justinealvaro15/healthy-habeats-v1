@@ -6,15 +6,15 @@ import moment from "moment";
 //item.dateConsumed = moment(currentDate).format('MMMM DD YYYY');
 
 
-const IntakeWaterContainer = ({water, setWater, currentDate, waterTemplate, waterCount, setWaterDeleted}) => {
-    let temp = [];
+const IntakeWaterContainer = (/*{water, setWater, currentDate, waterTemplate, waterCount, setWaterDeleted}*/) => {
+    /*let temp = [];
     let x_date = [];
     let counter = 0;
     let deleteID = '';
     let waterDrink = {
         dateConsumed: waterTemplate.dateConsumed,
         waterID: waterTemplate.waterID
-    };
+    };*/
 
     return(
         <View style={styles.container}>
@@ -28,7 +28,7 @@ const IntakeWaterContainer = ({water, setWater, currentDate, waterTemplate, wate
                     >
                     <TouchableHighlight
                         style={styles.button}
-                        onPress={ () => {
+                        /*onPress={ () => {
                             x_date = [];
                             counter = 0;
                             if(waterCount> 0){
@@ -59,7 +59,7 @@ const IntakeWaterContainer = ({water, setWater, currentDate, waterTemplate, wate
                                 setWaterDeleted(Math.random());
 
                             }
-                        }}
+                        }}*/
                     underlayColor={ThemeConstants.HIGHLIGHT_YELLOW}
                     >
                         <View>
@@ -68,17 +68,17 @@ const IntakeWaterContainer = ({water, setWater, currentDate, waterTemplate, wate
                     </TouchableHighlight>
 
                     <View style={styles.glass}>
-                        <Text style={styles.text_water}>{waterCount} {waterCount <= 1 ? 'glass' : 'glasses'}</Text>
+                        <Text style={styles.text_water}>{/*waterCount} {waterCount <= 1 ? 'glass' : 'glasses'}*/0}</Text>
                     </View>
 
                     <TouchableHighlight
                         style={styles.button}
-                        onPress={ () => {
+                        /*onPress={ () => {
                             waterDrink.dateConsumed = moment(currentDate).format('MMMM DD YYYY');
                             waterDrink.waterID = Math.floor(Math.random() * 99999);
                             setWater([...water, waterDrink]);
                             }
-                        }
+                        }*/
                         underlayColor={ThemeConstants.HIGHLIGHT_YELLOW}
                     >
                         <View>
