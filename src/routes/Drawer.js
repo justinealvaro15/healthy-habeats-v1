@@ -3,6 +3,7 @@ import { createDrawerNavigator } from 'react-navigation-drawer';
 
 import HomeStack from './HomeStack';
 import UserProfileStack from './UserProfileStack';
+import TestScreen from '../screens/TestScreen';
 
 const RootDrawerNavigator = createDrawerNavigator({
     Home: {
@@ -10,6 +11,9 @@ const RootDrawerNavigator = createDrawerNavigator({
     },
     UserProfile: {
         screen: UserProfileStack,
+    },
+    Test: {
+        screen: TestScreen
     }
 });
 

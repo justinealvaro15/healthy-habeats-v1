@@ -10,7 +10,6 @@ import * as ThemeConstants from '../common/Themes';
 import * as DbwText from '../common/DbwText';
 import Constants from 'expo-constants';
 
-let userProfile_counter = 1;
 
 const UserProfileScreen = ({ navigation }) => {
     const [userData, setUserData] = useState({
@@ -73,7 +72,7 @@ const UserProfileScreen = ({ navigation }) => {
 		}      
     };
 
-    const prepareCounter = async () => {
+    /*const prepareCounter = async () => {
 		try {
 			const data2 = await AsyncStorage.getItem('home_counter') || 'empty';
 			const data3 = await AsyncStorage.getItem('userProfile_counter') || 'empty';
@@ -104,11 +103,11 @@ const UserProfileScreen = ({ navigation }) => {
 			// Error retrieving data
 			console.log(error.message);
 		}
-	};
+	};*/
 
     useEffect( () => {
         getUserData();
-        prepareCounter();
+        //prepareCounter();
         //console.log(screen_counter);
         //console.log('USER PROFILE');
     },[]);
@@ -116,8 +115,8 @@ const UserProfileScreen = ({ navigation }) => {
     useEffect( () => {
         focusListener = navigation.addListener('didFocus', () => {
 			//console.log('Screen Focused');
-			userProfile_counter+=1;
-            saveUserProfileCounter('userProfile_counter', userProfile_counter);
+			//userProfile_counter+=1;
+            //saveUserProfileCounter('userProfile_counter', userProfile_counter);
             getUserData();
 			//console.log('UserProfile Counter: ' + userProfile_counter);	
 		});
