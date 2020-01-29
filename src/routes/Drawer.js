@@ -4,6 +4,7 @@ import { Image, ScrollView, StyleSheet, View, Text } from 'react-native';
 
 import HomeStack from './HomeStack';
 import UserProfileStack from './UserProfileStack';
+import AboutStack from './AboutStack';
 import TestScreen from '../screens/TestScreen';
 
 import { Feather } from '@expo/vector-icons';
@@ -23,6 +24,13 @@ const RootDrawerNavigator = createDrawerNavigator({
         navigationOptions: {
             drawerLabel: 'Profile',
             drawerIcon: ({tintColor}) => <Feather name='user' size={20} color={tintColor}/>
+        }
+    },
+    About: {
+        screen: AboutStack,
+        navigationOptions: {
+            drawerLabel: 'About',
+            drawerIcon: ({tintColor}) => <Feather name='info' size={20} color={tintColor}/>
         }
     },
     Test: {
