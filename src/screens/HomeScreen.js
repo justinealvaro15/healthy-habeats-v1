@@ -21,15 +21,14 @@ let current_breakfast1 = [];
 const HomeScreen = ({ navigation }) => {
     let totalFood = [];
     
-    const [isLoading1, setIsLoading1] = useState(true);
-    const [isLoading2, setIsLoading2] = useState(true);
-    const [isLoading3, setIsLoading3] = useState(true);
-    const [isLoading4, setIsLoading4] = useState(true);
-    const [isLoading5, setIsLoading5] = useState(true);
-    const [isLoading6, setIsLoading6] = useState(true);
-    const [isLoading7, setIsLoading7] = useState(true);
-    const [isLoading8, setIsLoading8] = useState(true);
+    const [isLoadingBreakfast, setIsLoadingBreakfast] = useState(true);
+    const [isLoadingLunch, setIsLoadingLunch] = useState(true);
+    const [isLoadingDinner, setIsLoadingDinner] = useState(true);
+    const [isLoadingSnacks, setIsLoadingSnacks] = useState(true);
 
+    const [isLoadingFood, setIsLoadingFood] = useState(true);
+    const [isLoadingUserData, setIsLoadingUserData] = useState(true);
+    
     const [userData, setUserData] = useState({
         calories: 0,
         carbs: 0,
@@ -99,6 +98,55 @@ const HomeScreen = ({ navigation }) => {
         //setIsWaterAdded(Math.random());
         console.log("RE-INITIALIZE");
     };
+
+    /*const syncBLDSData = async () => {
+        try {
+            let x = 0;
+            let y = 0;
+            let z = 0;
+            let a = 0;
+
+            const data1 = await (AsyncStorage.getItem('total_breakfast') || 'empty');
+            const data2 = await (AsyncStorage.getItem('total_lunch') || 'empty');
+            const data3 = await (AsyncStorage.getItem('total_dinner') || 'empty');
+            const data4 = await (AsyncStorage.getItem('total_snacks') || 'empty');
+           
+            
+            if(data1 === 'empty' || Array.isArray(JSON.parse(data1)) == false ){
+                setBreakfast([]);
+            } else{
+                x =  JSON.parse(data1);
+                setBreakfast(x); //naooverwirite si breakfast 
+            } 
+
+            if(data2 === 'empty' || Array.isArray(JSON.parse(data2)) == false ){
+                setLunch([]);
+            } else{
+                y =  JSON.parse(data2);
+                setLunch(y); //naooverwirite si breakfast 
+            } 
+
+            if(data3 === 'empty' || Array.isArray(JSON.parse(data3)) == false ){
+                setDinner([]);
+            } else{
+                z =  JSON.parse(data3);
+                setDinner(z); //naooverwirite si breakfast 
+            } 
+
+            if(data4 === 'empty' || Array.isArray(JSON.parse(data4)) == false ){
+                setSnacks([]);
+            } else{
+                a =  JSON.parse(data4);
+                setSnacks(a); //naooverwirite si breakfast 
+            } 
+		} catch (error) {
+			// Error retrieving data
+			console.log(error.message);
+        }      
+        //console.log("function#1: breakfast sync");
+    };
+*/
+
 
     const syncBreakfastData = async (key) => {
 		try {
@@ -337,7 +385,7 @@ const HomeScreen = ({ navigation }) => {
         //console.log('FOOD IS ADDED');
 		try {
             await (AsyncStorage.setItem(key, value), syncFoodsData().then( () => {
-                setIsLoading6(false);
+                setIsLoadingFood(false);
             }));
 		} catch (error) {
 			// Error retrieving data
@@ -346,7 +394,7 @@ const HomeScreen = ({ navigation }) => {
        // console.log("function#7: save data");
     };
 
-    const saveWaterData = async (key,value) => {
+    /*const saveWaterData = async (key,value) => {
         try {
             await (AsyncStorage.setItem(key, value), syncWaterData2().then( () => {
                 setIsLoading7(false);
@@ -356,7 +404,7 @@ const HomeScreen = ({ navigation }) => {
 			console.log(error.message);
         }
         //console.log("function#12: SAVE WATER DATA");
-    };
+    };*/
     
 
     const saveDeletionData = async () => {
@@ -386,17 +434,17 @@ const HomeScreen = ({ navigation }) => {
 
     useEffect(() => {
         syncBreakfastData('total_breakfast').then( () => {
-            setIsLoading1(false);
+            setIsLoadingBreakfast(false);
         });
         syncLunchData('total_lunch').then( () => {
-            setIsLoading2(false);
-        });;
+            setIsLoadingLunch(false);
+        });
         syncDinnerData('total_dinner').then( () => {
-            setIsLoading3(false);
-        });;
+            setIsLoadingDinner(false);
+        });
         syncSnacksData('total_snacks').then( () => {
-            setIsLoading4(false);
-        });;
+            setIsLoadingSnacks(false);
+        });
         /*syncWaterDataFromJson('total_water').then( () => {
             setIsLoading5(false);
         });;*/
@@ -404,10 +452,10 @@ const HomeScreen = ({ navigation }) => {
         //syncFoodsData();
         //syncCurrentUserData();
         getUserData().then( () => {
-            setIsLoading8(false);
+            setIsLoadingUserData(false);
         });
         
-        console.log("useEffect#1 in action: sync data from startup");
+        //console.log("useEffect#1 in action: sync data from startup");
     },[]);
 
     useEffect(() => {
@@ -469,11 +517,11 @@ const HomeScreen = ({ navigation }) => {
 
     useEffect(() => {
         syncFoodsData().then( () => {
-            setIsLoading6(false);
+            setIsLoadingFood(false);
         });
-        syncWaterData2().then( () => {
+        /*syncWaterData2().then( () => {
             setIsLoading7(false);
-        });;
+        });;*/
     }, [dateSelected]);
 
     useEffect(() => {
@@ -484,7 +532,7 @@ const HomeScreen = ({ navigation }) => {
         //saveData('total_snacks', JSON.stringify(snacks));
         saveDeletionData();
         syncFoodsData().then( () => {
-            setIsLoading6(false);
+            setIsLoadingFood(false);
         });
        // console.log("useEffect#7 in action: data is deleted");
     }, [isDeleted]);
@@ -496,7 +544,7 @@ const HomeScreen = ({ navigation }) => {
     },[waterDeleted])*/
 
     useEffect( () => {
-        setTimeout(function() { deleteMagic(); }, 2000);
+        setTimeout(function() { deleteMagic(); }, 3000);
         //setTimeout(function() { syncWaterData2('total_water'); }, 5000);
         //setTimeout(function() { getUserData(); }, 2000);
     }, []);
@@ -509,7 +557,7 @@ const HomeScreen = ({ navigation }) => {
 		});
 	},[]);
 
-    if(isLoading1 && isLoading2 && isLoading3 && isLoading4 && isLoading5 && isLoading6 && isLoading7 && isLoading8){
+    if(isLoadingBreakfast && isLoadingLunch && isLoadingDinner && isLoadingSnacks && isLoadingFood && isLoadingUserData){
         return(
             <View>
                 <Text>LOADING</Text>
