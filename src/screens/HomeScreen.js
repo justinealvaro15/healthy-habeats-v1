@@ -13,10 +13,10 @@ import Constants from 'expo-constants';
 
 let current_breakfast1 = [];
 
-const waterTemplate = 
+/*const waterTemplate = 
     {
     dateConsumed: '',
-};
+};*/
 
 const HomeScreen = ({ navigation }) => {
     let totalFood = [];
@@ -49,9 +49,9 @@ const HomeScreen = ({ navigation }) => {
     const [dinner, setDinner] = useState([]);
     const [snacks, setSnacks] = useState([]);
 
-    const [water, setWater] = useState([]);
-    const [currentWater, setCurrentWater] = useState([]);
-    const [waterDeleted, setWaterDeleted] = useState();
+    //const [water, setWater] = useState([]);
+    //const [currentWater, setCurrentWater] = useState([]);
+    //const [waterDeleted, setWaterDeleted] = useState();
 
     const [current_totalFoodArray, setCurrentTotalFoodArray] = useState([]);
     const [current_breakfast, setCurrentBreakfast] = useState([]);
@@ -95,7 +95,7 @@ const HomeScreen = ({ navigation }) => {
 
     const deleteMagic = async () => {
         setIsDeleted(Math.random());
-        setWaterDeleted(Math.random());
+        //setWaterDeleted(Math.random());
         //setIsWaterAdded(Math.random());
         console.log("RE-INITIALIZE");
     };
@@ -180,7 +180,7 @@ const HomeScreen = ({ navigation }) => {
         }      
         //console.log("function#4: snacks sync");
     };
-    const syncWaterDataFromJson = async (key) => {
+    /*const syncWaterDataFromJson = async (key) => {
         try {
             let x = 0;
             const data = await AsyncStorage.getItem(key) || 'empty';
@@ -222,7 +222,7 @@ const HomeScreen = ({ navigation }) => {
         }catch(error){
             console.log(error.message);
         }
-    };
+    };*/
 
     const syncFoodsData = async () => {
 		try {
@@ -397,9 +397,9 @@ const HomeScreen = ({ navigation }) => {
         syncSnacksData('total_snacks').then( () => {
             setIsLoading4(false);
         });;
-        syncWaterDataFromJson('total_water').then( () => {
+        /*syncWaterDataFromJson('total_water').then( () => {
             setIsLoading5(false);
-        });;
+        });;*/
 
         //syncFoodsData();
         //syncCurrentUserData();
@@ -451,7 +451,7 @@ const HomeScreen = ({ navigation }) => {
         //console.log("useEffect#5 in action: snacks sync ");
     }, [snacks]);
 
-    useEffect( () => {
+    /*useEffect( () => {
         if(water.length == 0){
             saveWaterData('total_water',JSON.stringify(water));
         } else{
@@ -465,7 +465,7 @@ const HomeScreen = ({ navigation }) => {
         } else{
             saveWaterData('total_water', JSON.stringify(water));
         }
-    }, [waterDeleted]);
+    }, [waterDeleted]);*/
 
     useEffect(() => {
         syncFoodsData().then( () => {
@@ -489,11 +489,11 @@ const HomeScreen = ({ navigation }) => {
        // console.log("useEffect#7 in action: data is deleted");
     }, [isDeleted]);
 
-    useEffect( () => {
+    /*useEffect( () => {
         syncWaterData2().then( () => {
             setIsLoading7(false);
         });;
-    },[waterDeleted])
+    },[waterDeleted])*/
 
     useEffect( () => {
         setTimeout(function() { deleteMagic(); }, 2000);
@@ -621,12 +621,12 @@ const HomeScreen = ({ navigation }) => {
             />
             
             <IntakeWaterContainer
-                water = {water}
+                /*water = {water}
                 setWater = {setWater}
                 currentDate = {dateMoment}
                 waterTemplate = {waterTemplate}
                 waterCount = {currentWater}
-                setWaterDeleted = {setWaterDeleted}
+                setWaterDeleted = {setWaterDeleted}*/
             />
         </ScrollView>
     );

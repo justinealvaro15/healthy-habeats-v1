@@ -1,7 +1,9 @@
 //WELCOME SCREEN NOTIF ORIGINAL
 import React, { useEffect, useState } from 'react';
-import { AsyncStorage, Button, Text, StyleSheet, Vibration, View } from 'react-native';
+import { AsyncStorage, Button, Text, StyleSheet, Vibration, View, YellowBox } from 'react-native';
 import { withNavigation } from 'react-navigation';
+
+
 
 import {Notifications} from 'expo';
 import * as Permissions from 'expo-permissions';
@@ -11,6 +13,7 @@ import moment from "moment";
 import * as ThemeConstants from '../common/Themes';
 import * as firebase from 'firebase';
 import '@firebase/firestore';
+
 
 
 let welcome_counter= 0;
@@ -26,11 +29,12 @@ const firebaseConfig = {
     storageBucket: "healthyhabeats-cs199.appspot.com",
   };
   
-  firebase.initializeApp(firebaseConfig);
 
 
+let token = 0;
 
 const TestScreen = ({ navigation }) => {
+	YellowBox.ignoreWarnings(['Setting a timer']);
 
 	const [expoState, setExpoState] = useState({
 		expoPushToken : '',
@@ -55,7 +59,7 @@ const TestScreen = ({ navigation }) => {
 			alert('Failed to get push token for push notification!');
 			return;
 		  }
-		  let token = await Notifications.getExpoPushTokenAsync();
+		  token = await Notifications.getExpoPushTokenAsync();
 		  console.log(token);
 		  setExpoState({expoPushToken: token});
 		} else {
@@ -63,40 +67,11 @@ const TestScreen = ({ navigation }) => {
 		}
 	  }; 
 
-	  useEffect(() => {
-			registerForPushNotificationsAsync();
-			_notificationSubscription = Notifications.addListener(
-				_handleNotification
-			  );
-		
-	},[]);
-
 	
 	_handleNotification = notification => {
 		Vibration.vibrate();
 		setExpoState({ notification: notification });
 	};
-
-	sendPushNotification = async () => {
-		const message = {
-		  to: expoState.expoPushToken,
-		  sound: 'default',
-		  title: 'Welcome to EatUP',
-		  body: 'Be healthy and stay fit!',
-		  data: { data: 'SAMPLE DATA' },
-		};
-		const response = await fetch('https://exp.host/--/api/v2/push/send', {
-		  method: 'POST',
-		  headers: {
-			Accept: 'application/json',
-			'Accept-encoding': 'gzip, deflate',
-			'Content-Type': 'application/json',
-		  },
-		  body: JSON.stringify(message),
-		});
-		const data = response._bodyInit;
-		console.log(`Status & Response ID-> ${JSON.stringify(data)}`);
-	  };
 
 
 // Initialize Firebase
@@ -119,7 +94,9 @@ const database = {
 
     const submitData = () => {
         const firebaseRef = firebase.database().ref();
-        firebaseRef.child("Text222").set("Some Value333");
+		firebaseRef.child('Users').child(token.slice(18,40)).child('Total Food Intake').set(0);
+		firebaseRef.child('Users').child(token.slice(18,40)).child('Screen Access Counter').set(0);
+		
     };
 
 
@@ -165,7 +142,14 @@ const database = {
 	///////////////////////////////////////////
 	
 	
+	useEffect(() => {
+		firebase.initializeApp(firebaseConfig);
+		registerForPushNotificationsAsync();
+		_notificationSubscription = Notifications.addListener(
+			_handleNotification
+		  );
 	
+	},[]);
 	
 
 
