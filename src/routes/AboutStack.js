@@ -2,41 +2,30 @@ import React from 'react';
 import { createStackNavigator } from 'react-navigation';
 import { StyleSheet, Text } from 'react-native';
 
-import AnthropometricScreen from '../screens/AnthropometricScreen';
-import UserProfileScreen from '../screens/UserProfileScreen';
+import AboutScreen from '../screens/AboutScreen';
 
 import Header from '../components/Header';
 import { FONT_SIZE_MEDIUM, MAIN_BLUE, MAIN_WHITE } from '../common/Themes';
 
 const screens = {
-    UserProfile: {
-        screen: UserProfileScreen,
+    About: {
+        screen: AboutScreen,
         navigationOptions: ({ navigation }) => {
             return {
                 headerTitle: () => {
-                    return <Header navigation={navigation} title={<Text style={styles.text_header}>Profile</Text>}/>
+                    return <Header navigation={navigation} title={<Text style={styles.text_header}>About Healthy Habeats</Text>}/>
                 }
             }
-        }
-    },
-    Anthropometric: {
-        screen: AnthropometricScreen,
-        navigationOptions: {
-            title: 'Personal Details'
         }
     }
 };
 
-const UserProfileStack = createStackNavigator(screens, {
+const AboutStack = createStackNavigator(screens, {
     defaultNavigationOptions: {
         headerTintColor: MAIN_WHITE,
         headerStyle: { backgroundColor: MAIN_BLUE, height: 60 }
     },
-    text_header: {
-        color: MAIN_WHITE,
-        fontSize: FONT_SIZE_MEDIUM,
-        fontWeight: 'bold',
-    }
+    initialRouteName: 'About'
 });
 
 const styles = StyleSheet.create({
@@ -47,4 +36,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default UserProfileStack;
+export default AboutStack;

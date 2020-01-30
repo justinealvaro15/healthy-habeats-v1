@@ -1,5 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from 'react-navigation';
+import { Image, StyleSheet } from 'react-native';
 
 import EditServingScreen from '../screens/EditServingScreen';
 import HomeScreen from '../screens/HomeScreen';
@@ -20,7 +21,9 @@ const screens = {
         screen: HomeScreen,
         navigationOptions: ({ navigation }) => {
             return {
-                headerTitle: () => <Header navigation={navigation} title='Healthy Habeats'/>
+                headerTitle: () => {
+                    return <Header navigation={navigation} title={<Image source={require('../../assets/logo_name.png')} style={styles.logo}/>}/>
+                }
             }
         }
     },
@@ -45,6 +48,13 @@ const HomeStack = createStackNavigator(screens, {
         headerStyle: { backgroundColor: MAIN_BLUE, height: 60 }
     },
     initialRouteName: 'Welcome'
+});
+
+const styles = StyleSheet.create({
+    logo: {
+        height: 21,
+        width: 168
+    }
 });
 
 export default HomeStack;
