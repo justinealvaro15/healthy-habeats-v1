@@ -47,7 +47,7 @@ const IntakeFoodContainer = ({ food, mealTitle, navigateToSearchFood, onDeletion
             
                 <FlatList
                     data={x_date}
-                    keyExtractor = {(item) => item.id}
+                    keyExtractor = {(item) => (item.deleteID).toString()}
                     showsVerticalScrollIndicator={false}
                     renderItem={({item,index})=>{
                         return (
