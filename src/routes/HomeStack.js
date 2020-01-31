@@ -5,6 +5,7 @@ import { Image, StyleSheet } from 'react-native';
 import EditServingScreen from '../screens/EditServingScreen';
 import HomeScreen from '../screens/HomeScreen';
 import SearchFoodScreen from '../screens/SearchFoodScreen';
+import TutorialScreen from '../screens/TutorialScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
 
 import Header from '../components/Header';
@@ -33,10 +34,15 @@ const screens = {
             title: 'Search for food'
         }
     },
+    Tutorial: {
+        screen: TutorialScreen,
+        navigationOptions: {
+            header: null
+        }
+    },
     Welcome: {
         screen: WelcomeScreen,
         navigationOptions: {
-            title: 'Welcome!',
             header: null
         }
     }

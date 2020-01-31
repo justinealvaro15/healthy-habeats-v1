@@ -57,7 +57,7 @@ export default class WelcomeScreen extends React.Component {
 					this.saveUserToken('oldUser');
 					this.props.navigation.replace('Anthropometric');
 				} else {
-					this.props.navigation.replace('Home');
+					this.props.navigation.replace('Tutorial');
 				}
 			})
 		}, TIMER);
