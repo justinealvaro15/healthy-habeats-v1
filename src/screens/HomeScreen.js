@@ -12,6 +12,10 @@ import * as ThemeConstants from '../common/Themes';
 const HomeScreen = ({ navigation }) => {
     let totalFood = [];
     
+    
+    
+    const [token,setToken] = useState(0);
+
     const [isLoadingBreakfast, setIsLoadingBreakfast] = useState(true);
     const [isLoadingLunch, setIsLoadingLunch] = useState(true);
     const [isLoadingDinner, setIsLoadingDinner] = useState(true);
@@ -80,6 +84,9 @@ const HomeScreen = ({ navigation }) => {
     };
 
     const deleteMagic = async () => {
+        const x = await AsyncStorage.getItem('userID');
+        console.log('TOKEN: ' + x);
+        setToken(x);
         setIsDeleted(Math.random());
         //setWaterDeleted(Math.random());
         //setIsWaterAdded(Math.random());
@@ -507,7 +514,9 @@ const HomeScreen = ({ navigation }) => {
                     foodArray: breakfast,
                     setFoodArray: setBreakfast,
                     currentDate: dateMoment,
-                    deleteID: 0
+                    deleteID: 0,
+                    mealTitle: 'Breakfast',
+                    userID: token
                 })}
                 onDeletion={setCurrentBreakfast}
                 onDeletion2={setIsDeleted}
@@ -516,6 +525,7 @@ const HomeScreen = ({ navigation }) => {
                 onDeletion5={breakfast}
                 foodArray1 = {breakfast}
                 setFoodArray1 = {setBreakfast}
+                token = {token}
             />
 
             <IntakeFoodContainer
@@ -525,7 +535,9 @@ const HomeScreen = ({ navigation }) => {
                     foodArray: lunch,
                     setFoodArray: setLunch,
                     currentDate: dateMoment,
-                    deleteID: 0
+                    deleteID: 0,
+                    mealTitle: 'Lunch',
+                    userID: token
                 })}
                 onDeletion={setCurrentLunch}
                 onDeletion2={setIsDeleted}
@@ -534,7 +546,7 @@ const HomeScreen = ({ navigation }) => {
                 onDeletion5={lunch}
                 foodArray1 = {lunch}
                 setFoodArray1 = {setLunch}
-                
+                token = {token}
             />
 
             <IntakeFoodContainer
@@ -544,7 +556,9 @@ const HomeScreen = ({ navigation }) => {
                     foodArray: dinner,
                     setFoodArray: setDinner,
                     currentDate: dateMoment,
-                    deleteID: 0
+                    deleteID: 0,
+                    mealTitle: 'Dinner',
+                    userID: token
                 })}
                 onDeletion={setCurrentDinner}
                 onDeletion2={setIsDeleted}
@@ -553,6 +567,7 @@ const HomeScreen = ({ navigation }) => {
                 onDeletion5={dinner}
                 foodArray1 = {dinner}
                 setFoodArray1 = {setDinner}
+                token = {token}
             />
 
             <IntakeFoodContainer
@@ -562,7 +577,9 @@ const HomeScreen = ({ navigation }) => {
                     foodArray: snacks,
                     setFoodArray: setSnacks,
                     currentDate: dateMoment,
-                    deleteID: 0
+                    deleteID: 0,
+                    mealTitle: 'Snacks',
+                    userID: token
                 })}
                 onDeletion={setCurrentSnacks}
                 onDeletion2={setIsDeleted}
@@ -571,6 +588,7 @@ const HomeScreen = ({ navigation }) => {
                 onDeletion5={snacks}
                 foodArray1 = {snacks}
                 setFoodArray1 = {setSnacks}
+                token = {token}
             />
         </ScrollView>
     );
