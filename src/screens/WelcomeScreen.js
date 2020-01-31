@@ -27,55 +27,52 @@ const firebaseConfig = {
     authDomain: "healthyhabeats-cs199.firebaseapp.com",
     databaseURL: "https://healthyhabeats-cs199.firebaseio.com",
     storageBucket: "healthyhabeats-cs199.appspot.com",
-  };
+};
 
-  
+firebase.initializeApp(firebaseConfig);
 
-	firebase.initializeApp(firebaseConfig);
+_handleNotification = notification => {
+	Vibration.vibrate();
+};
 
-	_handleNotification = notification => {
-		Vibration.vibrate();
-	};
+saveExpoToken = async (token) => {
+	try {
+		await AsyncStorage.setItem('userID', token);
+	} catch (error) {
+		// Error retrieving data
+		console.log(error.message);
+	}
+};
 
-	saveExpoToken = async (token) => {
-		try {
-			await AsyncStorage.setItem('userID', token);
-		} catch (error) {
-			// Error retrieving data
-			console.log(error.message);
-		}
-	};
-
-	registerForPushNotificationsAsync = async () => {
-		if (Constants.isDevice) {
-		  const { status: existingStatus } = await Permissions.getAsync(
+registerForPushNotificationsAsync = async () => {
+	if (Constants.isDevice) {
+		const { status: existingStatus } = await Permissions.getAsync(
 			Permissions.NOTIFICATIONS
-		  );
-		  let finalStatus = existingStatus;
-		  if (existingStatus !== 'granted') {
+		);
+		let finalStatus = existingStatus;
+
+		if (existingStatus !== 'granted') {
 			const { status } = await Permissions.askAsync(
-			  Permissions.NOTIFICATIONS
+				Permissions.NOTIFICATIONS
 			);
 			finalStatus = status;
-		  }
-		  if (finalStatus !== 'granted') {
+		}
+
+		if (finalStatus !== 'granted') {
 			alert('Failed to get push token for push notification!');
 			return;
-		  }
-		  token = await Notifications.getExpoPushTokenAsync();
-		  token = token.slice(18,40);
-		  console.log(token);
-		  saveExpoToken(token);
-		} else {
-		  alert('Must use physical device for Push Notifications');
 		}
-	  }; 
+		token = await Notifications.getExpoPushTokenAsync();
+		token = token.slice(18,40);
+		console.log(token);
+		saveExpoToken(token);
+	} else {
+		alert('Must use physical device for Push Notifications');
+	}
+}; 
 
 	
 export default class WelcomeScreen extends React.Component {
-
-
-
 	saveUserToken = async (userToken) => {
 		this.setState({ userToken });
 		try {
@@ -85,8 +82,7 @@ export default class WelcomeScreen extends React.Component {
 			console.log(error.message);
 		}
 	};
-	
-		
+
 	getUserToken = async () => {
 		try {
 			const userToken = await AsyncStorage.getItem('userToken') || 'firstTime'
@@ -114,7 +110,7 @@ export default class WelcomeScreen extends React.Component {
 			console.log(error.message);
 		}
 	}
-	
+
 	componentDidMount() {
 		setTimeout(() => {
 			registerForPushNotificationsAsync();
@@ -124,21 +120,17 @@ export default class WelcomeScreen extends React.Component {
 				this.getUserToken()
 			//  )
 			.then((state) => {
-				Notifications.presentLocalNotificationAsync(localNotification);
+				// Notifications.presentLocalNotificationAsync(localNotification);
 				if(this.state.userToken === 'firstTime'){
 					this.saveUserToken('oldUser');
-					
-					this.props.navigation.replace('Anthropometric');
+					this.props.navigation.replace('Tutorial1');
 				} else {
-					
 					this.props.navigation.replace('Home');
-					
 				}
 			})
 		}, TIMER);
 	}
 
-	//Pass Array as second argument
 	render() {
 		return(
 			<View style={styles.main}>
@@ -151,7 +143,7 @@ export default class WelcomeScreen extends React.Component {
 const styles = StyleSheet.create({
 	logo: {
 		height: ratio*380,
-		width: dimensions.width*0.7
+		width: ratio*350
 	},
 	main: {
 		alignItems: 'center',
