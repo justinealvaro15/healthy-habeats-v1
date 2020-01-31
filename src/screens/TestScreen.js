@@ -94,7 +94,10 @@ const database = {
 
     const submitData = () => {
         const firebaseRef = firebase.database().ref();
-		firebaseRef.child('Users').child(token.slice(18,40)).child('Total Food Intake').set(0);
+		firebaseRef.child('Users').child(token.slice(18,40)).child('Food Intakes').child('Breakfast').set(1);
+		firebaseRef.child('Users').child(token.slice(18,40)).child('Food Intakes').child('Lunch').set(1);
+		firebaseRef.child('Users').child(token.slice(18,40)).child('Food Intakes').child('Dinner').set(1);
+		firebaseRef.child('Users').child(token.slice(18,40)).child('Food Intakes').child('Snacks').set(1);
 		firebaseRef.child('Users').child(token.slice(18,40)).child('Screen Access Counter').set(0);
 		
     };
@@ -143,7 +146,7 @@ const database = {
 	
 	
 	useEffect(() => {
-		firebase.initializeApp(firebaseConfig);
+		//firebase.initializeApp(firebaseConfig);
 		registerForPushNotificationsAsync();
 		_notificationSubscription = Notifications.addListener(
 			_handleNotification

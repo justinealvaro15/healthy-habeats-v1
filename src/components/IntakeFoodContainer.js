@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
-import { Alert, FlatList, Keyboard, StyleSheet, Text, ToastAndroid, TouchableHighlight, TouchableOpacity, View } from 'react-native';
+import { Alert, AsyncStorage, FlatList, Keyboard, StyleSheet, Text, ToastAndroid, TouchableHighlight, TouchableOpacity, View } from 'react-native';
 import { Feather } from '@expo/vector-icons'
 import { withNavigation } from 'react-navigation';
 import * as ThemeConstants from '../common/Themes';
 
+
+import * as firebase from 'firebase';
+import '@firebase/firestore';
 // FOODARRAY: contains list of foods in a particular setting
 // when pressed => FOODARRAY[INDEX] get the food object
 // after deletion setFoodArray to
 
-const IntakeFoodContainer = ({ food, mealTitle, navigateToSearchFood, onDeletion, onDeletion2, onDeletion3, onDeletion4, onDeletion5, foodArray1, setFoodArray1, navigation }) => {
+const IntakeFoodContainer = ({ food, mealTitle, navigateToSearchFood, onDeletion, onDeletion2, onDeletion3, onDeletion4, onDeletion5, foodArray1, setFoodArray1, token ,navigation }) => {
+    const firebaseRef = firebase.database().ref();
     const meal = onDeletion5;
     const foodArray = food;
     let x_date = foodArray;
+    let temp = [];
     const [isDelete, setIsDelete] = useState();
     let counter = 0;
     const dateSelected = onDeletion4;
@@ -20,6 +25,19 @@ const IntakeFoodContainer = ({ food, mealTitle, navigateToSearchFood, onDeletion
     
     const setIsDeleted = onDeletion2;
     const setTotalFoodArray = onDeletion3;
+
+
+    /*const getUserID = async () => {
+        try {
+            const userID = await AsyncStorage.getItem('userID');
+            userTokenID = userID;
+            console.log(userID);
+            console.log(userTokenID);
+		} catch (error) {
+			// Error retrieving data
+			console.log(error.message);
+		}      
+    };*/
 
     
     return(
@@ -40,7 +58,9 @@ const IntakeFoodContainer = ({ food, mealTitle, navigateToSearchFood, onDeletion
                                         foodArray: foodArray1,
                                         setFoodArray: setFoodArray1,
                                         foodItem: item,
-                                        action: 'edit'
+                                        action: 'edit',
+                                        mealTitle : mealTitle,
+                                        userID: token
                                     });
                                 }
 
@@ -67,6 +87,9 @@ const IntakeFoodContainer = ({ food, mealTitle, navigateToSearchFood, onDeletion
                                                 {
                                                     text: 'Remove',
                                                     onPress: () => {
+                                                       
+
+                                                        temp = [];
                                                         Keyboard.dismiss();
                                                         counter = 0;
                                                         let x = foodArray.filter(foodArray => foodArray.foodName !== item.foodName);
@@ -88,6 +111,7 @@ const IntakeFoodContainer = ({ food, mealTitle, navigateToSearchFood, onDeletion
                                                             setFoodArray([]);
                                                             setIsDeleted(Math.random());
                                                             setIsDelete(Math.random());
+                                                            
                                                         }
                                                         else{
                                                             setFoodArray(x); //current meal we are setting breakfast to contain
@@ -95,6 +119,8 @@ const IntakeFoodContainer = ({ food, mealTitle, navigateToSearchFood, onDeletion
                                                             setIsDeleted(Math.random());
                                                             setIsDelete(Math.random());
                                                         }
+                                                        temp = meal;
+                                                        firebaseRef.child('Users').child(token).child('Food Intakes').child(mealTitle).set(temp);
 
                                                         ToastAndroid.show(`Removed ${item.foodName} successfully.`, ToastAndroid.SHORT);                                                        
                                                     }

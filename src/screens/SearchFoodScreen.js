@@ -60,6 +60,8 @@ const SearchFoodScreen = ({ navigation }) => {
                     setFoodArray={navigation.getParam('setFoodArray')}
                     currentDate={navigation.getParam('currentDate')}
                     deleteID = {navigation.getParam('deleteID')}
+                    mealTitle = {navigation.getParam('mealTitle')}
+                    userID = {navigation.getParam('userID')}
                     results={filterResultsBySearch(term)}
                 />
             </ScrollView>

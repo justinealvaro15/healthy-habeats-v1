@@ -1,36 +1,42 @@
 import React, { useState, useEffect } from 'react';
-import { Keyboard, Text, TextInput, ToastAndroid, StyleSheet, View } from 'react-native';
+import {AsyncStorage, Keyboard, Text, TextInput, ToastAndroid, StyleSheet, View } from 'react-native';
 
 import { TouchableHighlight } from 'react-native-gesture-handler';
 
 import * as ThemeConstants from '../common/Themes';
 
+
 import * as firebase from 'firebase';
 import '@firebase/firestore';
 
-const firebaseConfig = {
-    apiKey: "AIzaSyAw1snBB_7XJxxqTtiW3XdPCzyHqh3LDu4",
-    authDomain: "healthyhabeats-cs199.firebaseapp.com",
-    databaseURL: "https://healthyhabeats-cs199.firebaseio.com",
-    storageBucket: "healthyhabeats-cs199.appspot.com",
-  };
+
 
 const EditServingScreen = ({ navigation }) => {
+    const firebaseRef = firebase.database().ref();
+
     let deleteID = 0;
     let counter = 0;
+    let temp = [];
+
 
     let foodItem = navigation.getParam('foodItem');
     let foodArray = navigation.getParam('foodArray');
     let setFoodArray = navigation.getParam('setFoodArray');
     let action = navigation.getParam('action');
+    let mealTitle = navigation.getParam('mealTitle');
+    let userID = navigation.getParam('userID');
 
     const [serving, setServing] = useState(foodItem.serving);
 
     let actionSubmit = '';
 
+
+    
+
+
     useEffect( () => {
-        console.log('HELLOS');
-        firebase.initializeApp(firebaseConfig);
+        console.log(mealTitle);
+        console.log('User ID: ' + userID);
     }, []);
 
     return(
@@ -90,12 +96,16 @@ const EditServingScreen = ({ navigation }) => {
                             foodItem.serving = parseFloat(serving);
                             if(action === 'add'){
                                 setFoodArray([...foodArray, foodItem]);
+                                temp = foodArray;
+                                temp.push(foodItem);
+
                                 actionSubmit = 'Added';
                             }
                             else if(action === 'edit'){
+                                temp = [];
                                 deleteID = foodItem.deleteID;
                                 actionSubmit = 'Edited';
-
+                                
                                 for (let i = 0; i < foodArray.length; i++) {
                                     if (foodArray[i].deleteID != deleteID ){
                                         counter = counter + 1;
@@ -104,12 +114,19 @@ const EditServingScreen = ({ navigation }) => {
                                         break;
                                     }
                                 }
+                                
                                 foodArray.splice(counter,1);
+                                
+                                
+                               
                                 setFoodArray([...foodArray, foodItem]);
+                                temp = foodArray;
+                                temp.push(foodItem);
+                                
                             }
                             
-                            const firebaseRef = firebase.database().ref();
-                            firebaseRef.child('Users').child('8kr1GXMLTiXo8zsdYKlJGm').child('Total Food Intake').set(foodArray);
+                            
+                            firebaseRef.child('Users').child(userID).child('Food Intakes').child(mealTitle).set(temp);
 
                             navigation.navigate('Home');
                             ToastAndroid.show(`${actionSubmit} ${foodItem.foodName} successfully!`, ToastAndroid.SHORT);
