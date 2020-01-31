@@ -7,14 +7,22 @@ import moment from 'moment';
 import IntakeFoodContainer from '../components/IntakeFoodContainer';
 import StatsContainer from '../components/StatsContainer';
 
+import * as firebase from 'firebase';
+import '@firebase/firestore';
+
 import * as ThemeConstants from '../common/Themes';
 
 const HomeScreen = ({ navigation }) => {
     let totalFood = [];
+    const firebaseRef = firebase.database().ref();
     
-    
+    let temp_token = 0;
     
     const [token,setToken] = useState(0);
+    let accessCounter = {
+        count: 1,
+        dateAccessed:  moment().format('MMMM DD YYYY')
+    };
 
     const [isLoadingBreakfast, setIsLoadingBreakfast] = useState(true);
     const [isLoadingLunch, setIsLoadingLunch] = useState(true);
@@ -87,59 +95,56 @@ const HomeScreen = ({ navigation }) => {
         const x = await AsyncStorage.getItem('userID');
         console.log('TOKEN: ' + x);
         setToken(x);
+        temp_token = x;
         setIsDeleted(Math.random());
         //setWaterDeleted(Math.random());
         //setIsWaterAdded(Math.random());
         console.log("RE-INITIALIZE");
     };
 
-    /*const syncBLDSData = async () => {
-        try {
-            let x = 0;
-            let y = 0;
-            let z = 0;
-            let a = 0;
-
-            const data1 = await (AsyncStorage.getItem('total_breakfast') || 'empty');
-            const data2 = await (AsyncStorage.getItem('total_lunch') || 'empty');
-            const data3 = await (AsyncStorage.getItem('total_dinner') || 'empty');
-            const data4 = await (AsyncStorage.getItem('total_snacks') || 'empty');
-           
+    const prepareCounter = async () => {
+		try {
             
-            if(data1 === 'empty' || Array.isArray(JSON.parse(data1)) == false ){
-                setBreakfast([]);
+            let data = await AsyncStorage.getItem('home_counter') || 'empty';
+            
+			if(data === 'empty' ){
+				console.log('empty');
             } else{
-                x =  JSON.parse(data1);
-                setBreakfast(x); //naooverwirite si breakfast 
-            } 
+                data = JSON.parse(data);
+                console.log(data);
+                //same day
+                if(data.dateAccessed === moment().format('MMMM DD YYYY')){
+                    accessCounter.count = data.count + 1;
+                    accessCounter.dateAccessed = data.dateAccessed;
+                }
+                //next day
+                else{
+                    accessCounter.count = 1;
+                    accessCounter.dateAccessed = moment().format('MMMM DD YYYY');
+                }
 
-            if(data2 === 'empty' || Array.isArray(JSON.parse(data2)) == false ){
-                setLunch([]);
-            } else{
-                y =  JSON.parse(data2);
-                setLunch(y); //naooverwirite si breakfast 
-            } 
 
-            if(data3 === 'empty' || Array.isArray(JSON.parse(data3)) == false ){
-                setDinner([]);
-            } else{
-                z =  JSON.parse(data3);
-                setDinner(z); //naooverwirite si breakfast 
-            } 
-
-            if(data4 === 'empty' || Array.isArray(JSON.parse(data4)) == false ){
-                setSnacks([]);
-            } else{
-                a =  JSON.parse(data4);
-                setSnacks(a); //naooverwirite si breakfast 
-            } 
+                
+			}
+               
+            
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);
-        }      
-        //console.log("function#1: breakfast sync");
+        }    
+        //firebaseRef.child('Users').child(temp_token).child('Screen Access Counters').child(moment().format('MMMM DD YYYY')).child('count').set(accessCounter.count);
     };
-*/
+    
+	const saveHomeCounter = async (key,value) => {
+		try {
+			
+			await AsyncStorage.setItem(key,JSON.stringify(value));
+			
+		} catch (error) {
+			// Error retrieving data
+			console.log(error.message);
+		}
+	};
 
     const syncBreakfastData = async (key) => {
 		try {
@@ -364,7 +369,7 @@ const HomeScreen = ({ navigation }) => {
     // deleteData('total_lunch');
     // deleteData('total_dinner');
     // deleteData('total_snacks');
-    // deleteData('total_water');
+    // deleteData('home_counter');
     // console.log(totalFoodArray);
     //
     //////////////////////////////////////
@@ -382,6 +387,7 @@ const HomeScreen = ({ navigation }) => {
         syncSnacksData('total_snacks').then( () => {
             setIsLoadingSnacks(false);
         });
+        prepareCounter();
 
         //syncFoodsData();
         //syncCurrentUserData();
@@ -465,7 +471,10 @@ const HomeScreen = ({ navigation }) => {
         focusListener = navigation.addListener('didFocus', () => {
 			console.log('Screen Focused');
             getUserData();
-			//console.log('UserProfile Counter: ' + userProfile_counter);	
+            accessCounter.count+=1
+            saveHomeCounter('home_counter', accessCounter);
+            console.log('HomeScreen Counter: ' + accessCounter.count);
+            firebaseRef.child('Users').child(temp_token).child('Screen Access Counters').child(moment().format('MMMM DD YYYY')).child('count').set(accessCounter.count);	
 		});
 	},[]);
 
