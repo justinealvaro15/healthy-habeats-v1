@@ -478,7 +478,7 @@ const HomeScreen = ({ navigation }) => {
 		});
 	},[]);
 
-    if(isLoadingBreakfast && isLoadingLunch && isLoadingDinner && isLoadingSnacks && isLoadingFood && isLoadingUserData){
+    if(isLoadingBreakfast || isLoadingLunch || isLoadingDinner || isLoadingSnacks || isLoadingFood || isLoadingUserData){
         return(
             <View>
                 <Text>LOADING</Text>
