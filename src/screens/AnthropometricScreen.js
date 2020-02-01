@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { AsyncStorage, Keyboard, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, ToastAndroid, View } from 'react-native';
+import { AsyncStorage, Keyboard, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, ToastAndroid, TouchableHighlight, View } from 'react-native';
 import Slider from "react-native-slider";
 import { withNavigation } from 'react-navigation';
-// import Snackbar from 'react-native-snackbar';
 
 import * as ThemeConstants from '../common/Themes';
 import * as AnthroText from '../common/AnthropometricText';
-import { TouchableHighlight } from 'react-native-gesture-handler';
 
 const AnthropometricScreen = ({ navigation }) => {
     const [weight, setWeight] = useState(0);

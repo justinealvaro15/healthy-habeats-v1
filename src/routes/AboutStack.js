@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from 'react-navigation';
-import { StyleSheet, Text } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 
 import AboutScreen from '../screens/AboutScreen';
 
@@ -13,7 +13,7 @@ const screens = {
         navigationOptions: ({ navigation }) => {
             return {
                 headerTitle: () => {
-                    return <Header navigation={navigation} title={<Text style={styles.text_header}>About Healthy Habeats</Text>}/>
+                    return <Header navigation={navigation} title={<Image source={require('../../assets/logo_name.png')} style={styles.logo}/>}/>
                 }
             }
         }
@@ -29,11 +29,11 @@ const AboutStack = createStackNavigator(screens, {
 });
 
 const styles = StyleSheet.create({
-    text_header: {
-        color: MAIN_WHITE,
-        fontSize: FONT_SIZE_MEDIUM,
-        fontWeight: 'bold',
+    logo: {
+        height: 21,
+        width: 168
     }
 });
+
 
 export default AboutStack;
