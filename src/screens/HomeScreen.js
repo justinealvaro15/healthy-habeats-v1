@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AsyncStorage, ScrollView, StyleSheet, View, Text } from 'react-native';
+import { ActivityIndicator, AsyncStorage, ScrollView, StyleSheet, View, Text } from 'react-native';
 
 import CalendarStrip from 'react-native-calendar-strip';
 import moment from 'moment';
@@ -495,8 +495,8 @@ const HomeScreen = ({ navigation }) => {
 
     if(isLoadingBreakfast || isLoadingLunch || isLoadingDinner || isLoadingSnacks || isLoadingUserData || isDeleteMagic || isDeletionData || isLoadingFood || isReinitialized){
         return(
-            <View>
-                <Text>LOADING</Text>
+            <View style={{alignItems: 'center', flex: 1, justifyContent: 'center'}}>
+                <ActivityIndicator size={85} color={ThemeConstants.MAIN_BLUE} />
             </View>
         )
     }
