@@ -183,7 +183,7 @@ export default class WelcomeScreen extends React.Component {
 		const year = currentDate.getFullYear();
 		const month = currentDate.getMonth();
 		const date = currentDate.getDate();
-		let time1 = new Date(year, month, date, 07, 00); //7am
+		let time1 = new Date(year, month, date, 7, 00); //7am
 		let time2 = new Date(year, month, date, 12, 00); //12nn
 		let time3 = new Date(year, month, date, 19, 00); //7pm
 		//Notif before-ish lunch and after-ish lunch
