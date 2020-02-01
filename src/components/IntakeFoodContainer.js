@@ -92,8 +92,8 @@ const IntakeFoodContainer = ({ food, mealTitle, navigateToSearchFood, onDeletion
                                                         temp = [];
                                                         Keyboard.dismiss();
                                                         counter = 0;
-                                                        let x = foodArray.filter(foodArray => foodArray.foodName !== item.foodName);
-                                                        let y = foodArray.filter(foodArray => foodArray.foodName === item.foodName);
+                                                        let x = foodArray.filter(foodArray => (foodArray.foodName !== item.foodName) && (foodArray.deleteID !== item.deleteID));
+                                                        let y = foodArray.filter(foodArray => (foodArray.foodName === item.foodName) && (foodArray.deleteID === item.deleteID));
                                                         let data = y[0].deleteID;
                                                         
                                                         for (let i = 0; i < meal.length; i++) {

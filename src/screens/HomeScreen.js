@@ -12,9 +12,12 @@ import '@firebase/firestore';
 
 import * as ThemeConstants from '../common/Themes';
 
+let firstSync = 0;
+
 const HomeScreen = ({ navigation }) => {
     let totalFood = [];
     const firebaseRef = firebase.database().ref();
+    
     
     let temp_token = 0;
     
@@ -31,6 +34,9 @@ const HomeScreen = ({ navigation }) => {
 
     const [isLoadingFood, setIsLoadingFood] = useState(true);
     const [isLoadingUserData, setIsLoadingUserData] = useState(true);
+    const [isDeleteMagic, setIsDeleteMagic] = useState(true);
+    const [isDeletionData, setIsDeletionData] = useState(true);
+    const [isReinitialized, setIsReinitialized] = useState(true);
     
     const [userData, setUserData] = useState({
         calories: 0,
@@ -93,12 +99,13 @@ const HomeScreen = ({ navigation }) => {
 
     const deleteMagic = async () => {
         const x = await AsyncStorage.getItem('userID');
-        console.log('TOKEN: ' + x);
+        //console.log('TOKEN: ' + x);
         setToken(x);
         temp_token = x;
         setIsDeleted(Math.random());
         //setWaterDeleted(Math.random());
         //setIsWaterAdded(Math.random());
+        prepareCounter();
         console.log("RE-INITIALIZE");
     };
 
@@ -111,7 +118,7 @@ const HomeScreen = ({ navigation }) => {
 				console.log('empty');
             } else{
                 data = JSON.parse(data);
-                console.log(data);
+                //console.log(data);
                 //same day
                 if(data.dateAccessed === moment().format('MMMM DD YYYY')){
                     accessCounter.count = data.count + 1;
@@ -132,7 +139,7 @@ const HomeScreen = ({ navigation }) => {
 			// Error retrieving data
 			console.log(error.message);
         }    
-        //firebaseRef.child('Users').child(temp_token).child('Screen Access Counters').child(moment().format('MMMM DD YYYY')).child('count').set(accessCounter.count);
+        firebaseRef.child('Users').child(temp_token).child('Screen Access Counters').child(moment().format('MMMM DD YYYY')).child('count').set(accessCounter.count);
     };
     
 	const saveHomeCounter = async (key,value) => {
@@ -387,7 +394,7 @@ const HomeScreen = ({ navigation }) => {
         syncSnacksData('total_snacks').then( () => {
             setIsLoadingSnacks(false);
         });
-        prepareCounter();
+        
 
         //syncFoodsData();
         //syncCurrentUserData();
@@ -454,15 +461,23 @@ const HomeScreen = ({ navigation }) => {
         //saveData('total_lunch', JSON.stringify(lunch));
         //saveData('total_dinner', JSON.stringify(dinner));
         //saveData('total_snacks', JSON.stringify(snacks));
-        saveDeletionData();
+        saveDeletionData().then( () => {
+            setIsDeletionData(false);
+        });
         syncFoodsData().then( () => {
             setIsLoadingFood(false);
         });
+        //console.log(firstSync);
+        if(firstSync == 1){
+            //console.log('READY FOR 2nd SYNC');
+            setIsReinitialized(false);
+        };
+        firstSync = 1;
        // console.log("useEffect#7 in action: data is deleted");
     }, [isDeleted]);
 
     useEffect( () => {
-        setTimeout(function() { deleteMagic(); }, 3000);
+        setTimeout(function() { deleteMagic().then( () => {setIsDeleteMagic(false)}); }, 2000);
         //setTimeout(function() { syncWaterData2('total_water'); }, 5000);
         //setTimeout(function() { getUserData(); }, 2000);
     }, []);
@@ -478,7 +493,7 @@ const HomeScreen = ({ navigation }) => {
 		});
 	},[]);
 
-    if(isLoadingBreakfast || isLoadingLunch || isLoadingDinner || isLoadingSnacks || isLoadingFood || isLoadingUserData){
+    if(isLoadingBreakfast || isLoadingLunch || isLoadingDinner || isLoadingSnacks || isLoadingUserData || isDeleteMagic || isDeletionData || isLoadingFood || isReinitialized){
         return(
             <View>
                 <Text>LOADING</Text>
