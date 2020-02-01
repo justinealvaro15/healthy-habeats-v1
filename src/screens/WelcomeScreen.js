@@ -224,7 +224,7 @@ export default class WelcomeScreen extends React.Component {
 		Notifications.scheduleLocalNotificationAsync(winner_array[winner2], schedulingOptions5);
 		Notifications.scheduleLocalNotificationAsync(winner_array[winner], schedulingOptions6);
 		Notifications.scheduleLocalNotificationAsync(winner_array[winner2], schedulingOptions7);
-
+		console.log('Notifications Scheduled successfully!');
 		setTimeout(() => {
 			
 			// USE TO RESET STORAGE
