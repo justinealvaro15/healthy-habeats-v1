@@ -16,7 +16,7 @@ const localNotification = {
 	body: 'Testing!' 
 };
 
-const TIMER = 3000;
+const TIMER = 2000;
 const dimensions = Dimensions.get('window');
 const ratio = dimensions.width/350*0.7;
 
