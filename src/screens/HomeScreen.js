@@ -605,9 +605,9 @@ const HomeScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     calendar: {
-        height:100,
-        paddingTop: 5,
-        paddingBottom: 5
+        height: 100,
+        paddingTop: 15,
+        paddingHorizontal: 15
     },
     main: {
         backgroundColor: ThemeConstants.MAIN_WHITE,
