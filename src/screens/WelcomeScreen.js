@@ -91,7 +91,7 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-firebase.analytics();
+
 
 _handleNotification = notification => {
 	Vibration.vibrate();
