@@ -54,7 +54,8 @@ const RootDrawerNavigator = createDrawerNavigator({
         activeBackgroundColor: MAIN_WHITE,
         activeTintColor: MAIN_GREEN,
         inactiveTintColor: MAIN_WHITE
-    }
+    },
+    initialRouteName: 'Home'
 });
 
 const styles = StyleSheet.create({
