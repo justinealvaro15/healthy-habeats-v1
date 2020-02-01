@@ -7,6 +7,10 @@ import moment from 'moment';
 import IntakeFoodContainer from '../components/IntakeFoodContainer';
 import StatsContainer from '../components/StatsContainer';
 
+import {Notifications} from 'expo';
+import * as Permissions from 'expo-permissions';
+import Constants from 'expo-constants';
+
 import * as firebase from 'firebase';
 import '@firebase/firestore';
 
