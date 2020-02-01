@@ -182,7 +182,7 @@ export default class WelcomeScreen extends React.Component {
 		// get the day, month and year from current date to create time to schedule
 		const year = currentDate.getFullYear();
 		const month = currentDate.getMonth();
-		const date = currentDate.getDate();
+		const date = currentDate.getDate() + 1;
 		let time1 = new Date(year, month, date, 7); //7am
 		let time2 = new Date(year, month, date, 12); //12nn
 		let time3 = new Date(year, month, date, 19); //7pm
@@ -192,7 +192,13 @@ export default class WelcomeScreen extends React.Component {
 		let time6 = new Date(year, month, date, 17, 30); //5:30pm
 		let time7 = new Date(year, month, date, 18, 30); //8:30pm
 		
-		not0 = Date.parse(not0);
+		time1 = Date.parse(time1);
+		time2 = Date.parse(time2);
+		time3 = Date.parse(time3);
+		time4 = Date.parse(time4);
+		time5 = Date.parse(time5);
+		time6 = Date.parse(time6);
+		time7 = Date.parse(time7);
 		
 		const schedulingOptions1 = { time: time1, repeat: 'day' };
 		const schedulingOptions2 = { time: time2, repeat: 'day' };
