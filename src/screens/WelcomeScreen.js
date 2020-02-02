@@ -221,7 +221,7 @@ export default class WelcomeScreen extends React.Component {
 			.then((state) => {
 				//Notifications.presentLocalNotificationAsync(localNotification);
 				if(this.state.userToken === 'firstTime'){
-					this.saveUserToken('oldUser');
+					//this.saveUserToken('oldUser');
 					this.props.navigation.replace('Home');
 					this.props.navigation.navigate('Tutorial1');
 				} else {
