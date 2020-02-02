@@ -7,7 +7,6 @@ import * as ThemeConstants from '../../common/Themes';
 const FoodResultsList = () => {
     const foodArray = [
         { "id": "1", "foodName": "Apple", "grams": 130, "calories": 80  },
-        { "id": "2", "foodName": "Banana", "grams": 40, "calories": 40 },
         { "id": "3", "foodName": "Chopsuey", "grams": 147, "calories": 112 }
     ];
 
