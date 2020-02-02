@@ -138,53 +138,39 @@ export default class WelcomeScreen extends React.Component {
 
 		//notif#1 check: current_hour > 7am, set notif for 7am tommorow 
 		if(hour >= 7){
-			console.log('7am tom');
 			time1 = new Date(year, month, tomorrow_date, 7); //7am tomorrow
 		}else{
-			console.log('7am today');
 			time1 = new Date(year, month, current_date, 7); //7am today
 		};
 		if(hour >= 12){
-			console.log('12nn tom');
 			time2 = new Date(year, month, tomorrow_date, 12); //12nn
 		}else{
-			console.log('12nn today');
 			time2 = new Date(year, month, current_date, 12); //12nn
 		};
 		if(hour >= 19){
-			console.log('7pm tom');
 			time3 = new Date(year, month, tomorrow_date, 19); //7pm
 		}else{
-			console.log('7pm today');
 			time3 = new Date(year, month, current_date, 19); //7pm
 		};
 		//tips/notifs
 		if(hour >= 10){
-			console.log('10am tom');
 			time4 = new Date(year, month, tomorrow_date, 10); //10am
 		}else{
-			console.log('10am today');
 			time4 = new Date(year, month, current_date, 10); //10am
 		};
 		if(currentDate > temp_date1){
-			console.log('2:30pm tom');
 			time5 = new Date(year, month, tomorrow_date, 14, 30); //2:30pm
 		}else{
-			console.log('2:30pm today');
 			time5 = new Date(year, month, current_date, 14, 30); //2:30pm
 		};
 		if(currentDate > temp_date2){
-			console.log('5:30pm tom');
 			time6 = new Date(year, month, tomorrow_date, 17, 30); //5:30pm
 		}else{
-			console.log('5:30pm today');
 			time6 = new Date(year, month, current_date, 17, 30); //5:30pm
 		};
 		if(currentDate > temp_date3){
-			console.log('8:30pm tom');
 			time7 = new Date(year, month, tomorrow_date, 20, 30); //8:30pm
 		}else{
-			console.log('8:30pm today');
 			time7 = new Date(year, month, current_date, 20, 30); //8:30pm
 		};
 		time1 = Date.parse(time1);
