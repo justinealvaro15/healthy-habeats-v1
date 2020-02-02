@@ -26,6 +26,7 @@ const EditServingScreen = ({ navigation }) => {
     let userID = navigation.getParam('userID');
 
     const [serving, setServing] = useState(foodItem.serving);
+    const [pieces, setPieces] = useState(foodItem.pieces);
 
     let actionSubmit = '';
 
@@ -33,7 +34,6 @@ const EditServingScreen = ({ navigation }) => {
         console.log(mealTitle);
         console.log('User ID: ' + userID);
     }, []);
-
     const render_top = () => {
         return(
             <View style={styles.top}>
@@ -45,7 +45,13 @@ const EditServingScreen = ({ navigation }) => {
                 <View style={{ alignItems: 'center', paddingLeft: ThemeConstants.CONTAINER_MARGIN }}>
                     <TouchableHighlight
                         style={styles.button_green}
-                        onPress={() => serving>minThreshold ? setServing(serving-increment) : null }
+                        onPress={() => {
+                            if(serving>minThreshold){
+                                setServing(serving-increment);
+                                setPieces(pieces*serving)
+                            }
+                        }
+                        }
                         underlayColor={ThemeConstants.HIGHLIGHT_GREEN}
                     >
                         <Feather name='minus' style={styles.text_button_green}/>
@@ -61,6 +67,13 @@ const EditServingScreen = ({ navigation }) => {
                     <TouchableHighlight
                         style={styles.button_green}
                         onPress={() => serving<maxThreshold ? setServing(serving+increment) : null}
+                        onPress={() => {
+                            if(serving<maxThreshold){
+                                setServing(serving+increment);
+                                setPieces(pieces*serving)
+                            }
+                        }
+                        }
                         underlayColor={ThemeConstants.HIGHLIGHT_GREEN}
                     >
                         <Feather name='plus' style={styles.text_button_green}/>
@@ -113,6 +126,7 @@ const EditServingScreen = ({ navigation }) => {
                 underlayColor={ThemeConstants.HIGHLIGHT_YELLOW}
                 onPress={() => {
                     foodItem.serving = parseFloat(serving);
+                    foodItem.pieces = parseFloat(pieces);
                     if(action === 'add'){
                         setFoodArray([...foodArray, foodItem]);
                         temp = foodArray;

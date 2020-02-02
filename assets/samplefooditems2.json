@@ -1,0 +1,12 @@
+[
+    { "id": "1", "foodName": "Beef Shawarma", "grams": 255, "calories": 315, "carbs": 30, "fats": 15, "proteins": 10, "dateConsumed": "", "deleteID": "", "serving": 1  },
+    { "id": "2", "foodName": "Grilled Chicken", "grams": 192, "calories": 284, "carbs": 0, "fats": 6.5, "proteins": 57, "dateConsumed": "", "deleteID": "", "serving": 1 },
+    { "id": "3", "foodName": "Fish Fillet", "grams": 159, "calories": 173, "carbs": 0, "fats": 1.4, "proteins": 38, "dateConsumed": "", "deleteID": "", "serving": 1  },
+    { "id": "4", "foodName": "Chicken Adobo", "grams": 221, "calories": 392, "carbs": 9.1, "fats": 23, "proteins": 37, "dateConsumed": "", "deleteID": "", "serving": 1  },
+    { "id": "5", "foodName": "Pork Adobo", "grams": 241, "calories": 454, "carbs": 5.1, "fats": 25, "proteins": 50, "dateConsumed": "", "deleteID": "", "serving": 1  },
+    { "id": "6", "foodName": "Pork Sisig", "grams": 237, "calories": 515, "carbs": 6, "fats": 47, "proteins": 18, "dateConsumed": "", "deleteID": "", "serving": 1  },
+    { "id": "7", "foodName": "Chicken Sisig", "grams":  137, "calories": 147, "carbs": 3, "fats": 7, "proteins": 17, "dateConsumed": "", "deleteID": "", "serving": 1  },
+    { "id": "8", "foodName": "Afritada", "grams": 125, "calories": 202, "carbs": 8, "fats": 4, "proteins": 32, "dateConsumed": "", "deleteID": "", "serving": 1  },
+    { "id": "9", "foodName": "Kaldereta", "grams": 150, "calories": 191, "carbs": 15, "fats": 9, "proteins": 11, "dateConsumed": "", "deleteID": "", "serving": 1  },
+    { "id": "10", "foodName": "Mechado", "grams": 155, "calories": 195, "carbs": 17, "fats": 5, "proteins": 21, "dateConsumed": "", "deleteID": "", "serving": 1  }
+]

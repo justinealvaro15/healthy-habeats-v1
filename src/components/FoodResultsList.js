@@ -33,7 +33,8 @@ const FoodResultsList = ({ foodArray, setFoodArray, navigation, mealTitle ,resul
             const dateConsumed = data[i].dateConsumed;
             const deleteID = data[i].deleteID;
             const serving = data[i].serving;
-            foodItems.push({id, foodName, grams, calories, carbs, fats, proteins, dateConsumed, deleteID, serving});
+            const pieces = data[i].pieces;
+            foodItems.push({id, foodName, grams, calories, carbs, fats, proteins, dateConsumed, deleteID, serving, pieces});
         }       
         results = foodItems;
     }
