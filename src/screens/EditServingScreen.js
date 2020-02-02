@@ -110,6 +110,7 @@ const EditServingScreen = ({ navigation }) => {
                 style={styles.button_save}
                 underlayColor={ThemeConstants.HIGHLIGHT_YELLOW}
                 onPress={() => {
+                    foodItem.serving = parseFloat(serving);
                     if(action === 'add'){
                         setFoodArray([...foodArray, foodItem]);
                         temp = foodArray;
