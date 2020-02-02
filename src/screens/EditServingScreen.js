@@ -8,8 +8,8 @@ import { Feather } from '@expo/vector-icons';
 import * as ThemeConstants from '../common/Themes';
 
 const increment = 0.5;
-const min_threshold = 0.5;
-const max_threshold = 100.0;
+const minThreshold = 0.5;
+const maxThreshold = 100.0;
 
 const EditServingScreen = ({ navigation }) => {
     const firebaseRef = firebase.database().ref();
@@ -25,7 +25,6 @@ const EditServingScreen = ({ navigation }) => {
     let mealTitle = navigation.getParam('mealTitle');
     let userID = navigation.getParam('userID');
 
-    // const foodItem = { "id": "1", "foodName": "Beef Shawarma", "grams": 255, "calories": 315, "carbs": 30, "fats": 15, "proteins": 10, "dateConsumed": "", "deleteID": "", "serving": 1  };
     const [serving, setServing] = useState(foodItem.serving);
 
     let actionSubmit = '';
@@ -46,7 +45,7 @@ const EditServingScreen = ({ navigation }) => {
                 <View style={{ alignItems: 'center', paddingLeft: ThemeConstants.CONTAINER_MARGIN }}>
                     <TouchableHighlight
                         style={styles.button_green}
-                        onPress={() => serving>min_threshold ? setServing(serving-increment) : null }
+                        onPress={() => serving>minThreshold ? setServing(serving-increment) : null }
                         underlayColor={ThemeConstants.HIGHLIGHT_GREEN}
                     >
                         <Feather name='minus' style={styles.text_button_green}/>
@@ -61,7 +60,7 @@ const EditServingScreen = ({ navigation }) => {
 
                     <TouchableHighlight
                         style={styles.button_green}
-                        onPress={() => serving<max_threshold ? setServing(serving+increment) : null}
+                        onPress={() => serving<maxThreshold ? setServing(serving+increment) : null}
                         underlayColor={ThemeConstants.HIGHLIGHT_GREEN}
                     >
                         <Feather name='plus' style={styles.text_button_green}/>
@@ -81,27 +80,27 @@ const EditServingScreen = ({ navigation }) => {
 
                 <View style={styles.container_details}> 
                     <Text>Calories:</Text>
-                    <Text>{foodItem.calories*serving} kcal</Text>
+                    <Text>{Math.round(foodItem.calories*serving*100)/100} kcal</Text>
                 </View>
 
                 <View style={styles.container_details}> 
                     <Text>Carbohydrates:</Text>
-                    <Text>{foodItem.carbs*serving} grams</Text>
+                    <Text>{Math.round(foodItem.carbs*serving*100)/100} grams</Text>
                 </View>
 
                 <View style={styles.container_details}> 
                     <Text>Proteins:</Text>
-                    <Text>{foodItem.proteins*serving} grams</Text>
+                    <Text>{Math.round(foodItem.proteins*serving*100)/100} grams</Text>
                 </View>
 
                 <View style={styles.container_details}> 
                     <Text>Fats:</Text>
-                    <Text>{foodItem.fats*serving} grams</Text>
+                    <Text>{Math.round(foodItem.fats*serving*100)/100} grams</Text>
                 </View>
 
                 <View style={styles.container_details}> 
                     <Text>Weight:</Text>
-                    <Text>{foodItem.grams*serving} grams</Text>
+                    <Text>{Math.round(foodItem.grams*serving*100)/100} grams</Text>
                 </View>
             </ScrollView>
         );
