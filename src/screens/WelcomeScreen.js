@@ -9,72 +9,7 @@ import * as ThemeConstants from '../common/Themes';
 import * as firebase from 'firebase';
 import '@firebase/firestore';
 
-
-const localNotification = { 
-	sound: 'default',
-	title: 'Welcome to Healthy HabEATS!!', 
-	body: 'Testing!' 
-};
-
-const scheduledNotification1 = { 
-	sound: 'default',
-	title: 'Breakfast', 
-	body: 'Rise and shine! ☀️ Time to enter your breakfast!' 
-};
-const scheduledNotification2 = { 
-	sound: 'default',
-	title: 'Lunch', 
-	body: 'Have a healthy and a balanced diet! 🍱 Time to enter your lunch!' 
-};
-const scheduledNotification3 = { 
-	sound: 'default',
-	title: 'Dinner', 
-	body: 'Your day is almost done! 🌙 Time to enter your dinner!' 
-};
-
-const scheduledNotification4 = { 
-	sound: 'default',
-	title: 'Health Tips', 
-	body: 'Eat more vegetables and fruits to get the essential vitamins, minerals, and fiber for regulation of body processes!' 
-};
-const scheduledNotification5 = { 
-	sound: 'default',
-	title: 'Health Tips', 
-	body: 'Consume fish, lean meat, poultry, eggs, dried beans or nuts daily for growth and repair of body tissues!' 
-};
-const scheduledNotification6 = { 
-	sound: 'default',
-	title: 'Health Tips', 
-	body: 'Limit intake of salty, fried, fatty and sugar-rich foods to prevent cardiovascular diseases!' 
-};
-const scheduledNotification7 = { 
-	sound: 'default',
-	title: 'Health Tips', 
-	body: 'Fruit intake can be improved by eating fresh fruits as snacks!' 
-};
-const scheduledNotification8 = { 
-	sound: 'default',
-	title: 'Health Tips', 
-	body: 'Vegetable intake can be improved by always including vegetables in meals!' 
-};
-const scheduledNotification9 = { 
-	sound: 'default',
-	title: 'Health Tips', 
-	body: 'Fat intake can be reduced by limiting consumption of baked and fried foods, and pre-packaged snacks and foods!' 
-};
-const scheduledNotification10 = { 
-	sound: 'default',
-	title: 'Health Tips', 
-	body: 'Remember to choose and eat healthy foods!' 
-};
-const scheduledNotification11 = { 
-	sound: 'default',
-	title: 'Health Tips', 
-	body: 'Reach your required calorie intake while balancing the intake of your carbs, proteins and fats!' 
-};
-
-
-
+import * as NotificationsText from '../common/NotificationsText';
 
 
 const TIMER = 2000;
@@ -185,7 +120,6 @@ export default class WelcomeScreen extends React.Component {
 		const current_date = currentDate.getDate();
 		const tomorrow_date = currentDate.getDate() + 1;
 		const hour = currentDate.getHours();
-		const minute = currentDate.getMinutes();
 		let time1 = 0;
 		let time2 = 0;
 		let time3 = 0;
@@ -194,41 +128,63 @@ export default class WelcomeScreen extends React.Component {
 		let time6 = 0;
 		let time7 = 0;
 
+		let temp_date1 = new Date();
+		let temp_date2 = new Date();
+		let temp_date3 = new Date();
+
+		temp_date1.setHours(14,30);
+		temp_date2.setHours(17,30);
+		temp_date3.setHours(20,30);
+
 		//notif#1 check: current_hour > 7am, set notif for 7am tommorow 
 		if(hour >= 7){
+			console.log('7am tom');
 			time1 = new Date(year, month, tomorrow_date, 7); //7am tomorrow
 		}else{
+			console.log('7am today');
 			time1 = new Date(year, month, current_date, 7); //7am today
 		};
 		if(hour >= 12){
+			console.log('12nn tom');
 			time2 = new Date(year, month, tomorrow_date, 12); //12nn
 		}else{
+			console.log('12nn today');
 			time2 = new Date(year, month, current_date, 12); //12nn
 		};
 		if(hour >= 19){
+			console.log('7pm tom');
 			time3 = new Date(year, month, tomorrow_date, 19); //7pm
 		}else{
+			console.log('7pm today');
 			time3 = new Date(year, month, current_date, 19); //7pm
 		};
 		//tips/notifs
 		if(hour >= 10){
+			console.log('10am tom');
 			time4 = new Date(year, month, tomorrow_date, 10); //10am
 		}else{
+			console.log('10am today');
 			time4 = new Date(year, month, current_date, 10); //10am
 		};
-		if(hour >= 14 && minute>=30){
+		if(currentDate > temp_date1){
+			console.log('2:30pm tom');
 			time5 = new Date(year, month, tomorrow_date, 14, 30); //2:30pm
 		}else{
+			console.log('2:30pm today');
 			time5 = new Date(year, month, current_date, 14, 30); //2:30pm
 		};
-		if(hour >= 17 && minute>=30){
+		if(currentDate > temp_date2){
+			console.log('5:30pm tom');
 			time6 = new Date(year, month, tomorrow_date, 17, 30); //5:30pm
 		}else{
+			console.log('5:30pm today');
 			time6 = new Date(year, month, current_date, 17, 30); //5:30pm
 		};
-		if(hour >= 20 && minute>=30){
+		if(currentDate > temp_date3){
+			console.log('8:30pm tom');
 			time7 = new Date(year, month, tomorrow_date, 20, 30); //8:30pm
 		}else{
+			console.log('8:30pm today');
 			time7 = new Date(year, month, current_date, 20, 30); //8:30pm
 		};
 		time1 = Date.parse(time1);
@@ -247,12 +203,12 @@ export default class WelcomeScreen extends React.Component {
 		const schedulingOptions6 = { time: time6, repeat: 'day' };
 		const schedulingOptions7 = { time: time7, repeat: 'day' };
 		//B,L,D notifs
-		Notifications.scheduleLocalNotificationAsync(scheduledNotification1, schedulingOptions1);
-		Notifications.scheduleLocalNotificationAsync(scheduledNotification2, schedulingOptions2);
-		Notifications.scheduleLocalNotificationAsync(scheduledNotification3, schedulingOptions3);
+		Notifications.scheduleLocalNotificationAsync(NotificationsText.scheduledNotification1, schedulingOptions1);
+		Notifications.scheduleLocalNotificationAsync(NotificationsText.scheduledNotification2, schedulingOptions2);
+		Notifications.scheduleLocalNotificationAsync(NotificationsText.scheduledNotification3, schedulingOptions3);
 		//4 healthy tips notif
 		//4-12
-		const winner_array = [scheduledNotification4, scheduledNotification5, scheduledNotification6, scheduledNotification7, scheduledNotification8, scheduledNotification9, scheduledNotification10, scheduledNotification11]
+		const winner_array = [NotificationsText.scheduledNotification4, NotificationsText.scheduledNotification5, NotificationsText.scheduledNotification6, NotificationsText.scheduledNotification7, NotificationsText.scheduledNotification8, NotificationsText.scheduledNotification9, NotificationsText.scheduledNotification10, NotificationsText.scheduledNotification11]
 		let winner = Math.floor(Math.random() * 8 );
 		let winner2 = Math.floor(Math.random() * 8 );
 
