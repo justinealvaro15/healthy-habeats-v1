@@ -506,7 +506,7 @@ const HomeScreen = ({ navigation }) => {
     }
 
     return(
-        <ScrollView style={styles.main}>
+        <ScrollView style={styles.main} showsVerticalScrollIndicator={false}>
             <CalendarStrip
                 style={styles.calendar}
                 daySelectionAnimation={{type: 'background', duration: 200, highlightColor: ThemeConstants.MAIN_YELLOW}}

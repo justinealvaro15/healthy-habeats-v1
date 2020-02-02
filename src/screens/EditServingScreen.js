@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, TouchableHighlight, ToastAndroid, StyleSheet, View } from 'react-native';
+import { Text, TouchableHighlight, ToastAndroid, ScrollView, StyleSheet, View } from 'react-native';
 
 import * as firebase from 'firebase';
 import '@firebase/firestore';
@@ -73,7 +73,10 @@ const EditServingScreen = ({ navigation }) => {
 
     const render_mid = () => {
         return (
-            <View style={{ padding: ThemeConstants.CONTAINER_MARGIN*1.5 }}>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                style={{ padding: ThemeConstants.CONTAINER_MARGIN*1.5 }}
+            >
                 <Text style={[styles.text_regular, styles.divider]}>Total</Text>
 
                 <View style={styles.container_details}> 
@@ -100,7 +103,7 @@ const EditServingScreen = ({ navigation }) => {
                     <Text>Weight:</Text>
                     <Text>{foodItem.grams*serving} grams</Text>
                 </View>
-            </View>
+            </ScrollView>
         );
     };
 
