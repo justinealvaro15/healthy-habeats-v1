@@ -11,10 +11,6 @@ const increment = 0.5;
 const min_threshold = 0.5;
 const max_threshold = 100.0;
 
-const increment = 0.5;
-const min_threshold = 0.5;
-const max_threshold = 100.0;
-
 const EditServingScreen = ({ navigation }) => {
     const firebaseRef = firebase.database().ref();
 
@@ -290,96 +286,5 @@ const styles2 = StyleSheet.create({
         fontWeight: 'bold'
     },
 });
-
-{/* <View>
-        <View style={styles.main}>
-            <Text style={styles.text_header}>{foodItem.foodName}</Text>
-
-            <View style={styles.container}>
-                <View style={styles.details}>
-                    <Text style={styles.text_title}>Calories</Text>
-                    <Text style={styles.text_stat}>{Math.round(foodItem.calories*serving*100)/100} kcal</Text>
-                </View>
-            </View>
-
-            <View style={styles.container}>
-                <View style={styles.details}>
-                    <Text style={styles.text_title}>Carbs</Text>
-                    <Text style={styles.text_stat}>{Math.round(foodItem.carbs*serving*100)/100} g</Text>
-                </View>
-
-                <View style={styles.details}>
-                    <Text style={styles.text_title}>Fats</Text>
-                    <Text style={styles.text_stat}>{Math.round(foodItem.fats*serving*100)/100} g</Text>
-                </View>
-
-                <View style={styles.details}>
-                    <Text style={styles.text_title}>Proteins</Text>
-                    <Text style={styles.text_stat}>{Math.round(foodItem.proteins*serving*100)/100} g</Text>
-                </View>
-            </View>
-        </View>
-
-        <View>
-            <View style={styles.input_background}>
-                <Text style={styles.input_title}>Number of serving(s):</Text>
-                <TextInput
-                    keyboardType='numeric'
-                    value={serving.toString()}
-                    onChangeText={newServing => {
-                        setServing(newServing);
-                        }
-                    }
-                    placeholder='Serving count'
-                    style={styles.input}
-                />
-            </View>
-
-            <TouchableHighlight
-                style={styles.button}
-                underlayColor={ThemeConstants.HIGHLIGHT_YELLOW}
-                onPress={() => {
-                    Keyboard.dismiss();
-                    const isServingValid = serving > 0;
-                    if(isServingValid){
-                        foodItem.serving = parseFloat(serving);
-                        if(action === 'add'){
-                            setFoodArray([...foodArray, foodItem]);
-                            temp = foodArray;
-                            temp.push(foodItem);
-                            actionSubmit = 'Added';
-                        }
-                        else if(action === 'edit'){
-                            temp = [];
-                            deleteID = foodItem.deleteID;
-                            actionSubmit = 'Edited';
-                            for (let i = 0; i < foodArray.length; i++) {
-                                if (foodArray[i].deleteID != deleteID ){
-                                    counter = counter + 1;
-                                }
-                                else{
-                                    break;
-                                }
-                            }                                
-                            foodArray.splice(counter,1);
-                            setFoodArray([...foodArray, foodItem]);
-                            temp = foodArray;
-                            temp.push(foodItem);
-                        }
-                        
-                        
-                        firebaseRef.child('Users').child(userID).child('Food Intakes').child(mealTitle).set(temp);
-
-                        navigation.navigate('Home');
-                        ToastAndroid.show(`${actionSubmit} ${foodItem.foodName} successfully!`, ToastAndroid.SHORT);
-                    } else{
-                        ToastAndroid.show('Please enter number of food serving(s).', ToastAndroid.SHORT);
-                    }
-                }}
-            >
-                <Text style={styles.text_button}>Save</Text>
-            </TouchableHighlight>
-        </View>
-    </View> */}
 
 export default EditServingScreen;
