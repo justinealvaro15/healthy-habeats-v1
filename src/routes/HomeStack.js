@@ -20,7 +20,7 @@ const screens = {
     EditServing: {
         screen: EditServingScreen,
         navigationOptions: {
-            title: 'Food Servings'
+            title: 'Overview'
         }
     },
     Home: {
