@@ -165,7 +165,10 @@ const AnthropometricScreen = ({ navigation }) => {
         computeBMI();
         setDBW((height - 100) - ((height - 100) * 0.1));
         saveData('DBW', JSON.stringify((height - 100) - ((height - 100) * 0.1)));
-        navigation.navigate('UserProfile');
+        
+        // IF NEW USER, GO TO HOME. ELSE, RETURN TO USER PROFILE
+        navigation.navigate('Home');
+
         ToastAndroid.show('Saved successfully!', ToastAndroid.SHORT);
     }
 

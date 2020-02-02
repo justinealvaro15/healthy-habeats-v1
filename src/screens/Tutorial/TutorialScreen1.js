@@ -25,7 +25,6 @@ const TutorialScreen1 = ({ navigation }) => {
                         <View style={styles.circle_inactive}></View>
                         <View style={styles.circle_inactive}></View>
                         <View style={styles.circle_inactive}></View>
-                        <View style={styles.circle_inactive}></View>
                     </View>
 
                     <TouchableHighlight

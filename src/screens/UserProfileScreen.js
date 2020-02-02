@@ -127,6 +127,7 @@ const UserProfileScreen = ({ navigation }) => {
     return (
         <ScrollView 
             contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between', flexDirection: 'column' }}
+            showsVerticalScrollIndicator={false}
             style={styles.main}
         >
             <View style={{ justifyContent: 'flex-start' }}>

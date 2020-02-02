@@ -54,7 +54,7 @@ const SearchFoodScreen = ({ navigation }) => {
 
             <TouchableOpacity onPress={() => navigation.navigate('Home')} title='return'/>
 
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
                 <FoodResultsList
                     foodArray={navigation.getParam('foodArray')}
                     setFoodArray={navigation.getParam('setFoodArray')}
