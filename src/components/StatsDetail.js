@@ -4,8 +4,8 @@ import { Bar } from 'react-native-progress';
 
 import * as ThemeConstants from '../common/Themes';
 
-const lowIntakeThreshold = 0.7;
-const highIntakeThreshold = 1.6;
+const lowIntakeThreshold = 0.75;
+const highIntakeThreshold = 1.0;
 
 const StatsDetail = ({ title, unit, valueTotal, valueCurrent }) => {
     const progress = valueCurrent/valueTotal ? valueCurrent/valueTotal : null;
