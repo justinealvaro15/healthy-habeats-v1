@@ -182,16 +182,55 @@ export default class WelcomeScreen extends React.Component {
 		// get the day, month and year from current date to create time to schedule
 		const year = currentDate.getFullYear();
 		const month = currentDate.getMonth();
-		const date = currentDate.getDate() + 1;
-		let time1 = new Date(year, month, date, 7); //7am
-		let time2 = new Date(year, month, date, 12); //12nn
-		let time3 = new Date(year, month, date, 19); //7pm
-		//Notif before-ish lunch and after-ish lunch
-		let time4 = new Date(year, month, date, 10); //10am
-		let time5 = new Date(year, month, date, 14, 30); //2:30pm
-		let time6 = new Date(year, month, date, 17, 30); //5:30pm
-		let time7 = new Date(year, month, date, 18, 30); //8:30pm
-		
+		const current_date = currentDate.getDate();
+		const tomorrow_date = currentDate.getDate() + 1;
+		const hour = currentDate.getHours();
+		const minute = currentDate.getMinutes();
+		let time1 = 0;
+		let time2 = 0;
+		let time3 = 0;
+		let time4 = 0;
+		let time5 = 0;
+		let time6 = 0;
+		let time7 = 0;
+
+		//notif#1 check: current_hour > 7am, set notif for 7am tommorow 
+		if(hour >= 7){
+			time1 = new Date(year, month, tomorrow_date, 7); //7am tomorrow
+		}else{
+			time1 = new Date(year, month, current_date, 7); //7am today
+		};
+		if(hour >= 12){
+			time2 = new Date(year, month, tomorrow_date, 12); //12nn
+		}else{
+			time2 = new Date(year, month, current_date, 12); //12nn
+		};
+		if(hour >= 19){
+			time3 = new Date(year, month, tomorrow_date, 19); //7pm
+		}else{
+			time3 = new Date(year, month, current_date, 19); //7pm
+		};
+		//tips/notifs
+		if(hour >= 10){
+			time4 = new Date(year, month, tomorrow_date, 10); //10am
+		}else{
+			time4 = new Date(year, month, current_date, 10); //10am
+		};
+		if(hour >= 14 && minute>=30){
+			time5 = new Date(year, month, tomorrow_date, 14, 30); //2:30pm
+		}else{
+			time5 = new Date(year, month, current_date, 14, 30); //2:30pm
+		};
+		if(hour >= 17 && minute>=30){
+			time6 = new Date(year, month, tomorrow_date, 17, 30); //5:30pm
+		}else{
+			time6 = new Date(year, month, current_date, 17, 30); //5:30pm
+		};
+		if(hour >= 20 && minute>=30){
+			time7 = new Date(year, month, tomorrow_date, 20, 30); //8:30pm
+		}else{
+			time7 = new Date(year, month, current_date, 20, 30); //8:30pm
+		};
 		time1 = Date.parse(time1);
 		time2 = Date.parse(time2);
 		time3 = Date.parse(time3);
@@ -199,7 +238,7 @@ export default class WelcomeScreen extends React.Component {
 		time5 = Date.parse(time5);
 		time6 = Date.parse(time6);
 		time7 = Date.parse(time7);
-		
+
 		const schedulingOptions1 = { time: time1, repeat: 'day' };
 		const schedulingOptions2 = { time: time2, repeat: 'day' };
 		const schedulingOptions3 = { time: time3, repeat: 'day' };
