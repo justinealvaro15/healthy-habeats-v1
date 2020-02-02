@@ -1,6 +1,6 @@
 import React from 'react';
 import { createAppContainer, createDrawerNavigator, DrawerItems } from 'react-navigation';
-import { Image, ScrollView, StyleSheet, View, Text } from 'react-native';
+import { Image, ScrollView, StyleSheet, View } from 'react-native';
 
 import HomeStack from './HomeStack';
 import UserProfileStack from './UserProfileStack';
@@ -10,6 +10,13 @@ import TestScreen from '../screens/TestScreen';
 import { Feather } from '@expo/vector-icons';
 import { MAIN_BLUE, MAIN_GREEN, MAIN_WHITE } from '../common/Themes';
 import Constants from 'expo-constants';
+import TutorialStack from './TutorialStack';
+
+class Hidden extends React.Component {
+    render() {
+      return null;
+    }
+  }
 
 const RootDrawerNavigator = createDrawerNavigator({
     Home: {
@@ -31,6 +38,12 @@ const RootDrawerNavigator = createDrawerNavigator({
         navigationOptions: {
             drawerLabel: 'About',
             drawerIcon: ({tintColor}) => <Feather name='info' size={20} color={tintColor}/>
+        }
+    },
+    Tutorial: {
+        screen: TutorialStack,
+        navigationOptions: {
+            drawerLabel: <Hidden/>
         }
     },
     Test: {

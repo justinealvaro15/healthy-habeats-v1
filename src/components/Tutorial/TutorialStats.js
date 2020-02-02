@@ -8,13 +8,13 @@ const StatsContainer = () => {
     return(
         <View style={styles.container}>
             <View style={styles.bar}>
-                <StatsDetail style={styles.details} title='Energy' unit='kcal' valueTotal={2350} valueCurrent={594}/>
-                <StatsDetail style={styles.details} title='Carbs' unit='g' valueTotal={380} valueCurrent={17}/>
+                <StatsDetail style={styles.details} title='Energy' unit='kcal' valueTotal={2350} valueCurrent={2375}/>
+                <StatsDetail style={styles.details} title='Carbs' unit='g' valueTotal={380} valueCurrent={60}/>
             </View>
 
             <View style={styles.bar}>
                 <StatsDetail style={styles.details} title='Protein' unit='g' valueTotal={90} valueCurrent={69}/>
-                <StatsDetail style={styles.details} title='Fat' unit='g' valueTotal={55} valueCurrent={27}/>
+                <StatsDetail style={styles.details} title='Fat' unit='g' valueTotal={55} valueCurrent={125}/>
             </View>
         </View>
     );

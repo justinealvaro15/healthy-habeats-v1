@@ -1,8 +1,8 @@
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
-import { withNavigation } from 'react-navigation';
+import { Alert, Image, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+import { withNavigation, StackActions, NavigationActions } from 'react-navigation';
 
-import TutorialSearch from '../../components/Tutorial/TutorialSearch';
+import TutorialStats from '../../components/Tutorial/TutorialStats';
 import { Feather } from '@expo/vector-icons';
 
 import * as ThemeConstants from '../../common/Themes';
@@ -17,10 +17,10 @@ const TutorialScreen4 = ({ navigation }) => {
             </View>
 
             <View>
-                <Text style={styles.text_header}>EDIT THE</Text>
-                <Text style={styles.text_header}>NUMBER OF SERVINGS</Text>
+                <Text style={styles.text_header}>CHECK YOUR</Text>
+                <Text style={styles.text_header}>DAILY PROGRESS</Text>
                 <View style={styles.mid}>
-                    <TutorialSearch/>
+                    <TutorialStats/>
                 </View>
             </View>
 
@@ -39,15 +39,30 @@ const TutorialScreen4 = ({ navigation }) => {
                         <View style={styles.circle_inactive}></View>
                         <View style={styles.circle_inactive}></View>
                         <View style={styles.circle_active}></View>
-                        <View style={styles.circle_inactive}></View>
                     </View>
 
                     <TouchableHighlight
                         style={styles.button}
-                        onPress={() => navigation.navigate('Tutorial5')}
+                        onPress={() => Alert.alert(
+                            'Let\'s get you started!',
+                            'Are you sure you want to proceed?',
+                            [
+                                {
+                                    text: 'Cancel',
+                                    onPress: () => console.log('cancel pressed')
+                                },
+                                {
+                                    text: 'Get Started',
+                                    onPress: () => navigation.dispatch(NavigationActions.navigate({
+                                        routeName: 'Anthropometric',
+                                        action: navigation.popToTop()
+                                    }))
+                                }
+                            ]
+                        )}
                         underlayColor={ThemeConstants.HIGHLIGHT_GREEN}
                     >
-                        <Feather name='corner-down-right' style={styles.text_button}/>
+                        <Feather name='check' style={styles.text_button}/>
                     </TouchableHighlight>
                 </View>
             </View>

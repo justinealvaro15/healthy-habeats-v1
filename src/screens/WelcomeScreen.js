@@ -234,14 +234,15 @@ export default class WelcomeScreen extends React.Component {
 		setTimeout(() => {
 			
 			// USE TO RESET STORAGE
-			//  this.deleteUserToken().then(() => 
+			// this.deleteUserToken().then(() => 
 				this.getUserToken()
-			//  )
+			// )
 			.then((state) => {
 				//Notifications.presentLocalNotificationAsync(localNotification);
 				if(this.state.userToken === 'firstTime'){
 					this.saveUserToken('oldUser');
-					this.props.navigation.replace('Tutorial1');
+					this.props.navigation.replace('Home');
+					this.props.navigation.navigate('Tutorial1');
 				} else {
 					this.props.navigation.replace('Home');
 				}
