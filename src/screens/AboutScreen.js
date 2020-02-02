@@ -7,7 +7,7 @@ import * as AboutText from '../common/AboutText';
 
 const AboutScreen = () => {
     return (
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.container}>
                 <Text style={styles.text_header}>Healthy Habeats</Text>
                 <Text style={styles.text_regular}>{AboutText.about}</Text>
