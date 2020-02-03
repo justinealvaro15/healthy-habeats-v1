@@ -67,7 +67,7 @@ export const popup_complete_carbs1 = {
 };
 export const popup_complete_carbs2 = {
 	title: 'Protein Intake',
-	message: 'Uh-oh! You already exceeded your daily carbs allowance. Cut down your carbs consumption on your succeeding meals!'
+	message: 'Uh-oh! You already exceeded your daily carbs allowance! Cut down your carbs consumption on your next meal!'
 };
 export const popup_complete_proteins1 = {
 	title: 'Protein Intake',
@@ -75,7 +75,7 @@ export const popup_complete_proteins1 = {
 };
 export const popup_complete_proteins2 = {
 	title: 'Protein Intake',
-	message: 'Uh-oh! You already exceeded your daily protein allowance. Cut down your protein consumption on your succeeding meals!'
+	message: 'Uh-oh! You already exceeded your daily protein allowance! Cut down your protein consumption on your next meal!'
 };
 export const popup_complete_fats1 = {
 	title: 'Fat Intake',
@@ -83,5 +83,21 @@ export const popup_complete_fats1 = {
 };
 export const popup_complete_fats2 = {
 	title: 'Fat Intake',
-	message: 'Uh-oh! You already exceeded your daily fat allowance. Cut down your fat consumption on your succeeding meals!'
+	message: 'Uh-oh! You already exceeded your daily fat allowance! Cut down your fat consumption on your next meal!'
+};
+export const calorie50 = {
+	title: 'Calorie Intake',
+	message: 'You already achieved more than half of your daily calorie requirement! Make sure to have a balanced diet to stay healthy!'
+};
+export const carb50 = {
+	title: 'Carbs Intake',
+	message: 'You already achieved more than half of your daily carbs allowance! Balance your diet by consuming foods with less carbs on your succeeding meals!'
+};
+export const protein50 = {
+	title: 'Protein Intake',
+	message: 'You already achieved more than half of your daily protein allowance! Balance your diet by consuming foods with less protein on your succeeding meals!'
+};
+export const fat50 = {
+	title: 'Fat Intake',
+	message: 'You already achieved more than half of your daily fat allowance! Balance your diet by consuming foods with less fat on your succeeding meals!'
 };
