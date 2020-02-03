@@ -1,35 +1,47 @@
 import React, { useState, useEffect } from 'react';
-import { AsyncStorage, ScrollView, StyleSheet, View, Text } from 'react-native';
+import { ActivityIndicator, AsyncStorage, ScrollView, StyleSheet, View, Text } from 'react-native';
 
 import CalendarStrip from 'react-native-calendar-strip';
 import moment from 'moment';
 
 import IntakeFoodContainer from '../components/IntakeFoodContainer';
-import IntakeWaterContainer from '../components/IntakeWaterContainer';
 import StatsContainer from '../components/StatsContainer';
 
-import * as ThemeConstants from '../common/Themes';
+import {Notifications} from 'expo';
+import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 
-let current_breakfast1 = [];
+import * as firebase from 'firebase';
+import '@firebase/firestore';
 
-const waterTemplate = 
-    {
-    dateConsumed: '',
-};
+import * as ThemeConstants from '../common/Themes';
+
+let firstSync = 0;
 
 const HomeScreen = ({ navigation }) => {
     let totalFood = [];
+    const firebaseRef = firebase.database().ref();
     
-    const [isLoading1, setIsLoading1] = useState(true);
-    const [isLoading2, setIsLoading2] = useState(true);
-    const [isLoading3, setIsLoading3] = useState(true);
-    const [isLoading4, setIsLoading4] = useState(true);
-    const [isLoading5, setIsLoading5] = useState(true);
-    const [isLoading6, setIsLoading6] = useState(true);
-    const [isLoading7, setIsLoading7] = useState(true);
-    const [isLoading8, setIsLoading8] = useState(true);
+    
+    let temp_token = 0;
+    
+    const [token,setToken] = useState(0);
+    let accessCounter = {
+        count: 1,
+        dateAccessed:  moment().format('MMMM DD YYYY')
+    };
 
+    const [isLoadingBreakfast, setIsLoadingBreakfast] = useState(true);
+    const [isLoadingLunch, setIsLoadingLunch] = useState(true);
+    const [isLoadingDinner, setIsLoadingDinner] = useState(true);
+    const [isLoadingSnacks, setIsLoadingSnacks] = useState(true);
+
+    const [isLoadingFood, setIsLoadingFood] = useState(true);
+    const [isLoadingUserData, setIsLoadingUserData] = useState(true);
+    const [isDeleteMagic, setIsDeleteMagic] = useState(true);
+    const [isDeletionData, setIsDeletionData] = useState(true);
+    const [isReinitialized, setIsReinitialized] = useState(true);
+    
     const [userData, setUserData] = useState({
         calories: 0,
         carbs: 0,
@@ -48,10 +60,6 @@ const HomeScreen = ({ navigation }) => {
     const [lunch, setLunch] = useState([]);
     const [dinner, setDinner] = useState([]);
     const [snacks, setSnacks] = useState([]);
-
-    const [water, setWater] = useState([]);
-    const [currentWater, setCurrentWater] = useState([]);
-    const [waterDeleted, setWaterDeleted] = useState();
 
     const [current_totalFoodArray, setCurrentTotalFoodArray] = useState([]);
     const [current_breakfast, setCurrentBreakfast] = useState([]);
@@ -94,11 +102,60 @@ const HomeScreen = ({ navigation }) => {
     };
 
     const deleteMagic = async () => {
+        const x = await AsyncStorage.getItem('userID');
+        //console.log('TOKEN: ' + x);
+        setToken(x);
+        temp_token = x;
         setIsDeleted(Math.random());
-        setWaterDeleted(Math.random());
+        //setWaterDeleted(Math.random());
         //setIsWaterAdded(Math.random());
+        prepareCounter();
         console.log("RE-INITIALIZE");
     };
+
+    const prepareCounter = async () => {
+		try {
+            
+            let data = await AsyncStorage.getItem('home_counter') || 'empty';
+            
+			if(data === 'empty' ){
+				console.log('empty');
+            } else{
+                data = JSON.parse(data);
+                //console.log(data);
+                //same day
+                if(data.dateAccessed === moment().format('MMMM DD YYYY')){
+                    accessCounter.count = data.count + 1;
+                    accessCounter.dateAccessed = data.dateAccessed;
+                }
+                //next day
+                else{
+                    accessCounter.count = 1;
+                    accessCounter.dateAccessed = moment().format('MMMM DD YYYY');
+                }
+
+
+                
+			}
+               
+            
+		} catch (error) {
+			// Error retrieving data
+			console.log(error.message);
+        }    
+        firebaseRef.child('Users').child(temp_token).child('Screen Access Counters').child(moment().format('MMMM DD YYYY')).child('count').set(accessCounter.count);
+    };
+    
+	const saveHomeCounter = async (key,value) => {
+		try {
+			
+			await AsyncStorage.setItem(key,JSON.stringify(value));
+			
+		} catch (error) {
+			// Error retrieving data
+			console.log(error.message);
+		}
+	};
 
     const syncBreakfastData = async (key) => {
 		try {
@@ -179,49 +236,6 @@ const HomeScreen = ({ navigation }) => {
 			console.log(error.message);
         }      
         //console.log("function#4: snacks sync");
-    };
-    const syncWaterDataFromJson = async (key) => {
-        try {
-            let x = 0;
-            const data = await AsyncStorage.getItem(key) || 'empty';
-            
-            if(data === 'empty' || Array.isArray(JSON.parse(data)) == false){
-                setWater([]);
-            } else{
-                x =  JSON.parse(data);
-                setWater(x);
-            }
-            return data;
-		} catch (error) {
-			// Error retrieving data
-			console.log(error.message);
-        }      
-    };
-
-    const syncWaterData2 =  async () => {
-        try{
-            let a = 0;
-            let x_date = [];
-            const water1 = await AsyncStorage.getItem('total_water') || 'empty';
-
-            if(water1 === 'empty'){
-                setCurrentWater(0);
-            } else{
-                a = JSON.parse(water1);
-                for (let i = 0; i < a.length; i++) {
-                    if(a[i].dateConsumed === dateSelected){
-                        //console.log(a[i].count);
-                        x_date.push(a[i]);
-                    }
-                }
-            
-                setCurrentWater(x_date.length);
-            }
-            x_date = [];
-
-        }catch(error){
-            console.log(error.message);
-        }
     };
 
     const syncFoodsData = async () => {
@@ -337,27 +351,14 @@ const HomeScreen = ({ navigation }) => {
         //console.log('FOOD IS ADDED');
 		try {
             await (AsyncStorage.setItem(key, value), syncFoodsData().then( () => {
-                setIsLoading6(false);
+                setIsLoadingFood(false);
             }));
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);
         }
        // console.log("function#7: save data");
-    };
-
-    const saveWaterData = async (key,value) => {
-        try {
-            await (AsyncStorage.setItem(key, value), syncWaterData2().then( () => {
-                setIsLoading7(false);
-            }));
-		} catch (error) {
-			// Error retrieving data
-			console.log(error.message);
-        }
-        //console.log("function#12: SAVE WATER DATA");
-    };
-    
+    };    
 
     const saveDeletionData = async () => {
 		try {
@@ -379,35 +380,33 @@ const HomeScreen = ({ navigation }) => {
     // deleteData('total_lunch');
     // deleteData('total_dinner');
     // deleteData('total_snacks');
-    // deleteData('total_water');
+    // deleteData('home_counter');
     // console.log(totalFoodArray);
     //
     //////////////////////////////////////
 
     useEffect(() => {
         syncBreakfastData('total_breakfast').then( () => {
-            setIsLoading1(false);
+            setIsLoadingBreakfast(false);
         });
         syncLunchData('total_lunch').then( () => {
-            setIsLoading2(false);
-        });;
+            setIsLoadingLunch(false);
+        });
         syncDinnerData('total_dinner').then( () => {
-            setIsLoading3(false);
-        });;
+            setIsLoadingDinner(false);
+        });
         syncSnacksData('total_snacks').then( () => {
-            setIsLoading4(false);
-        });;
-        syncWaterDataFromJson('total_water').then( () => {
-            setIsLoading5(false);
-        });;
+            setIsLoadingSnacks(false);
+        });
+        
 
         //syncFoodsData();
         //syncCurrentUserData();
         getUserData().then( () => {
-            setIsLoading8(false);
+            setIsLoadingUserData(false);
         });
         
-        console.log("useEffect#1 in action: sync data from startup");
+        //console.log("useEffect#1 in action: sync data from startup");
     },[]);
 
     useEffect(() => {
@@ -451,29 +450,13 @@ const HomeScreen = ({ navigation }) => {
         //console.log("useEffect#5 in action: snacks sync ");
     }, [snacks]);
 
-    useEffect( () => {
-        if(water.length == 0){
-            saveWaterData('total_water',JSON.stringify(water));
-        } else{
-            saveWaterData('total_water', JSON.stringify(water));
-        }
-    }, [water]);
-
-    useEffect( () => {
-        if(water.length == 0){
-            saveWaterData('total_water',JSON.stringify(water));
-        } else{
-            saveWaterData('total_water', JSON.stringify(water));
-        }
-    }, [waterDeleted]);
-
     useEffect(() => {
         syncFoodsData().then( () => {
-            setIsLoading6(false);
+            setIsLoadingFood(false);
         });
-        syncWaterData2().then( () => {
+        /*syncWaterData2().then( () => {
             setIsLoading7(false);
-        });;
+        });;*/
     }, [dateSelected]);
 
     useEffect(() => {
@@ -482,21 +465,23 @@ const HomeScreen = ({ navigation }) => {
         //saveData('total_lunch', JSON.stringify(lunch));
         //saveData('total_dinner', JSON.stringify(dinner));
         //saveData('total_snacks', JSON.stringify(snacks));
-        saveDeletionData();
-        syncFoodsData().then( () => {
-            setIsLoading6(false);
+        saveDeletionData().then( () => {
+            setIsDeletionData(false);
         });
+        syncFoodsData().then( () => {
+            setIsLoadingFood(false);
+        });
+        //console.log(firstSync);
+        if(firstSync == 1){
+            //console.log('READY FOR 2nd SYNC');
+            setIsReinitialized(false);
+        };
+        firstSync = 1;
        // console.log("useEffect#7 in action: data is deleted");
     }, [isDeleted]);
 
     useEffect( () => {
-        syncWaterData2().then( () => {
-            setIsLoading7(false);
-        });;
-    },[waterDeleted])
-
-    useEffect( () => {
-        setTimeout(function() { deleteMagic(); }, 2000);
+        setTimeout(function() { deleteMagic().then( () => {setIsDeleteMagic(false)}); }, 2000);
         //setTimeout(function() { syncWaterData2('total_water'); }, 5000);
         //setTimeout(function() { getUserData(); }, 2000);
     }, []);
@@ -505,20 +490,23 @@ const HomeScreen = ({ navigation }) => {
         focusListener = navigation.addListener('didFocus', () => {
 			console.log('Screen Focused');
             getUserData();
-			//console.log('UserProfile Counter: ' + userProfile_counter);	
+            accessCounter.count+=1
+            saveHomeCounter('home_counter', accessCounter);
+            console.log('HomeScreen Counter: ' + accessCounter.count);
+            firebaseRef.child('Users').child(temp_token).child('Screen Access Counters').child(moment().format('MMMM DD YYYY')).child('count').set(accessCounter.count);	
 		});
 	},[]);
 
-    if(isLoading1 && isLoading2 && isLoading3 && isLoading4 && isLoading5 && isLoading6 && isLoading7 && isLoading8){
+    if(isLoadingBreakfast || isLoadingLunch || isLoadingDinner || isLoadingSnacks || isLoadingUserData || isDeleteMagic || isDeletionData || isLoadingFood || isReinitialized){
         return(
-            <View>
-                <Text>LOADING</Text>
+            <View style={{alignItems: 'center', flex: 1, justifyContent: 'center'}}>
+                <ActivityIndicator size={85} color={ThemeConstants.MAIN_BLUE} />
             </View>
         )
     }
 
     return(
-        <ScrollView style={styles.main}>
+        <ScrollView style={styles.main} showsVerticalScrollIndicator={false}>
             <CalendarStrip
                 style={styles.calendar}
                 daySelectionAnimation={{type: 'background', duration: 200, highlightColor: ThemeConstants.MAIN_YELLOW}}
@@ -554,7 +542,9 @@ const HomeScreen = ({ navigation }) => {
                     foodArray: breakfast,
                     setFoodArray: setBreakfast,
                     currentDate: dateMoment,
-                    deleteID: 0
+                    deleteID: 0,
+                    mealTitle: 'Breakfast',
+                    userID: token
                 })}
                 onDeletion={setCurrentBreakfast}
                 onDeletion2={setIsDeleted}
@@ -563,6 +553,7 @@ const HomeScreen = ({ navigation }) => {
                 onDeletion5={breakfast}
                 foodArray1 = {breakfast}
                 setFoodArray1 = {setBreakfast}
+                token = {token}
             />
 
             <IntakeFoodContainer
@@ -572,7 +563,9 @@ const HomeScreen = ({ navigation }) => {
                     foodArray: lunch,
                     setFoodArray: setLunch,
                     currentDate: dateMoment,
-                    deleteID: 0
+                    deleteID: 0,
+                    mealTitle: 'Lunch',
+                    userID: token
                 })}
                 onDeletion={setCurrentLunch}
                 onDeletion2={setIsDeleted}
@@ -581,7 +574,7 @@ const HomeScreen = ({ navigation }) => {
                 onDeletion5={lunch}
                 foodArray1 = {lunch}
                 setFoodArray1 = {setLunch}
-                
+                token = {token}
             />
 
             <IntakeFoodContainer
@@ -591,7 +584,9 @@ const HomeScreen = ({ navigation }) => {
                     foodArray: dinner,
                     setFoodArray: setDinner,
                     currentDate: dateMoment,
-                    deleteID: 0
+                    deleteID: 0,
+                    mealTitle: 'Dinner',
+                    userID: token
                 })}
                 onDeletion={setCurrentDinner}
                 onDeletion2={setIsDeleted}
@@ -600,6 +595,7 @@ const HomeScreen = ({ navigation }) => {
                 onDeletion5={dinner}
                 foodArray1 = {dinner}
                 setFoodArray1 = {setDinner}
+                token = {token}
             />
 
             <IntakeFoodContainer
@@ -609,7 +605,9 @@ const HomeScreen = ({ navigation }) => {
                     foodArray: snacks,
                     setFoodArray: setSnacks,
                     currentDate: dateMoment,
-                    deleteID: 0
+                    deleteID: 0,
+                    mealTitle: 'Snacks',
+                    userID: token
                 })}
                 onDeletion={setCurrentSnacks}
                 onDeletion2={setIsDeleted}
@@ -618,15 +616,7 @@ const HomeScreen = ({ navigation }) => {
                 onDeletion5={snacks}
                 foodArray1 = {snacks}
                 setFoodArray1 = {setSnacks}
-            />
-            
-            <IntakeWaterContainer
-                water = {water}
-                setWater = {setWater}
-                currentDate = {dateMoment}
-                waterTemplate = {waterTemplate}
-                waterCount = {currentWater}
-                setWaterDeleted = {setWaterDeleted}
+                token = {token}
             />
         </ScrollView>
     );
@@ -634,9 +624,9 @@ const HomeScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     calendar: {
-        height:100,
-        paddingTop: 5,
-        paddingBottom: 5
+        height: 100,
+        paddingTop: 15,
+        paddingHorizontal: 15
     },
     main: {
         backgroundColor: ThemeConstants.MAIN_WHITE,

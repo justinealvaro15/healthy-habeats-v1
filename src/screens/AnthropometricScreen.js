@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { AsyncStorage, Keyboard, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, ToastAndroid, View } from 'react-native';
+import { AsyncStorage, Keyboard, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, ToastAndroid, TouchableHighlight, View } from 'react-native';
 import Slider from "react-native-slider";
 import { withNavigation } from 'react-navigation';
-// import Snackbar from 'react-native-snackbar';
 
 import * as ThemeConstants from '../common/Themes';
 import * as AnthroText from '../common/AnthropometricText';
-import { TouchableHighlight } from 'react-native-gesture-handler';
 
 const AnthropometricScreen = ({ navigation }) => {
     const [weight, setWeight] = useState(0);
@@ -167,7 +165,10 @@ const AnthropometricScreen = ({ navigation }) => {
         computeBMI();
         setDBW((height - 100) - ((height - 100) * 0.1));
         saveData('DBW', JSON.stringify((height - 100) - ((height - 100) * 0.1)));
-        navigation.navigate('UserProfile');
+        
+        // IF NEW USER, GO TO HOME. ELSE, RETURN TO USER PROFILE
+        navigation.navigate('Home');
+
         ToastAndroid.show('Saved successfully!', ToastAndroid.SHORT);
     }
 

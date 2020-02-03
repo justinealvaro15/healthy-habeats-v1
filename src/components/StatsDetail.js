@@ -1,17 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Bar } from 'react-native-progress';
 
 import * as ThemeConstants from '../common/Themes';
 
+const lowIntakeThreshold = 0.75;
+const highIntakeThreshold = 1.0;
+
 const StatsDetail = ({ title, unit, valueTotal, valueCurrent }) => {
     const progress = valueCurrent/valueTotal ? valueCurrent/valueTotal : null;
+
+    const [color, setColor] = useState(ThemeConstants.MAIN_YELLOW);
+
+    useEffect(() => {
+        if(progress <= lowIntakeThreshold){
+            setColor(ThemeConstants.MAIN_YELLOW);
+        } else if (progress <= highIntakeThreshold){
+            setColor(ThemeConstants.MAIN_GREEN);
+        } else{
+            setColor(ThemeConstants.MAIN_RED);
+        }
+    })
 
     return(
         <View style={styles.details}>
             <View style={styles.bar}>
                 <Bar
-                    color={ThemeConstants.MAIN_BLUE}
+                    color={color}
                     progress={progress}
                     width={100}
                 />
