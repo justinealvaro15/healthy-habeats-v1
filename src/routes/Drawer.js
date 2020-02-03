@@ -5,7 +5,6 @@ import { Image, ScrollView, StyleSheet, View } from 'react-native';
 import HomeStack from './HomeStack';
 import UserProfileStack from './UserProfileStack';
 import AboutStack from './AboutStack';
-import TestScreen from '../screens/TestScreen';
 
 import { Feather } from '@expo/vector-icons';
 import { MAIN_BLUE, MAIN_GREEN, MAIN_WHITE } from '../common/Themes';
@@ -44,13 +43,6 @@ const RootDrawerNavigator = createDrawerNavigator({
         screen: TutorialStack,
         navigationOptions: {
             drawerLabel: <Hidden/>
-        }
-    },
-    Test: {
-        screen: TestScreen,
-        navigationOptions: {
-            drawerLabel: 'Test',
-            drawerIcon: ({tintColor}) => <Feather name='alert-triangle' size={20} color={tintColor}/>
         }
     }
 }, {

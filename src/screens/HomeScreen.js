@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ActivityIndicator, AsyncStorage, ScrollView, StyleSheet, View, Text } from 'react-native';
+import { ActivityIndicator, Alert ,AsyncStorage, ScrollView, StyleSheet, View, Text } from 'react-native';
 
 import CalendarStrip from 'react-native-calendar-strip';
 import moment from 'moment';
@@ -7,14 +7,11 @@ import moment from 'moment';
 import IntakeFoodContainer from '../components/IntakeFoodContainer';
 import StatsContainer from '../components/StatsContainer';
 
-import {Notifications} from 'expo';
-import * as Permissions from 'expo-permissions';
-import Constants from 'expo-constants';
-
 import * as firebase from 'firebase';
 import '@firebase/firestore';
 
 import * as ThemeConstants from '../common/Themes';
+import * as PopupText from '../common/NotificationsText';
 
 let firstSync = 0;
 
@@ -71,6 +68,7 @@ const HomeScreen = ({ navigation }) => {
     const [dateMoment, setDateMoment] = useState(moment());
 
     const [isDeleted, setIsDeleted] = useState();
+    const [isModified, setIsModified] = useState(0);
 
     const deleteData = async (key) => {
         try {
@@ -132,13 +130,8 @@ const HomeScreen = ({ navigation }) => {
                 else{
                     accessCounter.count = 1;
                     accessCounter.dateAccessed = moment().format('MMMM DD YYYY');
-                }
-
-
-                
+                }    
 			}
-               
-            
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);
@@ -155,7 +148,55 @@ const HomeScreen = ({ navigation }) => {
 			// Error retrieving data
 			console.log(error.message);
 		}
-	};
+    };
+    
+    const showPopup = (alert_title, alert_message) => {
+        Alert.alert(
+            alert_title,
+            alert_message,
+            [
+                {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ],
+            {cancelable: false},
+        );
+
+    };
+
+    const initializePopup = (calories, carbs, proteins, fats) => {
+        if(isModified != 0){
+            console.log('HELLOPOPUP');
+            console.log(fats);
+            console.log(userData.fats);
+            if(dateSelected === (moment().format('MMMM DD YYYY'))){
+                if(calories > userData.calories && calories < (userData.calories + userData.calories * 0.2)){
+                    showPopup(PopupText.popup_complete_calories1.title, PopupText.popup_complete_calories1.message);
+                };
+                if(calories > userData.calories && calories > (userData.calories + userData.calories * 0.2)){
+                    showPopup(PopupText.popup_complete_calories2.title, PopupText.popup_complete_calories2.message);
+                };
+                if(carbs > userData.carbs && carbs < (userData.carbs + userData.carbs * 0.2)){
+                    showPopup(PopupText.popup_complete_carbs1.title, PopupText.popup_complete_carbs1.message);
+                };
+                if(carbs > userData.carbs && carbs > (userData.carbs + userData.carbs * 0.2)){
+                    showPopup(PopupText.popup_complete_carbs2.title, PopupText.popup_complete_carbs2.message);
+                };
+                if(proteins > userData.proteins && proteins < (userData.proteins + userData.proteins * 0.2)){
+                    showPopup(PopupText.popup_complete_proteins1.title, PopupText.popup_complete_proteins1.message);
+                };
+                if(proteins > userData.proteins && proteins > (userData.proteins + userData.proteins * 0.2)){
+                    showPopup(PopupText.popup_complete_proteins2.title, PopupText.popup_complete_proteins2.message);
+                };
+                if(fats > userData.fats && fats < (userData.fats + userData.fats * 0.2)){
+                    console.log("FATFATFAT");
+                    showPopup(PopupText.popup_complete_fats1.title, PopupText.popup_complete_fats1.message);
+                };
+                if(fats > userData.fats && fats > (userData.fats + userData.fats * 0.2)){
+                    showPopup(PopupText.popup_complete_fats2.title, PopupText.popup_complete_fats2.message);
+                };
+            };
+        }; 
+    };
+
 
     const syncBreakfastData = async (key) => {
 		try {
@@ -328,9 +369,14 @@ const HomeScreen = ({ navigation }) => {
             saveCurrentUserData('current_carbs', JSON.stringify(carbs));
             saveCurrentUserData('current_proteins', JSON.stringify(proteins));
             saveCurrentUserData('current_fats', JSON.stringify(fats));
-            
-           
             setTotalFoodArray(totalFood);            
+            //initializePopup(current.current_calories, current.current_carbs, current.current_proteins, current.current_fats);
+            if(isModified == 1){
+                initializePopup(calories, carbs, proteins, fats);
+                setIsModified(0);
+            };
+            
+
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);
@@ -495,7 +541,11 @@ const HomeScreen = ({ navigation }) => {
             console.log('HomeScreen Counter: ' + accessCounter.count);
             firebaseRef.child('Users').child(temp_token).child('Screen Access Counters').child(moment().format('MMMM DD YYYY')).child('count').set(accessCounter.count);	
 		});
-	},[]);
+    },[]);
+    
+    /*useEffect( () => {
+        
+    }, [isModified]);*/
 
     if(isLoadingBreakfast || isLoadingLunch || isLoadingDinner || isLoadingSnacks || isLoadingUserData || isDeleteMagic || isDeletionData || isLoadingFood || isReinitialized){
         return(
@@ -522,7 +572,6 @@ const HomeScreen = ({ navigation }) => {
                     var currentDateSelected = moment(onDateSelected).format('MMMM DD YYYY');
                     setDateSelected(currentDateSelected);
                     setDateMoment(moment(onDateSelected));
-                    //console.log(moment('2019-11-30T13:51:45.046Z').format('MMMM DD YYYY')); // FOR DEV PURPOSES ONLY
                 }}
             />
             
@@ -544,7 +593,8 @@ const HomeScreen = ({ navigation }) => {
                     currentDate: dateMoment,
                     deleteID: 0,
                     mealTitle: 'Breakfast',
-                    userID: token
+                    userID: token,
+                    setIsModified: setIsModified
                 })}
                 onDeletion={setCurrentBreakfast}
                 onDeletion2={setIsDeleted}
@@ -554,6 +604,7 @@ const HomeScreen = ({ navigation }) => {
                 foodArray1 = {breakfast}
                 setFoodArray1 = {setBreakfast}
                 token = {token}
+                setIsModified = {setIsModified}
             />
 
             <IntakeFoodContainer
@@ -565,7 +616,8 @@ const HomeScreen = ({ navigation }) => {
                     currentDate: dateMoment,
                     deleteID: 0,
                     mealTitle: 'Lunch',
-                    userID: token
+                    userID: token,
+                    setIsModified: setIsModified
                 })}
                 onDeletion={setCurrentLunch}
                 onDeletion2={setIsDeleted}
@@ -575,6 +627,7 @@ const HomeScreen = ({ navigation }) => {
                 foodArray1 = {lunch}
                 setFoodArray1 = {setLunch}
                 token = {token}
+                setIsModified = {setIsModified}
             />
 
             <IntakeFoodContainer
@@ -586,7 +639,8 @@ const HomeScreen = ({ navigation }) => {
                     currentDate: dateMoment,
                     deleteID: 0,
                     mealTitle: 'Dinner',
-                    userID: token
+                    userID: token,
+                    setIsModified: setIsModified
                 })}
                 onDeletion={setCurrentDinner}
                 onDeletion2={setIsDeleted}
@@ -596,6 +650,7 @@ const HomeScreen = ({ navigation }) => {
                 foodArray1 = {dinner}
                 setFoodArray1 = {setDinner}
                 token = {token}
+                setIsModified = {setIsModified}
             />
 
             <IntakeFoodContainer
@@ -607,7 +662,8 @@ const HomeScreen = ({ navigation }) => {
                     currentDate: dateMoment,
                     deleteID: 0,
                     mealTitle: 'Snacks',
-                    userID: token
+                    userID: token,
+                    setIsModified: setIsModified
                 })}
                 onDeletion={setCurrentSnacks}
                 onDeletion2={setIsDeleted}
@@ -617,6 +673,7 @@ const HomeScreen = ({ navigation }) => {
                 foodArray1 = {snacks}
                 setFoodArray1 = {setSnacks}
                 token = {token}
+                setIsModified = {setIsModified}
             />
         </ScrollView>
     );
