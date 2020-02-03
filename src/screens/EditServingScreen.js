@@ -24,6 +24,7 @@ const EditServingScreen = ({ navigation }) => {
     let action = navigation.getParam('action');
     let mealTitle = navigation.getParam('mealTitle');
     let userID = navigation.getParam('userID');
+    let setIsModified = navigation.getParam('setIsModified');
 
     const [serving, setServing] = useState(foodItem.serving);
     const [pieces, setPieces] = useState(foodItem.pieces);
@@ -85,8 +86,7 @@ const EditServingScreen = ({ navigation }) => {
 
     const render_mid = () => {
         return (
-            <ScrollView
-                showsVerticalScrollIndicator={false}
+            <View
                 style={{ padding: ThemeConstants.CONTAINER_MARGIN*1.5 }}
             >
                 <Text style={[styles.text_regular, styles.divider]}>Total</Text>
@@ -115,7 +115,7 @@ const EditServingScreen = ({ navigation }) => {
                     <Text>Weight:</Text>
                     <Text>{Math.round(foodItem.grams*serving*100)/100} grams</Text>
                 </View>
-            </ScrollView>
+            </View>
         );
     };
 
@@ -129,6 +129,7 @@ const EditServingScreen = ({ navigation }) => {
                     foodItem.pieces = parseFloat(pieces);
                     if(action === 'add'){
                         setFoodArray([...foodArray, foodItem]);
+                        setIsModified(Math.floor(Math.random() * 99999));
                         temp = foodArray;
                         temp.push(foodItem);
                         actionSubmit = 'Added';
@@ -147,6 +148,7 @@ const EditServingScreen = ({ navigation }) => {
                         }                                
                         foodArray.splice(counter,1);
                         setFoodArray([...foodArray, foodItem]);
+                        setIsModified(Math.floor(Math.random() * 99999));
                         temp = foodArray;
                         temp.push(foodItem);
                     }
@@ -163,13 +165,17 @@ const EditServingScreen = ({ navigation }) => {
     };
 
     return(
-        <View style={{ flex: 1, justifyContent: 'space-between' }}>
-            <View>
-                {render_top()}
-                {render_mid()}
+        <ScrollView
+            showsVerticalScrollIndicator={false}
+        >
+            <View style={{ flex: 1, justifyContent: 'space-between' }}>
+                <View>
+                    {render_top()}
+                    {render_mid()}
+                </View>
+                {render_bot()}
             </View>
-            {render_bot()}
-        </View>
+        </ScrollView>
     );
 };
 

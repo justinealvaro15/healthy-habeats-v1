@@ -11,7 +11,7 @@ import '@firebase/firestore';
 // when pressed => FOODARRAY[INDEX] get the food object
 // after deletion setFoodArray to
 
-const IntakeFoodContainer = ({ food, mealTitle, navigateToSearchFood, onDeletion, onDeletion2, onDeletion3, onDeletion4, onDeletion5, foodArray1, setFoodArray1, token ,navigation }) => {
+const IntakeFoodContainer = ({ food, mealTitle, navigateToSearchFood, onDeletion, onDeletion2, onDeletion3, onDeletion4, onDeletion5, foodArray1, setFoodArray1, token, setIsModified, navigation }) => {
     const firebaseRef = firebase.database().ref();
     const meal = onDeletion5;
     const foodArray = food;
@@ -60,7 +60,8 @@ const IntakeFoodContainer = ({ food, mealTitle, navigateToSearchFood, onDeletion
                                         foodItem: item,
                                         action: 'edit',
                                         mealTitle : mealTitle,
-                                        userID: token
+                                        userID: token,
+                                        setIsModified: setIsModified
                                     });
                                 }
 

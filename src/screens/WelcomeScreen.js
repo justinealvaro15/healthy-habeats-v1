@@ -125,16 +125,14 @@ export default class WelcomeScreen extends React.Component {
 		let time3 = 0;
 		let time4 = 0;
 		let time5 = 0;
-		let time6 = 0;
-		let time7 = 0;
-
-		let temp_date1 = new Date();
-		let temp_date2 = new Date();
-		let temp_date3 = new Date();
-
-		temp_date1.setHours(14,30);
-		temp_date2.setHours(17,30);
-		temp_date3.setHours(20,30);
+		//let time6 = 0;
+		//let time7 = 0;
+		//let temp_date1 = new Date();
+		//let temp_date2 = new Date();
+		//let temp_date3 = new Date();
+		//temp_date1.setHours(14,30);
+		//temp_date2.setHours(17,30);
+		//temp_date3.setHours(20,30);
 
 		//notif#1 check: current_hour > 7am, set notif for 7am tommorow 
 		if(hour >= 7){
@@ -158,36 +156,29 @@ export default class WelcomeScreen extends React.Component {
 		}else{
 			time4 = new Date(year, month, current_date, 10); //10am
 		};
-		if(currentDate > temp_date1){
+		if(hour >= 16){
+			time5 = new Date(year, month, tomorrow_date, 16); //4pm
+		}else{
+			time5 = new Date(year, month, current_date, 16); //4pm
+		};
+		/*if(currentDate > temp_date1){
 			time5 = new Date(year, month, tomorrow_date, 14, 30); //2:30pm
 		}else{
 			time5 = new Date(year, month, current_date, 14, 30); //2:30pm
-		};
-		if(currentDate > temp_date2){
-			time6 = new Date(year, month, tomorrow_date, 17, 30); //5:30pm
-		}else{
-			time6 = new Date(year, month, current_date, 17, 30); //5:30pm
-		};
-		if(currentDate > temp_date3){
-			time7 = new Date(year, month, tomorrow_date, 20, 30); //8:30pm
-		}else{
-			time7 = new Date(year, month, current_date, 20, 30); //8:30pm
-		};
+		};*/
 		time1 = Date.parse(time1);
 		time2 = Date.parse(time2);
 		time3 = Date.parse(time3);
 		time4 = Date.parse(time4);
 		time5 = Date.parse(time5);
-		time6 = Date.parse(time6);
-		time7 = Date.parse(time7);
 
 		const schedulingOptions1 = { time: time1, repeat: 'day' };
 		const schedulingOptions2 = { time: time2, repeat: 'day' };
 		const schedulingOptions3 = { time: time3, repeat: 'day' };
 		const schedulingOptions4 = { time: time4, repeat: 'day' };
 		const schedulingOptions5 = { time: time5, repeat: 'day' };
-		const schedulingOptions6 = { time: time6, repeat: 'day' };
-		const schedulingOptions7 = { time: time7, repeat: 'day' };
+		//const schedulingOptions6 = { time: time6, repeat: 'day' };
+		//const schedulingOptions7 = { time: time7, repeat: 'day' };
 		//B,L,D notifs
 		Notifications.scheduleLocalNotificationAsync(NotificationsText.scheduledNotification1, schedulingOptions1);
 		Notifications.scheduleLocalNotificationAsync(NotificationsText.scheduledNotification2, schedulingOptions2);
@@ -209,8 +200,8 @@ export default class WelcomeScreen extends React.Component {
 
 		Notifications.scheduleLocalNotificationAsync(winner_array[winner], schedulingOptions4);
 		Notifications.scheduleLocalNotificationAsync(winner_array[winner2], schedulingOptions5);
-		Notifications.scheduleLocalNotificationAsync(winner_array[winner], schedulingOptions6);
-		Notifications.scheduleLocalNotificationAsync(winner_array[winner2], schedulingOptions7);
+		//Notifications.scheduleLocalNotificationAsync(winner_array[winner], schedulingOptions6);
+		//Notifications.scheduleLocalNotificationAsync(winner_array[winner2], schedulingOptions7);
 		console.log('Notifications Scheduled successfully!');
 		setTimeout(() => {
 			
