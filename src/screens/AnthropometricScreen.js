@@ -41,10 +41,6 @@ const AnthropometricScreen = ({ navigation }) => {
         setWeight(parseInt(JSON.parse(data1)));
         setHeight(parseInt(JSON.parse(data2)));
         setActivityLevel(parseInt(JSON.parse(data3)));
-
-        //console.log(data1);
-        //console.log(data2);
-        //console.log(data3);
     };
 
     const computeBMI = () => {
