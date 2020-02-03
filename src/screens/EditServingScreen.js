@@ -148,7 +148,7 @@ const EditServingScreen = ({ navigation }) => {
                         }                                
                         foodArray.splice(counter,1);
                         setFoodArray([...foodArray, foodItem]);
-                        setIsModified(Math.floor(Math.random() * 99999));
+                        setIsModified(1);
                         temp = foodArray;
                         temp.push(foodItem);
                     }

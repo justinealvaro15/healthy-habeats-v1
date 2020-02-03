@@ -371,7 +371,10 @@ const HomeScreen = ({ navigation }) => {
             saveCurrentUserData('current_fats', JSON.stringify(fats));
             setTotalFoodArray(totalFood);            
             //initializePopup(current.current_calories, current.current_carbs, current.current_proteins, current.current_fats);
-            initializePopup(calories, carbs, proteins, fats);
+            if(isModified == 1){
+                initializePopup(calories, carbs, proteins, fats);
+                setIsModified(0);
+            };
             
 
 		} catch (error) {
