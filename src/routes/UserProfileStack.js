@@ -22,7 +22,8 @@ const screens = {
     Anthropometric: {
         screen: AnthropometricScreen,
         navigationOptions: {
-            title: 'Personal Details'
+            title: 'Personal Details',
+            headerLeft: null
         }
     }
 };
