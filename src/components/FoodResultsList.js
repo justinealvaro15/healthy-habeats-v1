@@ -88,11 +88,10 @@ const FoodResultsList = ({ foodArray, setFoodArray, navigation, mealTitle ,resul
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        marginBottom: ThemeConstants.CONTAINER_MARGIN,
         marginHorizontal: ThemeConstants.CONTAINER_MARGIN*2
     },
     food: {
-        // borderBottomColor: ThemeConstants.BORDER_GRAY,
-        // borderBottomWidth: 1,
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',

@@ -204,7 +204,9 @@ const styles = StyleSheet.create({
     button_save: {
         backgroundColor: ThemeConstants.MAIN_YELLOW,
         borderRadius: ThemeConstants.CONTAINER_RADIUS,
-        margin: ThemeConstants.CONTAINER_MARGIN*1.5
+        marginBottom: ThemeConstants.CONTAINER_MARGIN*1,
+        marginHorizontal: ThemeConstants.CONTAINER_MARGIN*1.5,
+        marginTop: ThemeConstants.CONTAINER_MARGIN*1.5
     },
     container_details: {
         flexDirection: 'row',
