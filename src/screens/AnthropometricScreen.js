@@ -7,7 +7,7 @@ import * as ThemeConstants from '../common/Themes';
 import * as AnthroText from '../common/AnthropometricText';
 
 const AnthropometricScreen = ({ navigation }) => {
-    const [tokenState, setTokenState] = useState('firstTime')
+    const [tokenState, setTokenState] = useState('firstTime');
     const [weight, setWeight] = useState(0);
     const [height, setHeight] = useState(0);
     const [DBW, setDBW] = useState(0);
@@ -42,16 +42,12 @@ const AnthropometricScreen = ({ navigation }) => {
         setWeight(parseInt(JSON.parse(data1)));
         setHeight(parseInt(JSON.parse(data2)));
         setActivityLevel(parseInt(JSON.parse(data3)));
-
-        //console.log(data1);
-        //console.log(data2);
-        //console.log(data3);
     };
 
     const getUserToken = async () => {
 		try {
-			const userToken = await AsyncStorage.getItem('userToken') || 'firstTime'
-			setTokenState(userToken);
+			const userToken = await AsyncStorage.getItem('userToken') || 'firstTime';
+            setTokenState(userToken);
 
 			return userToken;
 		} catch (error) {
@@ -162,6 +158,7 @@ const AnthropometricScreen = ({ navigation }) => {
 
     useEffect( () => {
         getUserData();
+        getUserToken();
     },[]);
 
     const saveData = async (key, value) => {
@@ -173,20 +170,22 @@ const AnthropometricScreen = ({ navigation }) => {
 		}
 	};
     
-
     const submit = async () => {
         Keyboard.dismiss();
         computeBMI();
         setDBW((height - 100) - ((height - 100) * 0.1));
         saveData('DBW', JSON.stringify((height - 100) - ((height - 100) * 0.1)));
-        
-        // IF NEW USER, (SAVE AS TOKEN AS OLD USER) AND GO TO HOME. ELSE, RETURN TO USER PROFILE
-        getUserToken();// pangkuha ng token then set => tokenState 
-        saveData('userToken','oldUser');
-        navigation.navigate('Home');
+
+        if(tokenState === 'firstTime'){
+            saveData('userToken', 'oldUser');
+            navigation.replace('UserProfile');
+            navigation.navigate('Home');
+        } else {
+            navigation.navigate('UserProfile');
+        }
 
         ToastAndroid.show('Saved successfully!', ToastAndroid.SHORT);
-    }
+    };
 
     return (
         <KeyboardAvoidingView 

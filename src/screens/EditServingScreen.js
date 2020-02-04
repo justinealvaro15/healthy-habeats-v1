@@ -35,12 +35,14 @@ const EditServingScreen = ({ navigation }) => {
         console.log(mealTitle);
         console.log('User ID: ' + userID);
     }, []);
+
     const render_top = () => {
         return(
             <View style={styles.top}>
                 <View>
                     <Text style={styles.text_header}>{foodItem.foodName}</Text>
                     <Text style={styles.text_servingsize}>{foodItem.grams} grams per serving</Text>
+                    { pieces > 0 ? render_pieces() : null }
                 </View>
 
                 <View style={{ alignItems: 'center', paddingLeft: ThemeConstants.CONTAINER_MARGIN }}>
@@ -61,7 +63,7 @@ const EditServingScreen = ({ navigation }) => {
                     <View style={styles.container_serving}>
                         <Text style={styles.text_regular}>{serving.toFixed(1)}</Text>
                         <Text style={{ color: ThemeConstants.FONT_GRAY, fontSize: ThemeConstants.FONT_SIZE_SMALL-2 }}>
-                            { serving<= 1 ? 'serving' : 'servings' }
+                            { serving <= 1 ? 'serving' : 'servings' }
                         </Text>
                     </View>
 
@@ -86,10 +88,10 @@ const EditServingScreen = ({ navigation }) => {
 
     const render_mid = () => {
         return (
-            <View
-                style={{ padding: ThemeConstants.CONTAINER_MARGIN*1.5 }}
-            >
+            <View style={{ padding: ThemeConstants.CONTAINER_MARGIN*1.5 }}>
                 <Text style={[styles.text_regular, styles.divider]}>Total</Text>
+
+                { pieces > 0 ? render_total_pieces() : null }
 
                 <View style={styles.container_details}> 
                     <Text>Calories:</Text>
@@ -164,17 +166,34 @@ const EditServingScreen = ({ navigation }) => {
         );
     };
 
+    const render_pieces = () => {
+        return <Text style={styles.text_servingsize}>{foodItem.pieces} {foodItem.pieces <= 1 ? 'piece' : 'pieces'} per serving</Text>;
+    };
+
+    const render_total_pieces = () => {
+        return (
+            <View style={styles.container_details}> 
+                <Text>Pieces:</Text>
+                <Text>{Math.round(foodItem.pieces*serving*100)/100} {pieces <= 1 ? 'piece' : 'pieces'}</Text>
+            </View>
+        );
+    };
+
     return(
         <ScrollView
             showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between', flexDirection: 'column' }}
         >
-            <View style={{ flex: 1, justifyContent: 'space-between' }}>
-                <View>
+            {/* <View style={{ flexGrow: 1, justifyContent: 'space-between', flexDirection: 'column' }}> */}
+                <View style={{ justifyContent: 'flex-start' }}>
                     {render_top()}
                     {render_mid()}
                 </View>
-                {render_bot()}
-            </View>
+                
+                <View style={{ justifyContent: 'flex-end' }}>
+                    {render_bot()}
+                </View>
+            {/* </View> */}
         </ScrollView>
     );
 };

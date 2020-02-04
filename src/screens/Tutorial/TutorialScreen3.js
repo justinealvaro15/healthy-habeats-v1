@@ -17,7 +17,7 @@ const TutorialScreen3 = ({ navigation }) => {
             </View>
 
             <View>
-                <Text style={styles.text_header}>SEARCH FOD</Text>
+                <Text style={styles.text_header}>SEARCH FOR</Text>
                 <Text style={styles.text_header}>FOOD ITEMS</Text>
                 <View style={styles.mid}>
                     <TutorialSearch/>
