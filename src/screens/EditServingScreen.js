@@ -184,16 +184,14 @@ const EditServingScreen = ({ navigation }) => {
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between', flexDirection: 'column' }}
         >
-            {/* <View style={{ flexGrow: 1, justifyContent: 'space-between', flexDirection: 'column' }}> */}
-                <View style={{ justifyContent: 'flex-start' }}>
-                    {render_top()}
-                    {render_mid()}
-                </View>
-                
-                <View style={{ justifyContent: 'flex-end' }}>
-                    {render_bot()}
-                </View>
-            {/* </View> */}
+            <View style={{ justifyContent: 'flex-start' }}>
+                {render_top()}
+                {render_mid()}
+            </View>
+            
+            <View style={{ justifyContent: 'flex-end' }}>
+                {render_bot()}
+            </View>
         </ScrollView>
     );
 };
@@ -206,7 +204,9 @@ const styles = StyleSheet.create({
     button_save: {
         backgroundColor: ThemeConstants.MAIN_YELLOW,
         borderRadius: ThemeConstants.CONTAINER_RADIUS,
-        margin: ThemeConstants.CONTAINER_MARGIN*1.5
+        marginBottom: ThemeConstants.CONTAINER_MARGIN*1,
+        marginHorizontal: ThemeConstants.CONTAINER_MARGIN*1.5,
+        marginTop: ThemeConstants.CONTAINER_MARGIN*1.5
     },
     container_details: {
         flexDirection: 'row',

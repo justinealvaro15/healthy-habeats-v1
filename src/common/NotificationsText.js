@@ -59,7 +59,7 @@ export const popup_complete_calories1 = {
 };
 export const popup_complete_calories2 = {
 	title: 'Calorie Intake',
-	message: 'Uh-oh! You already exceeded your daily calorie requirement. Balance your food intakes by choosing healthier food options'
+	message: 'Uh-oh! You already exceeded your daily calorie requirement. Balance your food intakes by choosing healthier food options.'
 };
 export const popup_complete_carbs1 = {
 	title: 'Carbs Intake',
