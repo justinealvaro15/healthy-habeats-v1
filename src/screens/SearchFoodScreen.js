@@ -10,7 +10,7 @@ import * as foodData from '../../assets/foodDatabase.json';
 
 // Store food item data
 const data = [];
-for (let i = 0; i < 10; i++) {
+for (let i = 0; i < 129; i++) {
     data.push(foodData[i]);
 }
 

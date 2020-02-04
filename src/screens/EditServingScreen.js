@@ -32,8 +32,8 @@ const EditServingScreen = ({ navigation }) => {
     let actionSubmit = '';
 
     useEffect( () => {
-        console.log(mealTitle);
-        console.log('User ID: ' + userID);
+        //console.log(mealTitle);
+        //console.log('User ID: ' + userID);
     }, []);
 
     const render_top = () => {
@@ -131,7 +131,7 @@ const EditServingScreen = ({ navigation }) => {
                     foodItem.pieces = parseFloat(pieces);
                     if(action === 'add'){
                         setFoodArray([...foodArray, foodItem]);
-                        setIsModified(Math.floor(Math.random() * 99999));
+                        setIsModified(1);
                         temp = foodArray;
                         temp.push(foodItem);
                         actionSubmit = 'Added';
