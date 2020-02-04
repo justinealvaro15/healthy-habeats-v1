@@ -137,35 +137,35 @@ export default class WelcomeScreen extends React.Component {
 		//notif#1 check: current_hour > 7am, set notif for 7am tommorow 
 		if(hour >= 7){
 			time1 = new Date(year, month, tomorrow_date, 7); //7am tomorrow
-		}else{
+		} else{
 			time1 = new Date(year, month, current_date, 7); //7am today
 		};
+
 		if(hour >= 12){
 			time2 = new Date(year, month, tomorrow_date, 12); //12nn
-		}else{
+		} else{
 			time2 = new Date(year, month, current_date, 12); //12nn
 		};
+
 		if(hour >= 19){
 			time3 = new Date(year, month, tomorrow_date, 19); //7pm
-		}else{
+		} else{
 			time3 = new Date(year, month, current_date, 19); //7pm
 		};
+
 		//tips/notifs
 		if(hour >= 10){
 			time4 = new Date(year, month, tomorrow_date, 10); //10am
-		}else{
+		} else{
 			time4 = new Date(year, month, current_date, 10); //10am
 		};
+
 		if(hour >= 16){
 			time5 = new Date(year, month, tomorrow_date, 16); //4pm
-		}else{
+		} else{
 			time5 = new Date(year, month, current_date, 16); //4pm
 		};
-		/*if(currentDate > temp_date1){
-			time5 = new Date(year, month, tomorrow_date, 14, 30); //2:30pm
-		}else{
-			time5 = new Date(year, month, current_date, 14, 30); //2:30pm
-		};*/
+
 		time1 = Date.parse(time1);
 		time2 = Date.parse(time2);
 		time3 = Date.parse(time3);
@@ -177,8 +177,7 @@ export default class WelcomeScreen extends React.Component {
 		const schedulingOptions3 = { time: time3, repeat: 'day' };
 		const schedulingOptions4 = { time: time4, repeat: 'day' };
 		const schedulingOptions5 = { time: time5, repeat: 'day' };
-		//const schedulingOptions6 = { time: time6, repeat: 'day' };
-		//const schedulingOptions7 = { time: time7, repeat: 'day' };
+
 		//B,L,D notifs
 		Notifications.scheduleLocalNotificationAsync(NotificationsText.scheduledNotification1, schedulingOptions1);
 		Notifications.scheduleLocalNotificationAsync(NotificationsText.scheduledNotification2, schedulingOptions2);
@@ -200,8 +199,6 @@ export default class WelcomeScreen extends React.Component {
 
 		Notifications.scheduleLocalNotificationAsync(winner_array[winner], schedulingOptions4);
 		Notifications.scheduleLocalNotificationAsync(winner_array[winner2], schedulingOptions5);
-		//Notifications.scheduleLocalNotificationAsync(winner_array[winner], schedulingOptions6);
-		//Notifications.scheduleLocalNotificationAsync(winner_array[winner2], schedulingOptions7);
 		console.log('Notifications Scheduled successfully!');
 		setTimeout(() => {
 			
@@ -210,9 +207,7 @@ export default class WelcomeScreen extends React.Component {
 				this.getUserToken()
 			// )
 			.then((state) => {
-				//Notifications.presentLocalNotificationAsync(localNotification);
 				if(this.state.userToken === 'firstTime'){
-					//this.saveUserToken('oldUser');
 					this.props.navigation.replace('Home');
 					this.props.navigation.navigate('Tutorial1');
 				} else {
