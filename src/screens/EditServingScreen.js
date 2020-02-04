@@ -184,16 +184,14 @@ const EditServingScreen = ({ navigation }) => {
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between', flexDirection: 'column' }}
         >
-            {/* <View style={{ flexGrow: 1, justifyContent: 'space-between', flexDirection: 'column' }}> */}
-                <View style={{ justifyContent: 'flex-start' }}>
-                    {render_top()}
-                    {render_mid()}
-                </View>
-                
-                <View style={{ justifyContent: 'flex-end' }}>
-                    {render_bot()}
-                </View>
-            {/* </View> */}
+            <View style={{ justifyContent: 'flex-start' }}>
+                {render_top()}
+                {render_mid()}
+            </View>
+            
+            <View style={{ justifyContent: 'flex-end' }}>
+                {render_bot()}
+            </View>
         </ScrollView>
     );
 };
