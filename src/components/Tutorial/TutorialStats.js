@@ -8,8 +8,8 @@ const StatsContainer = () => {
     return(
         <View style={styles.container}>
             <View style={styles.bar}>
-                <StatsDetail style={styles.details} title='Energy' unit='kcal' valueTotal={2350} valueCurrent={2375}/>
-                <StatsDetail style={styles.details} title='Carbs' unit='g' valueTotal={380} valueCurrent={60}/>
+                <StatsDetail style={styles.details} title='Energy' unit='kcal' valueTotal={2375} valueCurrent={500}/>
+                <StatsDetail style={styles.details} title='Carbs' unit='g' valueTotal={380} valueCurrent={375}/>
             </View>
 
             <View style={styles.bar}>
