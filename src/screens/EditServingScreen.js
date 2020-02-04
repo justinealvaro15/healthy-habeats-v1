@@ -180,14 +180,20 @@ const EditServingScreen = ({ navigation }) => {
     };
 
     return(
-        <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={{ flex: 1, justifyContent: 'space-between' }}>
-                <View>
+        <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between', flexDirection: 'column' }}
+        >
+            {/* <View style={{ flexGrow: 1, justifyContent: 'space-between', flexDirection: 'column' }}> */}
+                <View style={{ justifyContent: 'flex-start' }}>
                     {render_top()}
                     {render_mid()}
                 </View>
-                {render_bot()}
-            </View>
+                
+                <View style={{ justifyContent: 'flex-end' }}>
+                    {render_bot()}
+                </View>
+            {/* </View> */}
         </ScrollView>
     );
 };
