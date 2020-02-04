@@ -85,7 +85,7 @@ const HomeScreen = ({ navigation }) => {
             const carbs = await AsyncStorage.getItem('total_carbs');
             const proteins = await AsyncStorage.getItem('total_proteins');
             const fats = await AsyncStorage.getItem('total_fats');
-            console.log(calories+'/'+carbs+'/'+proteins+'/'+fats);
+            //console.log(calories+'/'+carbs+'/'+proteins+'/'+fats);
             setUserData({
                 calories: calories,
                 carbs: carbs,
@@ -157,46 +157,47 @@ const HomeScreen = ({ navigation }) => {
     };
 
     const initializePopup = (calories, carbs, proteins, fats) => {
-        if(isModified != 0){
+        if(isModified == 1){
             if(dateSelected === (moment().format('MMMM DD YYYY'))){
-                if(calories >= userData.calories && calories <= (userData.calories + userData.calories * 0.2)){
+                if(calories >= parseFloat(userData.calories) && calories <= (parseFloat(userData.calories) + parseFloat(userData.calories) * 0.2)){
                     showPopup(PopupText.popup_complete_calories1.title, PopupText.popup_complete_calories1.message);
-                };
-                if(calories >= userData.calories && calories >= (userData.calories + userData.calories * 0.2)){
+                }
+                else if(calories >= parseFloat(userData.calories) && calories >= (parseFloat(userData.calories) + parseFloat(userData.calories) * 0.2)){
                     showPopup(PopupText.popup_complete_calories2.title, PopupText.popup_complete_calories2.message);
                 };
-                if(carbs >= userData.carbs && carbs <= (userData.carbs + userData.carbs * 0.2)){
+                if(carbs >= parseFloat(userData.carbs) && carbs <= (parseFloat(userData.carbs) + parseFloat(userData.carbs) * 0.2)){
                     showPopup(PopupText.popup_complete_carbs1.title, PopupText.popup_complete_carbs1.message);
-                };
-                if(carbs >= userData.carbs && carbs >= (userData.carbs + userData.carbs * 0.2)){
+                }
+                else if(carbs >= parseFloat(userData.carbs) && carbs >= (parseFloat(userData.carbs) + parseFloat(userData.carbs) * 0.2)){
                     showPopup(PopupText.popup_complete_carbs2.title, PopupText.popup_complete_carbs2.message);
                 };
-                if(proteins >= userData.proteins && proteins <= (userData.proteins + userData.proteins * 0.2)){
+                if(proteins >= parseFloat(userData.proteins) && proteins <= (parseFloat(userData.proteins) + parseFloat(userData.proteins) * 0.2)){
                     showPopup(PopupText.popup_complete_proteins1.title, PopupText.popup_complete_proteins1.message);
-                };
-                if(proteins >= userData.proteins && proteins >= (userData.proteins + userData.proteins * 0.2)){
+                }
+                else if(proteins >= parseFloat(userData.proteins) && proteins >= (parseFloat(userData.proteins) + parseFloat(userData.proteins) * 0.2)){
                     showPopup(PopupText.popup_complete_proteins2.title, PopupText.popup_complete_proteins2.message);
                 };
-                if(fats >= userData.fats && fats <= (userData.fats + userData.fats * 0.2)){
+                if(fats >= parseFloat(userData.fats) && fats <= (parseFloat(userData.fats) + parseFloat(userData.fats) * 0.2)){
                     showPopup(PopupText.popup_complete_fats1.title, PopupText.popup_complete_fats1.message);
-                };
-                if(fats >= userData.fats && fats >= (userData.fats + userData.fats * 0.2)){
+                }
+                else if(fats >= parseFloat(userData.fats) && fats >= (parseFloat(userData.fats) + parseFloat(userData.fats) * 0.2)){
                     showPopup(PopupText.popup_complete_fats2.title, PopupText.popup_complete_fats2.message);
                 };
-                if(calories >= userData.calories * 0.5 && calories <= userData.calories * 0.75 ){
+                if(calories >= parseFloat(userData.calories) * 0.5 && calories <= parseFloat(userData.calories) * 0.75 ){
                     showPopup(PopupText.calorie50.title, PopupText.calorie50.message);
                 };
-                if(carbs >= userData.carbs * 0.5 && carbs <= userData.carbs * 0.75 ){
+                if(carbs >= parseFloat(userData.carbs) * 0.5 && carbs <= parseFloat(userData.carbs) * 0.75 ){
                     showPopup(PopupText.carb50.title, PopupText.carb50.message);
                 };
-                if(proteins >= userData.proteins * 0.5 && protein <= userData.proteins * 0.75 ){
+                if(proteins >= parseFloat(userData.proteins) * 0.5 && proteins <= parseFloat(userData.proteins) * 0.75 ){
                     showPopup(PopupText.protein50.title, PopupText.protein50.message);
                 };
-                if(fats >= userData.fats * 0.5 && fats <= userData.fats * 0.75 ){
+                if(fats >= parseFloat(userData.fats) * 0.5 && fats <= parseFloat(userData.fats) * 0.75 ){
                     showPopup(PopupText.fat50.title, PopupText.fat50.message);
                 };
             };
         }; 
+        setIsModified(0);
     };
 
     const syncBreakfastData = async (key) => {
@@ -369,9 +370,9 @@ const HomeScreen = ({ navigation }) => {
             saveCurrentUserData('current_fats', JSON.stringify(fats));
             setTotalFoodArray(totalFood);
 
+            
             if(isModified == 1){
                 initializePopup(calories, carbs, proteins, fats);
-                setIsModified(0);
             };
             
 
@@ -518,7 +519,7 @@ const HomeScreen = ({ navigation }) => {
 
     useEffect( () => {
         focusListener = navigation.addListener('didFocus', () => {
-			console.log('Screen Focused');
+			//console.log('Screen Focused');
             getUserData();
             accessCounter.count+=1
             saveHomeCounter('home_counter', accessCounter);

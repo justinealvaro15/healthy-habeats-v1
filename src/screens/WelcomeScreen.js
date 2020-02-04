@@ -61,7 +61,7 @@ registerForPushNotificationsAsync = async () => {
 		}
 		token = await Notifications.getExpoPushTokenAsync();
 		token = token.slice(18,40);
-		console.log(token);
+		//console.log(token);
 		saveExpoToken(token);
 	} else {
 		alert('Must use physical device for Push Notifications');
@@ -192,14 +192,14 @@ export default class WelcomeScreen extends React.Component {
 			if(winner2 == winner){
 				winner2 = Math.floor(Math.random() * 8 );
 			}else{
-				console.log('BREAK');
+				//console.log('BREAK');
 				break;
 			}
 		};
 
 		Notifications.scheduleLocalNotificationAsync(winner_array[winner], schedulingOptions4);
 		Notifications.scheduleLocalNotificationAsync(winner_array[winner2], schedulingOptions5);
-		console.log('Notifications Scheduled successfully!');
+		//console.log('Notifications Scheduled successfully!');
 		setTimeout(() => {
 			
 			// USE TO RESET STORAGE
