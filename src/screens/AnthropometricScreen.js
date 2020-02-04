@@ -178,7 +178,7 @@ const AnthropometricScreen = ({ navigation }) => {
 
         if(tokenState === 'firstTime'){
             saveData('userToken', 'oldUser');
-            navigation.replace('UserProfile');
+            navigation.navigate('UserProfile');
             navigation.navigate('Home');
         } else {
             navigation.navigate('UserProfile');
