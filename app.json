@@ -4,7 +4,7 @@
     "slug": "cs-198-project",
     "sdkVersion": "35.0.0",
     "icon": "./assets/icon.png",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "orientation": "portrait",
     "description": "CS 199 Thesis",
     "primaryColor": "#0455AE",

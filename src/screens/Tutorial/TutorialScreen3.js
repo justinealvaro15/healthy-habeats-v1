@@ -19,9 +19,7 @@ const TutorialScreen3 = ({ navigation }) => {
             <View>
                 <Text style={styles.text_header}>SEARCH FOR</Text>
                 <Text style={styles.text_header}>FOOD ITEMS</Text>
-                <View style={styles.mid}>
-                    <TutorialSearch/>
-                </View>
+                <TutorialSearch/>
             </View>
 
             <View style={{ justifyContent: 'flex-end' }}>
@@ -100,15 +98,6 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-between',
         flex: 1
-    },
-    mid: {
-        backgroundColor: ThemeConstants.MAIN_WHITE,
-        borderTopRightRadius: ThemeConstants.CONTAINER_RADIUS*2,
-        borderTopLeftRadius: ThemeConstants.CONTAINER_RADIUS*2,
-        borderBottomRightRadius: ThemeConstants.CONTAINER_RADIUS*2,
-        justifyContent: 'center',
-        margin: ThemeConstants.CONTAINER_MARGIN,
-        paddingVertical: ThemeConstants.CONTAINER_MARGIN
     },
     status_bar: {
         backgroundColor: ThemeConstants.MAIN_BLUE,

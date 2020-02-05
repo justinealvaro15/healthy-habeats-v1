@@ -1,50 +1,58 @@
 import React from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 
+import PhoneCase from './PhoneCase';
 import { Feather } from '@expo/vector-icons';
 import * as ThemeConstants from '../../common/Themes';
 
 
 const TutorialFood = () => {
     const foodArray = [
-        { "id": "1", "foodName": "Beef Shawarma", "calories": 315, "serving": 1  },
-        { "id": "2", "foodName": "Grilled Chicken", "calories": 284, "serving": 1 },
+        { "id": "1", "foodName": "Beef Shawarma", "calories": 315, "serving": 1  }
     ];
     
+    const render_inside = () => {
+        return(
+            <View style={styles.main}>
+                <View style={styles.details}>
+                    <View>
+                        <Text style={styles.text_header}>Breakfast</Text>
+                        <FlatList
+                            data={foodArray}
+                            keyExtractor = {(item) => item.id}
+                            showsVerticalScrollIndicator={false}
+                            renderItem={({item,index})=>{
+                                return (
+                                    <View style={styles.food}>
+                                        <View>
+                                            <Text style={styles.text_regular}>{item.foodName}</Text>
+                                            <Text style={styles.text_small}>
+                                                Serving: {item.serving}  •  Energy: {item.calories * item.serving} kcal
+                                            </Text>
+                                        </View>
+
+                                        <View style={styles.button_delete}>
+                                            <Feather
+                                                name='x-circle'
+                                                style={{fontSize: 25, color: ThemeConstants.FONT_GRAY}}
+                                            />
+                                        </View>
+                                    </View>
+                                )
+                            }}
+                        />
+                    </View>
+
+                    <View style={styles.button_add}>
+                        <Text style={styles.text_button}>Add Breakfast</Text>
+                    </View>
+                </View>
+            </View>
+        );
+    };
+
     return(
-        <View style={styles.details}>
-            <View>
-                <Text style={styles.text_header}>Breakfast</Text>
-                <FlatList
-                    data={foodArray}
-                    keyExtractor = {(item) => item.id}
-                    showsVerticalScrollIndicator={false}
-                    renderItem={({item,index})=>{
-                        return (
-                            <View style={styles.food}>
-                                <View>
-                                    <Text style={styles.text_regular}>{item.foodName}</Text>
-                                    <Text style={styles.text_small}>
-                                        Serving: {item.serving}  •  Energy: {item.calories * item.serving} kcal
-                                    </Text>
-                                </View>
-
-                                <View style={styles.button_delete}>
-                                    <Feather
-                                        name='x-circle'
-                                        style={{fontSize: 25, color: ThemeConstants.FONT_GRAY}}
-                                    />
-                                </View>
-                            </View>
-                        )
-                    }}
-                />
-            </View>
-
-            <View style={styles.button_add}>
-                <Text style={styles.text_button}>Add Breakfast</Text>
-            </View>
-        </View>
+        <PhoneCase render_content={render_inside()}/>
     );
 };
 
@@ -66,6 +74,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingVertical: ThemeConstants.CONTAINER_MARGIN/2,
+    },
+    main: {
+        backgroundColor: ThemeConstants.MAIN_WHITE,
+        justifyContent: 'center',
+        marginHorizontal: ThemeConstants.CONTAINER_MARGIN*0.5,
+        marginTop: ThemeConstants.CONTAINER_MARGIN*1.75,
+        paddingTop: ThemeConstants.CONTAINER_MARGIN*0.2
     },
     text_button: {
         alignContent: 'center',
