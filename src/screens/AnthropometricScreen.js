@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { AsyncStorage, Keyboard, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, ToastAndroid, TouchableHighlight, View } from 'react-native';
+import { AsyncStorage, BackHandler, Keyboard, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, ToastAndroid, TouchableHighlight, View } from 'react-native';
 import Slider from "react-native-slider";
 import { withNavigation } from 'react-navigation';
 
@@ -161,6 +161,14 @@ const AnthropometricScreen = ({ navigation }) => {
         getUserToken();
     },[]);
 
+    useEffect( () => {
+        BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+    },[]);
+
+    const handleBackButton = () => {
+        return true;
+    };
+
     const saveData = async (key, value) => {
 		try {
 			await AsyncStorage.setItem(key, value);
@@ -183,7 +191,7 @@ const AnthropometricScreen = ({ navigation }) => {
         } else {
             navigation.navigate('UserProfile');
         }
-
+        BackHandler.removeEventListener('hardwareBackPress', handleBackButton);
         ToastAndroid.show('Saved successfully!', ToastAndroid.SHORT);
     };
 
@@ -255,15 +263,15 @@ const AnthropometricScreen = ({ navigation }) => {
                     style={styles.button}
                     underlayColor={ThemeConstants.HIGHLIGHT_YELLOW}
                     onPress={() => {
-                        const isWeightValid = weight > 0;
-                        const isHeightValid = height > 0;
+                        const isWeightValid = weight > 40 && weight < 350;
+                        const isHeightValid = height > 120 && height < 275;
 
                         setWeightValid(isWeightValid);
                         setHeightValid(isHeightValid);
                         
                         if(isWeightValid && isHeightValid){
                             submit();
-                        }
+                        };
                     }}
                 >
                     <Text style={styles.text_button}>Save</Text>
