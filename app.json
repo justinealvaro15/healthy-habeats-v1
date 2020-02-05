@@ -16,6 +16,9 @@
     },
     "notification": {
       "icon": "./assets/icon.png"
-    }
+    },
+    "platforms": [
+      "android"
+    ]
   }
 }
