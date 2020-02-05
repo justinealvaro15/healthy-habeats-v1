@@ -58,7 +58,7 @@ export const popup_complete_calories1 = {
 	message: 'Congratulations! You have successfully achieved your daily calorie requirement!'
 };
 export const popup_complete_calories2 = {
-	title: 'Calorie Intake',
+	title: 'Calorie Intake Overflow',
 	message: 'Uh-oh! You already exceeded your daily calorie requirement. Balance your food intakes by choosing healthier food options'
 };
 export const popup_complete_carbs1 = {
@@ -66,7 +66,7 @@ export const popup_complete_carbs1 = {
 	message: 'You have achieved your daily carbs allowance! Try to eat foods with less carbs on your next meal and stay healthy!'
 };
 export const popup_complete_carbs2 = {
-	title: 'Protein Intake',
+	title: 'Carbs Intake Overflow',
 	message: 'Uh-oh! You already exceeded your daily carbs allowance! Cut down your carbs consumption on your next meal!'
 };
 export const popup_complete_proteins1 = {
@@ -74,7 +74,7 @@ export const popup_complete_proteins1 = {
 	message: 'You have achieved your daily protein allowance! Try to eat foods with less protein on your next meal!'
 };
 export const popup_complete_proteins2 = {
-	title: 'Protein Intake',
+	title: 'Protein Intake Overflow',
 	message: 'Uh-oh! You already exceeded your daily protein allowance! Cut down your protein consumption on your next meal!'
 };
 export const popup_complete_fats1 = {
@@ -82,7 +82,7 @@ export const popup_complete_fats1 = {
 	message: 'You have achieved your daily fat allowance! Try to eat foods with less fat on your next meal!'
 };
 export const popup_complete_fats2 = {
-	title: 'Fat Intake',
+	title: 'Fat Intake Overflow',
 	message: 'Uh-oh! You already exceeded your daily fat allowance! Cut down your fat consumption on your next meal!'
 };
 export const calorie50 = {
