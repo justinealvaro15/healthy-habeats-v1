@@ -2,6 +2,7 @@ import React from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
+import PhoneCase from './PhoneCase';
 import * as ThemeConstants from '../../common/Themes';
 
 const FoodResultsList = () => {
@@ -10,31 +11,39 @@ const FoodResultsList = () => {
         { "id": "3", "foodName": "Chopsuey", "grams": 147, "calories": 112 }
     ];
 
-    return (
-        <View style={styles.container}>
-            <View style={styles.background}>
-                <Feather name='search' style={styles.icon}/>
-                <Text style={styles.input}>Search for food</Text>
-            </View>
+    const render_inside = () => {
+        return (
+            <View style={styles.container}>
+                <View style={styles.details}>
+                    <View style={styles.background}>
+                        <Feather name='search' style={styles.icon}/>
+                        <Text style={styles.input}>Search for food</Text>
+                    </View>
 
-            <FlatList
-                data={foodArray}
-                keyExtractor = {(result) => result.id}
-                renderItem={({item})=>{
-                    return (
-                        <View style={styles.food}>
-                            <View>
-                                <Text style={styles.text_regular}>{item.foodName}</Text>
-                                <Text style={styles.text_small}>
-                                    Serving Size: {item.grams} g  •  Energy: {item.calories} kcal
-                                </Text>
-                            </View>
-                        </View>
-                    )
-                }}
-                showsVerticalScrollIndicator={false}
-            />
-        </View>
+                    <FlatList
+                        data={foodArray}
+                        keyExtractor = {(result) => result.id}
+                        renderItem={({item})=>{
+                            return (
+                                <View style={styles.food}>
+                                    <View>
+                                        <Text style={styles.text_regular}>{item.foodName}</Text>
+                                        <Text style={styles.text_small}>
+                                            Serving Size: {item.grams} g  •  Energy: {item.calories} kcal
+                                        </Text>
+                                    </View>
+                                </View>
+                            )
+                        }}
+                        showsVerticalScrollIndicator={false}
+                    />
+                </View>
+            </View>
+        );
+    };
+
+    return (
+        <PhoneCase render_content={render_inside()}/>
     );
 };
 
@@ -50,7 +59,14 @@ const styles = StyleSheet.create({
         marginBottom: ThemeConstants.CONTAINER_MARGIN/2
     },
     container: {
-        margin: ThemeConstants.CONTAINER_MARGIN
+        backgroundColor: ThemeConstants.MAIN_WHITE,
+        justifyContent: 'center',
+        marginHorizontal: ThemeConstants.CONTAINER_MARGIN*0.5,
+        marginTop: ThemeConstants.CONTAINER_MARGIN*1.75,
+        paddingTop: ThemeConstants.CONTAINER_MARGIN*0.2
+    },
+    details: {
+        margin: ThemeConstants.CONTAINER_MARGIN,
     },
     food: {
         flex: 1,

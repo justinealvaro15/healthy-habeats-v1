@@ -42,7 +42,9 @@ const RootDrawerNavigator = createDrawerNavigator({
     Tutorial: {
         screen: TutorialStack,
         navigationOptions: {
-            drawerLabel: <Hidden/>
+            drawerLabel: <Hidden/>,
+            drawerLockMode: 'locked-closed',
+            disableGestures: true
         }
     }
 }, {

@@ -174,7 +174,7 @@ const EditServingScreen = ({ navigation }) => {
         return (
             <View style={styles.container_details}> 
                 <Text>Pieces:</Text>
-                <Text>{Math.round(foodItem.pieces*serving*100)/100} {pieces <= 1 ? 'piece' : 'pieces'}</Text>
+                <Text>{Math.round(foodItem.pieces*serving*100)/100} {pieces*serving <= 1 ? 'piece' : 'pieces'}</Text>
             </View>
         );
     };

@@ -19,9 +19,7 @@ const TutorialScreen4 = ({ navigation }) => {
             <View>
                 <Text style={styles.text_header}>CHECK YOUR</Text>
                 <Text style={styles.text_header}>DAILY PROGRESS</Text>
-                <View style={styles.mid}>
-                    <TutorialStats/>
-                </View>
+                <TutorialStats/>
             </View>
 
             <View style={{ justifyContent: 'flex-end' }}>
@@ -116,15 +114,6 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-between',
         flex: 1
-    },
-    mid: {
-        backgroundColor: ThemeConstants.MAIN_WHITE,
-        borderTopRightRadius: ThemeConstants.CONTAINER_RADIUS*2,
-        borderTopLeftRadius: ThemeConstants.CONTAINER_RADIUS*2,
-        borderBottomRightRadius: ThemeConstants.CONTAINER_RADIUS*2,
-        justifyContent: 'center',
-        margin: ThemeConstants.CONTAINER_MARGIN,
-        paddingVertical: ThemeConstants.CONTAINER_MARGIN
     },
     status_bar: {
         backgroundColor: ThemeConstants.MAIN_BLUE,
