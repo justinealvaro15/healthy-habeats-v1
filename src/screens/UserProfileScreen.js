@@ -153,8 +153,6 @@ const UserProfileScreen = ({ navigation }) => {
                 </TouchableHighlight>
             </View>
 
-            {/* insert weekly stats here */}
-
             <View style={{ justifyContent: 'flex-end' }}>
                 <View style={styles.container_blue}>
                     <View style={styles.container_dbw}>

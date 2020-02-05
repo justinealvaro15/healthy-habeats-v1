@@ -6,11 +6,12 @@ import FoodResultsList from '../components/FoodResultsList';
 import SearchBar from '../components/SearchBar';
 
 import * as ThemeConstants from '../common/Themes';
+import { DATABASE_LENGTH } from '../common/Constants';
 import * as foodData from '../../assets/foodDatabase.json';
 
 // Store food item data
 const data = [];
-for (let i = 0; i < 129; i++) {
+for (let i = 0; i < DATABASE_LENGTH; i++) {
     data.push(foodData[i]);
 }
 
@@ -21,7 +22,7 @@ const filterResultsBySearch = (term) => {
         return { };
     } else {
         const string_to_check = term.toUpperCase();
-        for (let i = 0; i < 129; i++) {
+        for (let i = 0; i < DATABASE_LENGTH; i++) {
             if(((data[i].foodName).toUpperCase()).includes(string_to_check)){
                 const foodName = data[i].foodName;
                 const id = (data[i].id).toString();;
