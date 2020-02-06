@@ -6,7 +6,8 @@ export const scheduledNotification1 = {
 export const scheduledNotification2 = { 
 	sound: 'default',
 	title: 'Lunch', 
-	body: 'Have a healthy and a balanced diet! 🍱 Time to enter your lunch!' 
+	body: 'Have a healthy and a balanced diet! 🍱'
+	/*Time to enter your lunch!' */
 };
 export const scheduledNotification3 = { 
 	sound: 'default',
