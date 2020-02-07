@@ -18,8 +18,7 @@
       "icon": "./assets/icon.png"
     },
     "platforms": [
-      "android",
-      "ios"
+      "android"
     ]
   }
 }
