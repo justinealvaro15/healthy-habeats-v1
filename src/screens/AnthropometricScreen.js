@@ -191,7 +191,7 @@ const AnthropometricScreen = ({ navigation }) => {
         } else {
             navigation.navigate('UserProfile');
         }
-        BackHandler.removeEventListener('hardwareBackPress', handleBackButton);
+        BackHandler.removeEventListener('hardwareBackPress', () => {return false});
         ToastAndroid.show('Saved successfully!', ToastAndroid.SHORT);
     };
 
