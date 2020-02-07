@@ -1,5 +1,5 @@
 import React from 'react';
-import { AsyncStorage, Dimensions, Image, StyleSheet, Vibration, View } from 'react-native';
+import { AsyncStorage, Dimensions, Image, StyleSheet, Text, Vibration, View } from 'react-native';
 
 import {Notifications} from 'expo';
 import * as Permissions from 'expo-permissions';
@@ -183,24 +183,7 @@ export default class WelcomeScreen extends React.Component {
 		const schedulingOptions3 = { time: time3, repeat: 'day' };
 		const schedulingOptions4 = { time: time4, repeat: 'day' };
 		const schedulingOptions5 = { time: time5, repeat: 'day' };
-		setTimeout(() => {
-			
-			
-			//4-12
-			/*const winner_array = [NotificationsText.scheduledNotification4, NotificationsText.scheduledNotification5, NotificationsText.scheduledNotification6, NotificationsText.scheduledNotification7, NotificationsText.scheduledNotification8, NotificationsText.scheduledNotification9, NotificationsText.scheduledNotification10, NotificationsText.scheduledNotification11]
-			let winner = Math.floor(Math.random() * 8 );
-			let winner2 = Math.floor(Math.random() * 8 );
-
-			while(true){
-				if(winner2 == winner){
-					winner2 = Math.floor(Math.random() * 8 );
-				}else{
-					//console.log('BREAK');
-					break;
-				}
-			};*/
-
-			
+		setTimeout(() => {			
 			// USE TO RESET STORAGE
 			// this.deleteUserToken().then(() => 
 				this.getUserToken()
@@ -228,6 +211,7 @@ export default class WelcomeScreen extends React.Component {
 		return(
 			<View style={styles.main}>
 				<Image source={require('../../assets/logo.png')} style={styles.logo}/>
+				<Text style={styles.version}>version 1.5.0</Text>
 			</View>
 		);
 	}
@@ -243,5 +227,12 @@ const styles = StyleSheet.create({
 		backgroundColor: ThemeConstants.MAIN_BLUE,
 		flex: 1,
 		justifyContent: 'center'
+	},
+	version: {
+		alignSelf: 'flex-end',
+		bottom: 0,
+		color: ThemeConstants.MAIN_WHITE,
+		padding: ThemeConstants.CONTAINER_MARGIN/2,
+		position: 'absolute',
 	}
 });
