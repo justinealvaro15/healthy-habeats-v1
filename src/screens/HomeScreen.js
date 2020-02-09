@@ -162,25 +162,25 @@ const HomeScreen = ({ navigation }) => {
                 if(calories >= parseFloat(userData.calories) && calories <= (parseFloat(userData.calories) + parseFloat(userData.calories) * 0.2)){
                     showPopup(PopupText.popup_complete_calories1.title, PopupText.popup_complete_calories1.message);
                 }
-                else if(calories >= parseFloat(userData.calories) && calories >= (parseFloat(userData.calories) + parseFloat(userData.calories) * 0.2)){
+                else if(calories > (parseFloat(userData.calories) + parseFloat(userData.calories) * 0.2)){
                     showPopup(PopupText.popup_complete_calories2.title, PopupText.popup_complete_calories2.message);
                 };
                 if(carbs >= parseFloat(userData.carbs) && carbs <= (parseFloat(userData.carbs) + parseFloat(userData.carbs) * 0.2)){
                     showPopup(PopupText.popup_complete_carbs1.title, PopupText.popup_complete_carbs1.message);
                 }
-                else if(carbs >= parseFloat(userData.carbs) && carbs >= (parseFloat(userData.carbs) + parseFloat(userData.carbs) * 0.2)){
+                else if(carbs > (parseFloat(userData.carbs) + parseFloat(userData.carbs) * 0.2)){
                     showPopup(PopupText.popup_complete_carbs2.title, PopupText.popup_complete_carbs2.message);
                 };
                 if(proteins >= parseFloat(userData.proteins) && proteins <= (parseFloat(userData.proteins) + parseFloat(userData.proteins) * 0.2)){
                     showPopup(PopupText.popup_complete_proteins1.title, PopupText.popup_complete_proteins1.message);
                 }
-                else if(proteins >= parseFloat(userData.proteins) && proteins >= (parseFloat(userData.proteins) + parseFloat(userData.proteins) * 0.2)){
+                else if(proteins > (parseFloat(userData.proteins) + parseFloat(userData.proteins) * 0.2)){
                     showPopup(PopupText.popup_complete_proteins2.title, PopupText.popup_complete_proteins2.message);
                 };
                 if(fats >= parseFloat(userData.fats) && fats <= (parseFloat(userData.fats) + parseFloat(userData.fats) * 0.2)){
                     showPopup(PopupText.popup_complete_fats1.title, PopupText.popup_complete_fats1.message);
                 }
-                else if(fats >= parseFloat(userData.fats) && fats >= (parseFloat(userData.fats) + parseFloat(userData.fats) * 0.2)){
+                else if(fats > (parseFloat(userData.fats) + parseFloat(userData.fats) * 0.2)){
                     showPopup(PopupText.popup_complete_fats2.title, PopupText.popup_complete_fats2.message);
                 };
                 if(calories >= parseFloat(userData.calories) * 0.5 && calories <= parseFloat(userData.calories) * 0.75 ){
