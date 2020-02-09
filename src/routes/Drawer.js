@@ -7,7 +7,7 @@ import UserProfileStack from './UserProfileStack';
 import AboutStack from './AboutStack';
 
 import { Feather } from '@expo/vector-icons';
-import { MAIN_BLUE, MAIN_GREEN, MAIN_WHITE } from '../common/Themes';
+import { MAIN_BLUE, HIGHLIGHT_GREEN, MAIN_WHITE } from '../common/Themes';
 import Constants from 'expo-constants';
 import TutorialStack from './TutorialStack';
 
@@ -59,7 +59,7 @@ const RootDrawerNavigator = createDrawerNavigator({
     ),
     contentOptions: {
         activeBackgroundColor: MAIN_WHITE,
-        activeTintColor: MAIN_GREEN,
+        activeTintColor: HIGHLIGHT_GREEN,
         inactiveTintColor: MAIN_WHITE
     },
     initialRouteName: 'Home'

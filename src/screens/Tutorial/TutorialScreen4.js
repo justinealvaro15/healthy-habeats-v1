@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
         position: 'absolute'
     },
     button: {
-        backgroundColor: ThemeConstants.MAIN_GREEN,
+        backgroundColor: ThemeConstants.HIGHLIGHT_GREEN,
         borderRadius: ThemeConstants.CONTAINER_RADIUS,
     },
     button_container: {

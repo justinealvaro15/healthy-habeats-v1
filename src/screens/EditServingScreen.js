@@ -198,7 +198,7 @@ const EditServingScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     button_green: {
-        backgroundColor: ThemeConstants.MAIN_GREEN,
+        backgroundColor: ThemeConstants.HIGHLIGHT_GREEN,
         borderRadius: ThemeConstants.CONTAINER_RADIUS,
     },
     button_save: {
