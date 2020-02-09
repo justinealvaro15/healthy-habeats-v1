@@ -1,13 +1,13 @@
 // colors
-export const MAIN_BLUE = '#0455AE';
+export const MAIN_BLUE = '#4285F4';
 export const MAIN_WHITE = '#FFFFFF';
-export const MAIN_YELLOW = '#FBA707';
-export const MAIN_GREEN = '#8AC64C';
-export const MAIN_RED = '#C0242D';
+export const MAIN_YELLOW = '#F4B400';
+export const MAIN_GREEN = '#0F9D58';
+export const MAIN_RED = '#DB4437';
 
-export const HIGHLIGHT_YELLOW = '#FBD007';
-export const HIGHLIGHT_GREEN = '#ADD781';
-// export const HIGHLIGHT_RED = '#F05053';
+export const HIGHLIGHT_YELLOW = '#FFD309';
+export const HIGHLIGHT_GREEN = '#8AC64C';
+// export const HIGHLIGHT_RED = '#EF5637';
 export const HIGHLIGHT_GRAY = '#EFEFF0';
 
 export const BORDER_GRAY = '#D1D0D4';

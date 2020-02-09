@@ -16,7 +16,7 @@ const StatsDetail = ({ title, unit, valueTotal, valueCurrent }) => {
         if(progress <= lowIntakeThreshold){
             setColor(ThemeConstants.MAIN_YELLOW);
         } else if (progress <= highIntakeThreshold){
-            setColor(ThemeConstants.MAIN_GREEN);
+            setColor(ThemeConstants.HIGHLIGHT_GREEN);
         } else{
             setColor(ThemeConstants.MAIN_RED);
         }
