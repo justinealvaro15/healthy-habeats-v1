@@ -192,12 +192,13 @@ export default class WelcomeScreen extends React.Component {
 			.then((state) => {
 				if(this.state.userToken === 'firstTime'){
 					//B,L,D notifs
-					Notifications.scheduleLocalNotificationAsync(NotificationsText.scheduledNotification1, schedulingOptions1);
-					Notifications.scheduleLocalNotificationAsync(NotificationsText.scheduledNotification2, schedulingOptions2);
-					Notifications.scheduleLocalNotificationAsync(NotificationsText.scheduledNotification3, schedulingOptions3);
+					Notifications.cancelAllScheduledNotificationsAsync();
+					Notifications.scheduleLocalNotificationAsync(NotificationsText.scheduledNotification10, schedulingOptions1);
+					Notifications.scheduleLocalNotificationAsync(NotificationsText.scheduledNotification11, schedulingOptions2);
+					Notifications.scheduleLocalNotificationAsync(NotificationsText.scheduledNotification6, schedulingOptions3);
 					//4 healthy tips notif
-					Notifications.scheduleLocalNotificationAsync(NotificationsText.scheduledNotification4, schedulingOptions4);
-					Notifications.scheduleLocalNotificationAsync(NotificationsText.scheduledNotification11, schedulingOptions5);
+					//Notifications.scheduleLocalNotificationAsync(NotificationsText.scheduledNotification4, schedulingOptions4);
+					//Notifications.scheduleLocalNotificationAsync(NotificationsText.scheduledNotification11, schedulingOptions5);
 					this.props.navigation.replace('Home');
 					this.props.navigation.navigate('Tutorial1');
 				} else {

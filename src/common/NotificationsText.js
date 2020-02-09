@@ -6,7 +6,8 @@ export const scheduledNotification1 = {
 export const scheduledNotification2 = { 
 	sound: 'default',
 	title: 'Lunch', 
-	body: 'Have a healthy and a balanced diet! 🍱 Time to enter your lunch!' 
+	body: 'Have a healthy and a balanced diet! 🍱'
+	/*Time to enter your lunch!' */
 };
 export const scheduledNotification3 = { 
 	sound: 'default',
@@ -26,7 +27,7 @@ export const scheduledNotification5 = {
 export const scheduledNotification6 = { 
 	sound: 'default',
 	title: 'Daily Digest', 
-	body: 'Limit intake of salty, fried, fatty and sugar-rich foods to prevent cardiovascular diseases.'
+	body: 'Your day is almost done! 🌙 Time to enter your dinner! Limit intake of salty, fried, fatty and sugar-rich foods to prevent cardiovascular diseases.'
 };
 export const scheduledNotification7 = { 
 	sound: 'default',
@@ -46,13 +47,15 @@ export const scheduledNotification9 = {
 export const scheduledNotification10 = { 
 	sound: 'default',
 	title: 'Daily Digest', 
-	body: 'Remember to choose and eat healthy foods!'
+	body: 'Rise and shine! ☀️ Time to enter your breakfast! Remember to choose and eat healthy foods!'
 };
 export const scheduledNotification11 = { 
 	sound: 'default',
 	title: 'Daily Digest', 
-	body: 'Reach your required calorie intake while balancing the intake of your carbs, proteins and fats.'
+	body: 'Time to enter your lunch! 🍱 Reach your required calorie intake while balancing the intake of your carbs, proteins and fats.'
 };
+ 
+	
 export const popup_complete_calories1 = {
 	title: 'Calorie Intake',
 	message: 'Congratulations! You have successfully achieved your daily calorie requirement!'
