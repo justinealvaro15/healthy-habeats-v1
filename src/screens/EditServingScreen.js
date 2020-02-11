@@ -51,7 +51,7 @@ const EditServingScreen = ({ navigation }) => {
                         onPress={() => {
                             if(serving>minThreshold){
                                 setServing(serving-increment);
-                                setPieces(pieces*serving)
+                                setPieces(pieces)
                             }
                         }
                         }
@@ -73,7 +73,7 @@ const EditServingScreen = ({ navigation }) => {
                         onPress={() => {
                             if(serving<maxThreshold){
                                 setServing(serving+increment);
-                                setPieces(pieces*serving)
+                                setPieces(pieces)
                             }
                         }
                         }
