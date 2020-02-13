@@ -39,9 +39,19 @@ const AnthropometricScreen = ({ navigation }) => {
         const data2 = await AsyncStorage.getItem('height') || 0;
         const data3 = await AsyncStorage.getItem('activityLevel') || 3;
 
+        const data4 = await AsyncStorage.getItem('total_calories') || 0;
+        const data5 = await AsyncStorage.getItem('total_carbs') || 0;
+        const data6 = await AsyncStorage.getItem('total_proteins') || 0;
+        const data7 = await AsyncStorage.getItem('total_fats') || 0;
+
         setWeight(parseInt(JSON.parse(data1)));
         setHeight(parseInt(JSON.parse(data2)));
         setActivityLevel(parseInt(JSON.parse(data3)));
+
+        saveData('total_calories', JSON.parse(data4));
+        saveData('total_carbs', JSON.parse(data5));
+        saveData('total_proteins', JSON.parse(data6));
+        saveData('total_fats', JSON.parse(data7));
     };
 
     const getUserToken = async () => {
