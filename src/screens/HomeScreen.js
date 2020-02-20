@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ActivityIndicator, Alert, AsyncStorage, ScrollView, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Alert, AsyncStorage, ScrollView, StyleSheet, View, YellowBox } from 'react-native';
 
 import CalendarStrip from 'react-native-calendar-strip';
 import moment from 'moment';
@@ -12,10 +12,14 @@ import '@firebase/firestore';
 
 import * as ThemeConstants from '../common/Themes';
 import * as PopupText from '../common/NotificationsText';
-
+YellowBox.ignoreWarnings([
+    'VirtualizedLists should never be nested',
+    'Setting a timer for a long period of time', // TODO: Remove when fixed
+]);
 let firstSync = 0;
 
 const HomeScreen = ({ navigation }) => {
+    let isModified2 = 0;
     let totalFood = [];
     const firebaseRef = firebase.database().ref();
 
@@ -364,6 +368,13 @@ const HomeScreen = ({ navigation }) => {
                 current_proteins: proteins,
                 current_fats: fats
             });
+            if(isModified == 1 ){
+                console.log('SAVE');
+                firebaseRef.child('Users').child(token).child('Food Allowance').child(moment(dateSelected).format('MMMM DD YYYY')).child('Calories').set(calories);
+                firebaseRef.child('Users').child(token).child('Food Allowance').child(moment(dateSelected).format('MMMM DD YYYY')).child('Carbs').set(carbs);
+                firebaseRef.child('Users').child(token).child('Food Allowance').child(moment(dateSelected).format('MMMM DD YYYY')).child('Proteins').set(proteins);
+                firebaseRef.child('Users').child(token).child('Food Allowance').child(moment(dateSelected).format('MMMM DD YYYY')).child('Fats').set(fats);
+            };
             saveCurrentUserData('current_calories', JSON.stringify(calories));
             saveCurrentUserData('current_carbs', JSON.stringify(carbs));
             saveCurrentUserData('current_proteins', JSON.stringify(proteins));
@@ -521,7 +532,7 @@ const HomeScreen = ({ navigation }) => {
         focusListener = navigation.addListener('didFocus', () => {
 			//console.log('Screen Focused');
             getUserData();
-            accessCounter.count+=1
+            accessCounter.count+=1;
             saveHomeCounter('home_counter', accessCounter);
             console.log('HomeScreen Counter: ' + accessCounter.count);
             firebaseRef.child('Users').child(temp_token).child('Screen Access Counters').child(moment().format('MMMM DD YYYY')).child('count').set(accessCounter.count);	
@@ -576,7 +587,7 @@ const HomeScreen = ({ navigation }) => {
                     deleteID: 0,
                     mealTitle: 'Breakfast',
                     userID: token,
-                    setIsModified: setIsModified
+                    setIsModified: setIsModified,
                 })}
                 onDeletion={setCurrentBreakfast}
                 onDeletion2={setIsDeleted}
@@ -587,6 +598,7 @@ const HomeScreen = ({ navigation }) => {
                 setFoodArray1 = {setBreakfast}
                 token = {token}
                 setIsModified = {setIsModified}
+                isModified2 = {isModified2}
             />
 
             <IntakeFoodContainer
@@ -610,6 +622,7 @@ const HomeScreen = ({ navigation }) => {
                 setFoodArray1 = {setLunch}
                 token = {token}
                 setIsModified = {setIsModified}
+                isModified2 = {isModified2}
             />
 
             <IntakeFoodContainer
@@ -633,6 +646,7 @@ const HomeScreen = ({ navigation }) => {
                 setFoodArray1 = {setDinner}
                 token = {token}
                 setIsModified = {setIsModified}
+                isModified2 = {isModified2}
             />
 
             <IntakeFoodContainer
@@ -656,6 +670,7 @@ const HomeScreen = ({ navigation }) => {
                 setFoodArray1 = {setSnacks}
                 token = {token}
                 setIsModified = {setIsModified}
+                isModified2 = {isModified2}
             />
         </ScrollView>
     );

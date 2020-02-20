@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, TouchableOpacity, View, YellowBox } from 'react-native';
 import { withNavigation } from 'react-navigation';
 
 import FoodResultsList from '../components/FoodResultsList';
@@ -8,7 +8,10 @@ import SearchBar from '../components/SearchBar';
 import * as ThemeConstants from '../common/Themes';
 import { DATABASE_LENGTH } from '../common/Constants';
 import * as foodData from '../../assets/foodDatabase.json';
-
+YellowBox.ignoreWarnings([
+    'VirtualizedLists should never be nested',
+    'Setting a timer for a long period of time', // TODO: Remove when fixed
+]);
 // Store food item data
 const data = [];
 for (let i = 0; i < DATABASE_LENGTH; i++) {
