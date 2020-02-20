@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ActivityIndicator, Alert, AsyncStorage, ScrollView, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Alert, AsyncStorage, ScrollView, StyleSheet, View, YellowBox } from 'react-native';
 
 import CalendarStrip from 'react-native-calendar-strip';
 import moment from 'moment';
@@ -12,7 +12,10 @@ import '@firebase/firestore';
 
 import * as ThemeConstants from '../common/Themes';
 import * as PopupText from '../common/NotificationsText';
-
+YellowBox.ignoreWarnings([
+    'VirtualizedLists should never be nested',
+    'Setting a timer for a long period of time', // TODO: Remove when fixed
+]);
 let firstSync = 0;
 
 const HomeScreen = ({ navigation }) => {
