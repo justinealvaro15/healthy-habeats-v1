@@ -363,7 +363,8 @@ const HomeScreen = ({ navigation }) => {
                 current_carbs: carbs,
                 current_proteins: proteins,
                 current_fats: fats
-            }).then(firebaseRef.child('Users').child(temp_token).child('Food Allowance').child(moment(dateSelected).format('MMMM DD YYYY')).set(current));;
+            })
+            firebaseRef.child('Users').child(temp_token).child('Food Allowance').child(moment(dateSelected).format('MMMM DD YYYY')).set(current);
             saveCurrentUserData('current_calories', JSON.stringify(calories));
             saveCurrentUserData('current_carbs', JSON.stringify(carbs));
             saveCurrentUserData('current_proteins', JSON.stringify(proteins));
