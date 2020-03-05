@@ -134,7 +134,7 @@ const HomeScreen = ({ navigation }) => {
 			// Error retrieving data
 			console.log(error.message);
         }    
-        firebaseRef.child('Users').child(temp_token).child('Screen Access Counters').child(moment().format('MMMM DD YYYY')).child('count').set(accessCounter.count);
+        firebaseRef.child('Users').child(temp_token).child('Screen Access Counters').child(moment().format('MMMM DD YYYY')).child('Home Screen Counter').set(accessCounter.count);
     };
     
 	const saveHomeCounter = async (key,value) => {
@@ -535,7 +535,7 @@ const HomeScreen = ({ navigation }) => {
             accessCounter.count+=1;
             saveHomeCounter('home_counter', accessCounter);
             console.log('HomeScreen Counter: ' + accessCounter.count);
-            firebaseRef.child('Users').child(temp_token).child('Screen Access Counters').child(moment().format('MMMM DD YYYY')).child('count').set(accessCounter.count);	
+            firebaseRef.child('Users').child(temp_token).child('Screen Access Counters').child(moment().format('MMMM DD YYYY')).child('Home Screen Counter').set(accessCounter.count);	
 		});
     },[]);
 
