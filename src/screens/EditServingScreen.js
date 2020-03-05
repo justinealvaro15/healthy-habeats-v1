@@ -39,13 +39,13 @@ const EditServingScreen = ({ navigation }) => {
     const render_top = () => {
         return(
             <View style={styles.top}>
-                <View>
+                <View style={{flex: 4}}>
                     <Text style={styles.text_header}>{foodItem.foodName}</Text>
                     <Text style={styles.text_servingsize}>{foodItem.grams} grams per serving</Text>
                     { pieces > 0 ? render_pieces() : null }
                 </View>
 
-                <View style={{ alignItems: 'center', paddingLeft: ThemeConstants.CONTAINER_MARGIN }}>
+                <View style={{ alignItems: 'center', flex: 1, paddingLeft: ThemeConstants.CONTAINER_MARGIN }}>
                     <TouchableHighlight
                         style={styles.button_green}
                         onPress={() => {
