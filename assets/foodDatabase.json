@@ -208,6 +208,19 @@
    "deleteID": ""
  },
  {
+   "id": 139,
+   "foodName": "Caesar Salad",
+   "serving": 1,
+   "pieces": 0,
+   "grams": 100,
+   "calories": 184,
+   "carbs": 7,
+   "fats": 15,
+   "proteins": 5,
+   "dateConsumed": "",
+   "deleteID": ""
+ },
+ {
    "id": 108,
    "foodName": "Carbonara",
    "serving": 1,
@@ -235,14 +248,14 @@
  },
  {
    "id": 52,
-   "foodName": "Cereal",
+   "foodName": "Cereal with Milk",
    "serving": 1,
    "pieces": 0,
-   "grams": 30,
-   "calories": 196,
-   "carbs": 28,
-   "fats": 5,
-   "proteins": 6,
+   "grams": 230,
+   "calories": 260,
+   "carbs": 40,
+   "fats": 15,
+   "proteins": 14,
    "dateConsumed": "",
    "deleteID": ""
  },
@@ -481,6 +494,32 @@
    "deleteID": ""
  },
  {
+   "id": 141,
+   "foodName": "Corn with Butter and Cheese",
+   "serving": 1,
+   "pieces": 0,
+   "grams": 122,
+   "calories": 202,
+   "carbs": 20,
+   "fats": 11,
+   "proteins": 9,
+   "dateConsumed": "",
+   "deleteID": ""
+ },
+ {
+   "id": 134,
+   "foodName": "Daing na Bangus",
+   "serving": 1,
+   "pieces": 1,
+   "grams": 85,
+   "calories": 260,
+   "carbs": 39,
+   "fats": 10,
+   "proteins": 6,
+   "dateConsumed": "",
+   "deleteID": ""
+ },
+ {
    "id": 29,
    "foodName": "Donuts",
    "serving": 1,
@@ -542,6 +581,19 @@
    "carbs": 0,
    "fats": 1,
    "proteins": 38,
+   "dateConsumed": "",
+   "deleteID": ""
+ },
+ {
+   "id": 143,
+   "foodName": "Fish Sarciado",
+   "serving": 1,
+   "pieces": 0,
+   "grams": 183,
+   "calories": 268,
+   "carbs": 8,
+   "fats": 16,
+   "proteins": 21,
    "dateConsumed": "",
    "deleteID": ""
  },
@@ -666,10 +718,10 @@
    "id": 118,
    "foodName": "Grapes",
    "serving": 1,
-   "pieces": 1,
-   "grams": 6,
-   "calories": 4,
-   "carbs": 1,
+   "pieces": 5,
+   "grams": 30,
+   "calories": 20,
+   "carbs": 5,
    "fats": 0,
    "proteins": 0,
    "dateConsumed": "",
@@ -923,6 +975,19 @@
    "deleteID": ""
  },
  {
+   "id": 132,
+   "foodName": "Kutsinta",
+   "serving": 1,
+   "pieces": 1,
+   "grams": 30,
+   "calories": 75,
+   "carbs": 12,
+   "fats": 0,
+   "proteins": 1,
+   "dateConsumed": "",
+   "deleteID": ""
+ },
+ {
    "id": 11,
    "foodName": "Kwek-kwek",
    "serving": 1,
@@ -932,6 +997,32 @@
    "carbs": 5,
    "fats": 11,
    "proteins": 8,
+   "dateConsumed": "",
+   "deleteID": ""
+ },
+ {
+   "id": 130,
+   "foodName": "Laing",
+   "serving": 1,
+   "pieces": 0,
+   "grams": 100,
+   "calories": 202,
+   "carbs": 9,
+   "fats": 16,
+   "proteins": 10,
+   "dateConsumed": "",
+   "deleteID": ""
+ },
+ {
+   "id": 136,
+   "foodName": "Lasagna",
+   "serving": 1,
+   "pieces": 0,
+   "grams": 175,
+   "calories": 246,
+   "carbs": 5,
+   "fats": 13,
+   "proteins": 25,
    "dateConsumed": "",
    "deleteID": ""
  },
@@ -997,6 +1088,19 @@
    "carbs": 3,
    "fats": 10,
    "proteins": null,
+   "dateConsumed": "",
+   "deleteID": ""
+ },
+ {
+   "id": 138,
+   "foodName": "Macaroni Salad",
+   "serving": 1,
+   "pieces": 0,
+   "grams": 102,
+   "calories": 207,
+   "carbs": 26,
+   "fats": 10,
+   "proteins": 4,
    "dateConsumed": "",
    "deleteID": ""
  },
@@ -1092,6 +1196,19 @@
    "deleteID": ""
  },
  {
+   "id": 144,
+   "foodName": "Okoy",
+   "serving": 1,
+   "pieces": 1,
+   "grams": 10,
+   "calories": 46,
+   "carbs": 6,
+   "fats": 2,
+   "proteins": 1,
+   "dateConsumed": "",
+   "deleteID": ""
+ },
+ {
    "id": 55,
    "foodName": "Palabok",
    "serving": 1,
@@ -1157,6 +1274,19 @@
    "deleteID": ""
  },
  {
+   "id": 140,
+   "foodName": "Pichi-pichi",
+   "serving": 1,
+   "pieces": 1,
+   "grams": 30,
+   "calories": 51,
+   "carbs": 10,
+   "fats": 0,
+   "proteins": 1,
+   "dateConsumed": "",
+   "deleteID": ""
+ },
+ {
    "id": 93,
    "foodName": "Pinakbet",
    "serving": 1,
@@ -1192,6 +1322,19 @@
    "carbs": 12,
    "fats": 7,
    "proteins": 25,
+   "dateConsumed": "",
+   "deleteID": ""
+ },
+ {
+   "id": 137,
+   "foodName": "Pizza",
+   "serving": 1,
+   "pieces": 1,
+   "grams": 132,
+   "calories": 300,
+   "carbs": 39,
+   "fats": 11,
+   "proteins": 13,
    "dateConsumed": "",
    "deleteID": ""
  },
@@ -1352,6 +1495,19 @@
    "deleteID": ""
  },
  {
+   "id": 131,
+   "foodName": "Puto",
+   "serving": 1,
+   "pieces": 1,
+   "grams": 45,
+   "calories": 86,
+   "carbs": 20,
+   "fats": 3,
+   "proteins": 2,
+   "dateConsumed": "",
+   "deleteID": ""
+ },
+ {
    "id": 57,
    "foodName": "Rice",
    "serving": 1,
@@ -1387,6 +1543,19 @@
    "carbs": 1,
    "fats": 9,
    "proteins": 10,
+   "dateConsumed": "",
+   "deleteID": ""
+ },
+ {
+   "id": 145,
+   "foodName": "Sinampalukang Manok",
+   "serving": 1,
+   "pieces": 0,
+   "grams": 235,
+   "calories": 167,
+   "carbs": 6,
+   "fats": 7,
+   "proteins": 20,
    "dateConsumed": "",
    "deleteID": ""
  },
@@ -1478,6 +1647,32 @@
    "carbs": 5,
    "fats": 8,
    "proteins": 6,
+   "dateConsumed": "",
+   "deleteID": ""
+ },
+ {
+   "id": 133,
+   "foodName": "Suman",
+   "serving": 1,
+   "pieces": 1,
+   "grams": 56,
+   "calories": 63,
+   "carbs": 6,
+   "fats": 4,
+   "proteins": 1,
+   "dateConsumed": "",
+   "deleteID": ""
+ },
+ {
+   "id": 142,
+   "foodName": "Sweet and Sour Fish",
+   "serving": 1,
+   "pieces": 0,
+   "grams": 112,
+   "calories": 122,
+   "carbs": 1,
+   "fats": 8,
+   "proteins": 12,
    "dateConsumed": "",
    "deleteID": ""
  },
@@ -1595,6 +1790,19 @@
    "carbs": 20,
    "fats": 0,
    "proteins": 0,
+   "dateConsumed": "",
+   "deleteID": ""
+ },
+ {
+   "id": 135,
+   "foodName": "Tuyo ",
+   "serving": 1,
+   "pieces": 1,
+   "grams": 10,
+   "calories": 44,
+   "carbs": 5,
+   "fats": 2,
+   "proteins": 2,
    "dateConsumed": "",
    "deleteID": ""
  },
