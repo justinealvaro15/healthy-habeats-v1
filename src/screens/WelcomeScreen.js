@@ -204,7 +204,7 @@ export default class WelcomeScreen extends React.Component {
 					this.props.navigation.replace('Home');
 					this.props.navigation.navigate('Tutorial1');
 				} else {
-					//Notifications.cancelAllScheduledNotificationsAsync();
+					Notifications.cancelAllScheduledNotificationsAsync();
 					Notifications.scheduleLocalNotificationAsync(NotificationsText.scheduledNotification10, schedulingOptions1);
 					Notifications.scheduleLocalNotificationAsync(NotificationsText.scheduledNotification11, schedulingOptions2);
 					Notifications.scheduleLocalNotificationAsync(NotificationsText.scheduledNotification6, schedulingOptions3);
@@ -218,7 +218,7 @@ export default class WelcomeScreen extends React.Component {
 		return(
 			<View style={styles.main}>
 				<Image source={require('../../assets/logo.png')} style={styles.logo}/>
-				<Text style={styles.version}>version 1.7.0</Text>
+				<Text style={styles.version}>version 1.8.0</Text>
 			</View>
 		);
 	}
