@@ -5,7 +5,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "build": "expo build:ios"
   },
   "dependencies": {
     "expo": "^36.0.0",
@@ -33,7 +34,8 @@
     "write-json-file": "^4.2.0"
   },
   "devDependencies": {
-    "babel-preset-expo": "^8.0.0"
+    "babel-preset-expo": "^8.0.0",
+    "expo-cli": "^3.11.7"
   },
   "private": true
 }
