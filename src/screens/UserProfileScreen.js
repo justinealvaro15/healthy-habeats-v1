@@ -5,6 +5,9 @@ import { withNavigation } from 'react-navigation';
 import { Feather } from '@expo/vector-icons';
 
 import AnthropometricContainer from '../components/AnthropometricContainer';
+import * as firebase from 'firebase';
+import '@firebase/firestore';
+import moment from 'moment';
 
 import * as ThemeConstants from '../common/Themes';
 import * as DbwText from '../common/DbwText';
@@ -12,6 +15,15 @@ import Constants from 'expo-constants';
 
 
 const UserProfileScreen = ({ navigation }) => {
+
+    let token = "sample_token";
+    let accessCounter = {
+        count: 1,
+        dateAccessed:  moment().format('MMMM DD YYYY')
+    };
+    const firebaseRef = firebase.database().ref();
+
+    
     const [userData, setUserData] = useState({
         weight: 0,
         height: 0,
@@ -36,7 +48,16 @@ const UserProfileScreen = ({ navigation }) => {
 			// Error retrieving data
 			console.log(error.message);
 		}
-	};
+    };
+
+    const getExpoToken = async () => {
+        try {
+            token = await AsyncStorage.getItem('userID');
+        } catch (error) {
+            // Error retrieving data
+            console.log(error.message);
+        }
+    };
 	  
 	const getUserData = async () => {
 		try {
@@ -72,29 +93,33 @@ const UserProfileScreen = ({ navigation }) => {
 		}      
     };
 
-    /*const prepareCounter = async () => {
+     const prepareCounter = async () => {
 		try {
-			const data2 = await AsyncStorage.getItem('home_counter') || 'empty';
-			const data3 = await AsyncStorage.getItem('userProfile_counter') || 'empty';
-
-			if(data2 === 'empty' ){
-				
+            let data = await AsyncStorage.getItem('userProfile_counter') || 'empty';
+            
+			if(data === 'empty' ){
+				console.log('empty');
             } else{
-                home_counter = parseInt(JSON.parse(data2));
+                data = JSON.parse(data);
+                //same day
+                if(data.dateAccessed === moment().format('MMMM DD YYYY')){
+                    accessCounter.count = data.count; /*+ 1;*/
+                    accessCounter.dateAccessed = data.dateAccessed;
+                }
+                //next day
+                else{
+                    accessCounter.count = 1;
+                    accessCounter.dateAccessed = moment().format('MMMM DD YYYY');
+                }    
 			}
-			if(data3 === 'empty' ){
-				
-            } else{
-                userProfile_counter = parseInt(JSON.parse(data3));
-               
-            }
 		} catch (error) {
 			// Error retrieving data
 			console.log(error.message);
         }    
+        firebaseRef.child('Users').child(token).child('Screen Access Counters').child(moment().format('MMMM DD YYYY')).child('User Profile Screen Count').set(accessCounter.count);	
     };
-    
-	const saveUserProfileCounter = async (key,value) => {
+
+    const saveUserProfileCounter = async (key,value) => {
 		try {
 			
 			await AsyncStorage.setItem(key,JSON.stringify(value));
@@ -103,7 +128,7 @@ const UserProfileScreen = ({ navigation }) => {
 			// Error retrieving data
 			console.log(error.message);
 		}
-	};*/
+    };
 
     useEffect( () => {
         getUserData();
@@ -113,12 +138,14 @@ const UserProfileScreen = ({ navigation }) => {
     },[]);
 
     useEffect( () => {
+        getExpoToken();
+        prepareCounter();
         focusListener = navigation.addListener('didFocus', () => {
-			//console.log('Screen Focused');
-			//userProfile_counter+=1;
-            //saveUserProfileCounter('userProfile_counter', userProfile_counter);
             getUserData();
-			//console.log('UserProfile Counter: ' + userProfile_counter);	
+			accessCounter.count+=1;
+            saveUserProfileCounter('userProfile_counter', accessCounter);
+            console.log('User Profile Counter: ' + accessCounter.count);
+            firebaseRef.child('Users').child(token).child('Screen Access Counters').child(moment().format('MMMM DD YYYY')).child('User Profile Screen Count').set(accessCounter.count);	
 		});
 	},[]);
 	

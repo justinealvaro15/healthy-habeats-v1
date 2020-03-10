@@ -67,7 +67,7 @@ const IntakeFoodContainer = ({ food, mealTitle, navigateToSearchFood, onDeletion
 
                                 }
                             >
-                                <View>
+                                <View style={{flex: 9}}>
                                     <Text style={styles.text_regular}>{item.foodName}</Text>
                                     <Text style={styles.text_small}>
                                         Serving: {item.serving}  •  Energy: {item.calories * item.serving} kcal
@@ -175,6 +175,7 @@ const styles = StyleSheet.create({
     button_delete: {
         alignItems: 'center',
         flexDirection: 'row',
+        flex: 1
     },
     container: {
         backgroundColor: ThemeConstants.MAIN_WHITE,
