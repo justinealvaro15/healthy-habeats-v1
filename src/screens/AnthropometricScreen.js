@@ -1,10 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { AsyncStorage, BackHandler, Keyboard, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, ToastAndroid, TouchableHighlight, View } from 'react-native';
-import Slider from "react-native-slider";
+import {
+    Alert,
+    AsyncStorage,
+    Keyboard,
+    KeyboardAvoidingView,
+    Platform,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableHighlight,
+    View,
+} from 'react-native';
+import Slider from 'react-native-slider';
 import { withNavigation } from 'react-navigation';
 
-import * as ThemeConstants from '../common/Themes';
 import * as AnthroText from '../common/AnthropometricText';
+import * as ThemeConstants from '../common/Themes';
 
 const AnthropometricScreen = ({ navigation }) => {
     const [tokenState, setTokenState] = useState('firstTime');
@@ -44,14 +56,14 @@ const AnthropometricScreen = ({ navigation }) => {
         const data6 = await AsyncStorage.getItem('total_proteins') || 0;
         const data7 = await AsyncStorage.getItem('total_fats') || 0;
 
-        setWeight(parseInt(JSON.parse(data1)));
-        setHeight(parseInt(JSON.parse(data2)));
-        setActivityLevel(parseInt(JSON.parse(data3)));
+        setWeight(parseInt(JSON.parse(JSON.stringify(data1))));
+        setHeight(parseInt(JSON.parse(JSON.stringify(data2))));
+        setActivityLevel(parseInt(JSON.parse(JSON.stringify(data3))));
 
-        saveData('total_calories', JSON.parse(data4));
-        saveData('total_carbs', JSON.parse(data5));
-        saveData('total_proteins', JSON.parse(data6));
-        saveData('total_fats', JSON.parse(data7));
+        saveData('total_calories', JSON.parse(JSON.stringify(data4)));
+        saveData('total_carbs', JSON.parse(JSON.stringify(data5)));
+        saveData('total_proteins', JSON.parse(JSON.stringify(data6)));
+        saveData('total_fats', JSON.parse(JSON.stringify(data7)));
     };
 
     const getUserToken = async () => {
@@ -142,6 +154,14 @@ const AnthropometricScreen = ({ navigation }) => {
         saveData('TEA', JSON.stringify(weight*value));
     };
 
+    const notifyMessage = (msg) => {
+        if (Platform.OS === 'android') {
+            ToastAndroid.show(msg, ToastAndroid.SHORT)
+        } else {
+            Alert.alert(msg);
+        }
+    };
+
     useEffect( () => {
         setDistributions({
             carbsCalorie: TEA*0.65,
@@ -171,14 +191,6 @@ const AnthropometricScreen = ({ navigation }) => {
         getUserToken();
     },[]);
 
-    useEffect( () => {
-        BackHandler.addEventListener('hardwareBackPress', handleBackButton);
-    },[]);
-
-    const handleBackButton = () => {
-        return true;
-    };
-
     const saveData = async (key, value) => {
 		try {
 			await AsyncStorage.setItem(key, value);
@@ -186,7 +198,7 @@ const AnthropometricScreen = ({ navigation }) => {
 			// Error retrieving data
 			console.log(error.message);
 		}
-	};
+    };
     
     const submit = async () => {
         Keyboard.dismiss();
@@ -201,8 +213,7 @@ const AnthropometricScreen = ({ navigation }) => {
         } else {
             navigation.navigate('UserProfile');
         }
-        BackHandler.removeEventListener('hardwareBackPress', () => {return false});
-        ToastAndroid.show('Saved successfully!', ToastAndroid.SHORT);
+        notifyMessage('Saved successfully!');
     };
 
     return (
@@ -323,7 +334,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         fontSize: ThemeConstants.FONT_SIZE_REGULAR,
         marginRight: ThemeConstants.CONTAINER_MARGIN/2,
-        paddingVertical: ThemeConstants.CONTAINER_MARGIN/3
+        paddingVertical: ThemeConstants.CONTAINER_MARGIN*0.75
     },
     input_converted: {
         alignSelf: 'center'

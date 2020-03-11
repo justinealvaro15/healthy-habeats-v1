@@ -1,6 +1,6 @@
-import React from 'react';
-import { StyleSheet, View, TextInput } from 'react-native';
 import { Feather } from '@expo/vector-icons';
+import React from 'react';
+import { StyleSheet, TextInput, View } from 'react-native';
 
 import * as ThemeConstants from '../common/Themes';
 
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
         marginTop: ThemeConstants.CONTAINER_MARGIN
     },
     icon: {
-        fontSize: 35,
+        fontSize: 25,
         alignSelf: 'center',
         margin: 10,
         marginRight: 15

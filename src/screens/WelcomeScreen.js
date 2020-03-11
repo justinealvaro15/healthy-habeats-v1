@@ -1,15 +1,14 @@
+import '@firebase/firestore';
+
+import { Notifications } from 'expo';
+import Constants from 'expo-constants';
+import * as Permissions from 'expo-permissions';
+import * as firebase from 'firebase';
 import React from 'react';
 import { AsyncStorage, Dimensions, Image, StyleSheet, Text, Vibration, View } from 'react-native';
 
-import {Notifications} from 'expo';
-import * as Permissions from 'expo-permissions';
-import Constants from 'expo-constants';
-
-import * as ThemeConstants from '../common/Themes';
-import * as firebase from 'firebase';
-import '@firebase/firestore';
-
 import * as NotificationsText from '../common/NotificationsText';
+import * as ThemeConstants from '../common/Themes';
 
 
 const TIMER = 3000;
@@ -218,7 +217,7 @@ export default class WelcomeScreen extends React.Component {
 		return(
 			<View style={styles.main}>
 				<Image source={require('../../assets/logo.png')} style={styles.logo}/>
-				<Text style={styles.version}>version 1.8.0</Text>
+				<Text style={styles.version}>version 1.8.1</Text>
 			</View>
 		);
 	}

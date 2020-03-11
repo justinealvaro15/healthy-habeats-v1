@@ -1,12 +1,24 @@
+import '@firebase/firestore';
+
+import { Feather } from '@expo/vector-icons';
+import * as firebase from 'firebase';
 import React, { useState } from 'react';
-import { Alert, AsyncStorage, FlatList, Keyboard, StyleSheet, Text, ToastAndroid, TouchableHighlight, TouchableOpacity, View } from 'react-native';
-import { Feather } from '@expo/vector-icons'
+import {
+    Alert,
+    FlatList,
+    Keyboard,
+    Platform,
+    StyleSheet,
+    Text,
+    TouchableHighlight,
+    TouchableOpacity,
+    View,
+} from 'react-native';
 import { withNavigation } from 'react-navigation';
+
 import * as ThemeConstants from '../common/Themes';
 
 
-import * as firebase from 'firebase';
-import '@firebase/firestore';
 // FOODARRAY: contains list of foods in a particular setting
 // when pressed => FOODARRAY[INDEX] get the food object
 // after deletion setFoodArray to
@@ -25,21 +37,15 @@ const IntakeFoodContainer = ({ food, mealTitle, navigateToSearchFood, onDeletion
     
     const setIsDeleted = onDeletion2;
     const setTotalFoodArray = onDeletion3;
-
-
-    /*const getUserID = async () => {
-        try {
-            const userID = await AsyncStorage.getItem('userID');
-            userTokenID = userID;
-            console.log(userID);
-            console.log(userTokenID);
-		} catch (error) {
-			// Error retrieving data
-			console.log(error.message);
-		}      
-    };*/
-
     
+    const notifyMessage = (msg) => {
+        if (Platform.OS === 'android') {
+            ToastAndroid.show(msg, ToastAndroid.SHORT)
+        } else {
+            Alert.alert(msg);
+        }
+    };
+
     return(
         <View style={styles.container}>
             <View style={styles.details}>
@@ -127,7 +133,7 @@ const IntakeFoodContainer = ({ food, mealTitle, navigateToSearchFood, onDeletion
                                                         temp = meal;
                                                         firebaseRef.child('Users').child(token).child('Food Intakes').child(mealTitle).set(temp);
 
-                                                        ToastAndroid.show(`Removed ${item.foodName} successfully.`, ToastAndroid.SHORT);                                                        
+                                                        notifyMessage(`Removed ${item.foodName} successfully.`)
                                                     }
                                                 }
                                             ]
