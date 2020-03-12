@@ -1,9 +1,9 @@
+import { Feather } from '@expo/vector-icons';
 import React from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
-import { Feather } from '@expo/vector-icons';
 
-import PhoneCase from './PhoneCase';
 import * as ThemeConstants from '../../common/Themes';
+import PhoneCase from './PhoneCase';
 
 const FoodResultsList = () => {
     const foodArray = [
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
         paddingVertical: ThemeConstants.CONTAINER_MARGIN/2,
     },
     icon: {
-        fontSize: 35,
+        fontSize: 25,
         alignSelf: 'center',
         margin: 10,
         marginRight: 15
