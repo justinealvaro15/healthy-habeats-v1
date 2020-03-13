@@ -481,6 +481,19 @@
    "deleteID": ""
  },
  {
+   "id": 150,
+   "foodName": "Coffee",
+   "serving": 1,
+   "pieces": 0,
+   "grams": 20,
+   "calories": 87,
+   "carbs": 16,
+   "fats": 2,
+   "proteins": 1,
+   "dateConsumed": "",
+   "deleteID": ""
+ },
+ {
    "id": 129,
    "foodName": "Cookie",
    "serving": 1,
@@ -663,6 +676,32 @@
    "deleteID": ""
  },
  {
+   "id": 156,
+   "foodName": "Fried tofu",
+   "serving": 1,
+   "pieces": 1,
+   "grams": 13,
+   "calories": 35,
+   "carbs": 2,
+   "fats": 3,
+   "proteins": 2,
+   "dateConsumed": "",
+   "deleteID": ""
+ },
+ {
+   "id": 148,
+   "foodName": "Fries",
+   "serving": 1,
+   "pieces": 0,
+   "grams": 85,
+   "calories": 150,
+   "carbs": 19,
+   "fats": 8,
+   "proteins": 3,
+   "dateConsumed": "",
+   "deleteID": ""
+ },
+ {
    "id": 96,
    "foodName": "Ginisang Ampalaya",
    "serving": 1,
@@ -741,6 +780,19 @@
    "deleteID": ""
  },
  {
+   "id": 158,
+   "foodName": "Grilled Beef",
+   "serving": 1,
+   "pieces": 0,
+   "grams": 100,
+   "calories": 228,
+   "carbs": 16,
+   "fats": 13,
+   "proteins": 13,
+   "dateConsumed": "",
+   "deleteID": ""
+ },
+ {
    "id": 60,
    "foodName": "Grilled Chicken",
    "serving": 1,
@@ -750,6 +802,19 @@
    "carbs": 0,
    "fats": 7,
    "proteins": 57,
+   "dateConsumed": "",
+   "deleteID": ""
+ },
+ {
+   "id": 147,
+   "foodName": "Grilled Pork",
+   "serving": 1,
+   "pieces": 0,
+   "grams": 113,
+   "calories": 144,
+   "carbs": 1,
+   "fats": 3,
+   "proteins": 23,
    "dateConsumed": "",
    "deleteID": ""
  },
@@ -832,6 +897,19 @@
    "deleteID": ""
  },
  {
+   "id": 152,
+   "foodName": "Iced Tea",
+   "serving": 1,
+   "pieces": 0,
+   "grams": 20,
+   "calories": 84,
+   "carbs": 22,
+   "fats": 0,
+   "proteins": 0,
+   "dateConsumed": "",
+   "deleteID": ""
+ },
+ {
    "id": 6,
    "foodName": "Instant Carbonara",
    "serving": 1,
@@ -906,6 +984,19 @@
    "carbs": 1,
    "fats": 13,
    "proteins": 12,
+   "dateConsumed": "",
+   "deleteID": ""
+ },
+ {
+   "id": 154,
+   "foodName": "Juice",
+   "serving": 1,
+   "pieces": 0,
+   "grams": 225,
+   "calories": 90,
+   "carbs": 22,
+   "fats": 0,
+   "proteins": 0,
    "dateConsumed": "",
    "deleteID": ""
  },
@@ -1170,6 +1261,19 @@
    "deleteID": ""
  },
  {
+   "id": 151,
+   "foodName": "Milk Tea",
+   "serving": 1,
+   "pieces": 0,
+   "grams": 37,
+   "calories": 149,
+   "carbs": 29,
+   "fats": 2,
+   "proteins": 0,
+   "dateConsumed": "",
+   "deleteID": ""
+ },
+ {
    "id": 40,
    "foodName": "Monay",
    "serving": 1,
@@ -1192,6 +1296,19 @@
    "carbs": 11,
    "fats": 7,
    "proteins": 6,
+   "dateConsumed": "",
+   "deleteID": ""
+ },
+ {
+   "id": 149,
+   "foodName": "Nachos",
+   "serving": 1,
+   "pieces": 0,
+   "grams": 28,
+   "calories": 139,
+   "carbs": 18,
+   "fats": 6,
+   "proteins": 1,
    "dateConsumed": "",
    "deleteID": ""
  },
@@ -1508,6 +1625,19 @@
    "deleteID": ""
  },
  {
+   "id": 155,
+   "foodName": "Ramen",
+   "serving": 1,
+   "pieces": 0,
+   "grams": 60,
+   "calories": 250,
+   "carbs": 39,
+   "fats": 8,
+   "proteins": 6,
+   "dateConsumed": "",
+   "deleteID": ""
+ },
+ {
    "id": 57,
    "foodName": "Rice",
    "serving": 1,
@@ -1569,6 +1699,19 @@
    "carbs": 10,
    "fats": 10,
    "proteins": 14,
+   "dateConsumed": "",
+   "deleteID": ""
+ },
+ {
+   "id": 153,
+   "foodName": "Soft Drinks",
+   "serving": 1,
+   "pieces": 0,
+   "grams": 340,
+   "calories": 140,
+   "carbs": 39,
+   "fats": 0,
+   "proteins": 0,
    "dateConsumed": "",
    "deleteID": ""
  },
@@ -1737,6 +1880,32 @@
    "calories": 85,
    "carbs": 10,
    "fats": 3,
+   "proteins": 1,
+   "dateConsumed": "",
+   "deleteID": ""
+ },
+ {
+   "id": 157,
+   "foodName": "Tortang Giniling",
+   "serving": 1,
+   "pieces": 1,
+   "grams": 81,
+   "calories": 50,
+   "carbs": 4,
+   "fats": 2,
+   "proteins": 5,
+   "dateConsumed": "",
+   "deleteID": ""
+ },
+ {
+   "id": 146,
+   "foodName": "Tortang Talong",
+   "serving": 1,
+   "pieces": 1,
+   "grams": 18,
+   "calories": 90,
+   "carbs": 10,
+   "fats": 5,
    "proteins": 1,
    "dateConsumed": "",
    "deleteID": ""
