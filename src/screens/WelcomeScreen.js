@@ -218,7 +218,7 @@ export default class WelcomeScreen extends React.Component {
 		return(
 			<View style={styles.main}>
 				<Image source={require('../../assets/logo.png')} style={styles.logo}/>
-				<Text style={styles.version}>version 1.8.3</Text>
+				<Text style={styles.version}>version 1.8.4</Text>
 			</View>
 		);
 	}
