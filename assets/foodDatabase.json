@@ -221,6 +221,19 @@
    "deleteID": ""
  },
  {
+   "id": 166,
+   "foodName": "Brown Rice",
+   "serving": 1,
+   "pieces": 0,
+   "grams": 160,
+   "calories": 150,
+   "carbs": 32,
+   "fats": 1,
+   "proteins": 3,
+   "dateConsumed": "",
+   "deleteID": ""
+ },
+ {
    "id": 82,
    "foodName": "Burger Steak",
    "serving": 1,
@@ -230,6 +243,19 @@
    "carbs": 21,
    "fats": 6,
    "proteins": 4,
+   "dateConsumed": "",
+   "deleteID": ""
+ },
+ {
+   "id": 167,
+   "foodName": "Buttered Garlic Shrimp",
+   "serving": 1,
+   "pieces": 0,
+   "grams": 74,
+   "calories": 112,
+   "carbs": 1,
+   "fats": 5,
+   "proteins": 16,
    "dateConsumed": "",
    "deleteID": ""
  },
@@ -1573,6 +1599,19 @@
    "deleteID": ""
  },
  {
+   "id": 165,
+   "foodName": "Pork Embutido",
+   "serving": 1,
+   "pieces": 0,
+   "grams": 144,
+   "calories": 303,
+   "carbs": 13,
+   "fats": 18,
+   "proteins": 23,
+   "dateConsumed": "",
+   "deleteID": ""
+ },
+ {
    "id": 106,
    "foodName": "Pork Liempo",
    "serving": 1,
@@ -1764,6 +1803,19 @@
    "carbs": 6,
    "fats": 7,
    "proteins": 20,
+   "dateConsumed": "",
+   "deleteID": ""
+ },
+ {
+   "id": 168,
+   "foodName": "Sinigang na Hipon",
+   "serving": 1,
+   "pieces": 0,
+   "grams": 190,
+   "calories": 148,
+   "carbs": 12,
+   "fats": 2,
+   "proteins": 21,
    "dateConsumed": "",
    "deleteID": ""
  },
